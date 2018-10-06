@@ -10,5 +10,5 @@
 * Als leerling wil ik gerichte werkaanbiedingen kunnen bekijken om zo een gepaste job te vinden
 
 ## TODO list
-..* ~~aanmaken project~~
-..* ~~toevoegen activity ~~
+* ~~aanmaken project~~
+* ~~toevoegen activity ~~
