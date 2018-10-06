@@ -1,5 +1,6 @@
 package com.talentcoach.id11.id11_android
 
+
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.annotation.TargetApi
@@ -21,10 +22,12 @@ import android.view.inputmethod.EditorInfo
 import android.widget.ArrayAdapter
 import android.widget.TextView
 
+
 import java.util.ArrayList
 import android.Manifest.permission.READ_CONTACTS
 
 import kotlinx.android.synthetic.main.activity_login.*
+import org.jetbrains.anko.alert
 
 /**
  * A login screen that offers login via email/password.
@@ -266,7 +269,7 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
             showProgress(false)
 
             if (success!!) {
-                finish()
+                alert("Login Successful!").show()
             } else {
                 password.error = getString(R.string.error_incorrect_password)
                 password.requestFocus()
