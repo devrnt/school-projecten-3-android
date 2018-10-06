@@ -11,4 +11,4 @@
 
 ## TODO list
 * ~~aanmaken project~~
-* ~~toevoegen activity ~~
+* ~~toevoegen activity~~
