@@ -12,3 +12,8 @@
 ## TODO list
 * ~~aanmaken project~~
 * ~~toevoegen activity~~
+
+## Links
+
+* Kotlin API Doc: https://kotlinlang.org/docs/reference/
+* Java Streams equivalenten in Kotlin: https://stackoverflow.com/questions/34642254/what-java-8-stream-collect-equivalents-are-available-in-the-standard-kotlin-libr#34642255
