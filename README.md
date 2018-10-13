@@ -10,8 +10,8 @@
 * Als leerling wil ik gerichte werkaanbiedingen kunnen bekijken om zo een gepaste job te vinden
 
 ## TODO list
-* ~~aanmaken project~~
-* ~~toevoegen activity~~
+* Onderdeel werkaanbiedingen
+* Onderdeel competenties
 
 ## Notities klant
 * Bij het weergeven van de behaalde competenties geef [behaalde]/[alle competenties].
