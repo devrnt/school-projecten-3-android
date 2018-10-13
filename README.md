@@ -13,7 +13,15 @@
 * ~~aanmaken project~~
 * ~~toevoegen activity~~
 
+## Notities klant
+* Bij het weergeven van de behaalde competenties geef [behaalde]/[alle competenties].
+* filteren: op filteren op module: vb schilderen is eig filteren op projecten.
+* module kan een deelcertificaat opleveren.
+* vb per onderdeel werk spreuken voor een ding vb op tijd komen etc
+
+
 ## Links
 
 * Kotlin API Doc: https://kotlinlang.org/docs/reference/
 * Java Streams equivalenten in Kotlin: https://stackoverflow.com/questions/34642254/what-java-8-stream-collect-equivalents-are-available-in-the-standard-kotlin-libr#34642255
+* Data Binding Library: https://developer.android.com/topic/libraries/data-binding/
