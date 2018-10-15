@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">id11-android</string>
+    <string name="app_name">Talent Coach</string>
 
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
