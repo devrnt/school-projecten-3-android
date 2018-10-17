@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    >
 
     <Button
         android:id="@+id/talentBtn"
@@ -15,7 +15,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         android:background="#E9724C"
-        android:text="Talent"
+        android:text="@string/talent"
         android:textColor="@android:color/white"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -33,7 +33,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
         android:background="#C5283D"
-        android:text="Coach"
+        android:text="@string/coach"
         android:textColor="@android:color/white"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -50,7 +50,7 @@
         android:layout_marginTop="44dp"
         android:layout_marginEnd="8dp"
         android:background="#FFC857"
-        android:text="Job"
+        android:text="@string/job"
         android:textColor="@android:color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.04"
@@ -64,7 +64,7 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="44dp"
         android:background="#006FBA"
-        android:text="Communicatie"
+        android:text="@string/communicatie"
         android:textColor="@android:color/white"
         app:layout_constraintStart_toEndOf="@+id/jobBtn"
         app:layout_constraintTop_toBottomOf="@+id/coachBtn" />
