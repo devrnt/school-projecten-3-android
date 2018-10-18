@@ -26,8 +26,11 @@
         <activity
             android:name=".AlgemeneInfoActivity"
             android:label="@string/aic_title"
-            android:parentActivityName=".HomeActivity"></activity>
-        <activity android:name=".WerkaanbiedingActivity"></activity>
+            android:parentActivityName=".HomeActivity" />
+        <activity
+            android:name=".WerkaanbiedingActivity"
+            android:label="@string/wa_title"
+            android:parentActivityName=".HomeActivity" />
     </application>
 
 </manifest>

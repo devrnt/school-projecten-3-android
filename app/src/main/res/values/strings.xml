@@ -5,6 +5,7 @@
     <string name="aic_title">Algemene Info</string>
 
     <!-- Strings related to WerkaanbiedingActivity -->
+    <string name="wa_title">Werkaanbiedingen</string>
     <string name="wa_werkgever">Werkgever: %s</string>
     <string name="wa_beschrijving">Beschrijving: %s</string>
 
