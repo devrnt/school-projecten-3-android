@@ -13,4 +13,10 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
+
+    <!-- Strings related to Competenties Tab -->
+    <string name="title_activity_comp__tabbed">Comp_Tabbed</string>
+    <string name="tab_text_1">TE BEHALEN</string>
+    <string name="tab_text_2">BEHAALD</string>
+    <string name="action_settings">Settings</string>
 </resources>
