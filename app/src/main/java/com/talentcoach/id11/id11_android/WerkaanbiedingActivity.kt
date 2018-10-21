@@ -19,7 +19,30 @@ class WerkaanbiedingActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_werkaanbieding)
 
+        showWerkaanbieding()
+        initButtons()
+    }
+
+    private fun initButtons() {
+        like.setOnClickListener {
+            leerling.bewaardeWerkaanbieding.add(leerling.huidigeWerkaanbieding!!)
+            leerling.huidigeWerkaanbieding = null
+            showWerkaanbieding()
+        }
+
+        noLike.setOnClickListener {
+            leerling.verwijderdeWerkaanbiedingen.add(leerling.huidigeWerkaanbieding!!)
+            leerling.huidigeWerkaanbieding = null
+            showWerkaanbieding()
+        }
+    }
+
+    private fun showWerkaanbieding() {
         try {
+            werkgever.text = ""
+            omschrijving.text = ""
+            progress.visibility = View.VISIBLE
+
             doAsync {
                 if (leerling.id < 0) // check of er een 'ingelogde' leerling is
                     leerling = LeerlingRepository().getLeerlingById(1L)
@@ -31,29 +54,23 @@ class WerkaanbiedingActivity : AppCompatActivity() {
                     progress.visibility = View.GONE // verbergt progressbar
                     val wa = leerling.huidigeWerkaanbieding
 
-                    // stelt tekst in
-                    werkgever.text = resources.getString(R.string.wa_werkgever, wa?.werkgever?.naam) ?: "Geen gepaste werkaanbieding gevonden"
-                    omschrijving.text = resources.getString(R.string.wa_beschrijving, wa?.omschrijving) ?: "Probeer uw interesses aan te vullen"
+                    if (wa != null) { // stelt tekst in
+                        werkgever.text = getString(R.string.wa_werkgever, wa.werkgever.naam)
+                        omschrijving.text = getString(R.string.wa_beschrijving, wa.omschrijving)
+                    } else {
+                        werkgever.text = getString(R.string.no_werkaanbieding)
+                        omschrijving.text = getString(R.string.modify_interesses)
+                        noLike.visibility = View.INVISIBLE
+                        like.visibility = View.INVISIBLE
+                    }
+
                 }
             }
-
 
         } catch (e: Exception) { // eventuele exceptions tonen
             val toast = Toast.makeText(this, e.message?.substring(0, 20), Toast.LENGTH_LONG)
             toast.show()
         }
-
-        // button listeners
-        like.setOnClickListener {
-            leerling.bewaardeWerkaanbieding.add(leerling.huidigeWerkaanbieding!!)
-            leerling.huidigeWerkaanbieding = null
-        }
-
-        noLike.setOnClickListener {
-            leerling.huidigeWerkaanbieding = null
-        }
-
-
     }
 
     override fun onPause() {
