@@ -53,8 +53,13 @@ class WerkaanbiedingActivity : AppCompatActivity() {
 
     override fun onPause() {
         super.onPause()
-        doAsync {
-            LeerlingRepository().saveLeerling(leerling)
+        try {
+            doAsync {
+                LeerlingRepository().saveLeerling(leerling)
+            }
+        } catch (e: Exception) {
+            val toast = Toast.makeText(this@WerkaanbiedingActivity, e.message?.subSequence(0, 20), Toast.LENGTH_LONG)
+            toast.show()
         }
     }
 
