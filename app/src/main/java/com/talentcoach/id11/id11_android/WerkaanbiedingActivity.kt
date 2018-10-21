@@ -2,6 +2,7 @@ package com.talentcoach.id11.id11_android
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.ProgressBar
 import android.widget.TextView
@@ -17,7 +18,7 @@ import java.lang.Exception
 import java.net.URL
 
 class WerkaanbiedingActivity : AppCompatActivity() {
-
+    private var leerling = Leerling(-1, "default")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,8 +27,8 @@ class WerkaanbiedingActivity : AppCompatActivity() {
         try {
             doAsync {
 
-                val leerling = LeerlingRepository().getLeerlingById(1L)
-                if (leerling.huidigeWerkaanbieding == null){
+                leerling = LeerlingRepository().getLeerlingById(1L)
+                if (leerling.huidigeWerkaanbieding == null) {
                     leerling.huidigeWerkaanbieding = WerkaanbiedingRepository().getWerkaanbiedingVoorLeerling(leerling)
                 }
                 uiThread {
@@ -42,12 +43,19 @@ class WerkaanbiedingActivity : AppCompatActivity() {
             }
 
 
-        } catch (e: Exception){
+        } catch (e: Exception) {
             val toast = Toast.makeText(this, e.message?.substring(0, 20), Toast.LENGTH_LONG)
             toast.show()
         }
 
 
+    }
+
+    override fun onPause() {
+        super.onPause()
+        doAsync {
+            LeerlingRepository().saveLeerling(leerling)
+        }
     }
 
 }
