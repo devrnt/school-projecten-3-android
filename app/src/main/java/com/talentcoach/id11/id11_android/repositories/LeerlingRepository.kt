@@ -33,6 +33,8 @@ class LeerlingRepository {
                 outputStream.write(json.toByteArray())
                 outputStream.flush()
 
+                // debugging purposes
+                println(json)
                 println("$responseCode $responseMessage")
 
             }

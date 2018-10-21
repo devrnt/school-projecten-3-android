@@ -15,5 +15,7 @@
     <string name="job">Job</string>
     <string name="coach">Coach</string>
     <string name="talent">Talent</string>
+    <string name="react_positive">Like</string>
+    <string name="react_negative">Don\'t Like</string>
 
 </resources>
