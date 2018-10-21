@@ -27,12 +27,14 @@ class WerkaanbiedingActivity : AppCompatActivity() {
         like.setOnClickListener {
             leerling.bewaardeWerkaanbieding.add(leerling.huidigeWerkaanbieding!!)
             leerling.huidigeWerkaanbieding = null
+            println(leerling)
             showWerkaanbieding()
         }
 
         noLike.setOnClickListener {
             leerling.verwijderdeWerkaanbiedingen.add(leerling.huidigeWerkaanbieding!!)
             leerling.huidigeWerkaanbieding = null
+            println(leerling)
             showWerkaanbieding()
         }
     }
