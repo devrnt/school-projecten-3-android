@@ -2,6 +2,7 @@ package com.talentcoach.id11.id11_android.repositories
 
 import android.app.Activity
 import android.content.Context
+import android.content.res.Resources
 import android.widget.Toast
 import com.android.volley.Request
 import com.android.volley.Response
@@ -11,24 +12,25 @@ import com.android.volley.toolbox.Volley
 import com.beust.klaxon.JsonObject
 import com.beust.klaxon.Klaxon
 import com.talentcoach.id11.id11_android.models.Leerling
+import org.jetbrains.anko.doAsync
+import org.jetbrains.anko.uiThread
+import java.lang.Exception
+import java.lang.IllegalArgumentException
+import java.net.URL
 
 class LeerlingRepository {
-    private var leerling: Leerling? = null
 
-    fun getLeerlingById(id: Long): Leerling? {
-        val queue = Volley.newRequestQueue(ApplicationContextProvider().getContext())
-        val url = "https://localhost:5001/api/leerlingen"
+    fun getLeerlingById(id: Long): Leerling {
+        var leerling: Leerling? = null
 
-// Request a string response from the provided URL.
-        val req = StringRequest(Request.Method.GET, url + id.toString(),
-                Response.Listener<String> { response ->
-                    leerling = Klaxon().parse<Leerling>(response)
-                },
-                Response.ErrorListener { })
-
-// Add the request to the RequestQueue.
-        queue.add(req)
-        // TODO: http GET
-        return leerling
+        try {
+            val json = URL("http://projecten3studserver11.westeurope.cloudapp.azure.com/api/leerlingen/1").readText()
+            leerling = Klaxon().parse<Leerling>(json)
+        } catch (e: Exception){
+            throw e
+        }
+        return leerling!!
     }
-}
+
+    
+    }
