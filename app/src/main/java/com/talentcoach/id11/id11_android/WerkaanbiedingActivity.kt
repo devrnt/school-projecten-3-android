@@ -43,15 +43,10 @@ class WerkaanbiedingActivity : AppCompatActivity() {
 
 
         } catch (e: Exception){
-            val toast = Toast.makeText(this, e.message, Toast.LENGTH_LONG)
+            val toast = Toast.makeText(this, e.message?.substring(0, 20), Toast.LENGTH_LONG)
             toast.show()
         }
 
-
-    }
-
-    override fun onPause() {
-        super.onPause()
 
     }
 

@@ -32,5 +32,5 @@ class LeerlingRepository {
         return leerling!!
     }
 
-    
+
     }
