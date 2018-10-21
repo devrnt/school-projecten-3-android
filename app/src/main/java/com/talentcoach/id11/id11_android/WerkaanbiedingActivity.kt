@@ -32,8 +32,8 @@ class WerkaanbiedingActivity : AppCompatActivity() {
                     val wa = leerling.huidigeWerkaanbieding
 
                     // stelt tekst in
-                    werkgever.text = resources.getString(R.string.wa_werkgever, wa?.werkgever?.naam)
-                    omschrijving.text = resources.getString(R.string.wa_beschrijving, wa?.omschrijving)
+                    werkgever.text = resources.getString(R.string.wa_werkgever, wa?.werkgever?.naam) ?: "Geen gepaste werkaanbieding gevonden"
+                    omschrijving.text = resources.getString(R.string.wa_beschrijving, wa?.omschrijving) ?: "Probeer uw interesses aan te vullen"
                 }
             }
 
@@ -41,6 +41,16 @@ class WerkaanbiedingActivity : AppCompatActivity() {
         } catch (e: Exception) { // eventuele exceptions tonen
             val toast = Toast.makeText(this, e.message?.substring(0, 20), Toast.LENGTH_LONG)
             toast.show()
+        }
+
+        // button listeners
+        like.setOnClickListener {
+            leerling.bewaardeWerkaanbieding.add(leerling.huidigeWerkaanbieding!!)
+            leerling.huidigeWerkaanbieding = null
+        }
+
+        noLike.setOnClickListener {
+            leerling.huidigeWerkaanbieding = null
         }
 
 

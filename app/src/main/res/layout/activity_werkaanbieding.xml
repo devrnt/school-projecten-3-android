@@ -56,7 +56,7 @@
         app:layout_constraintTop_toTopOf="@+id/scrollView2" />
 
     <ImageButton
-        android:id="@+id/thumbs_up"
+        android:id="@+id/like"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_marginStart="8dp"
@@ -70,7 +70,7 @@
         app:srcCompat="@drawable/thumbs_up" />
 
     <ImageButton
-        android:id="@+id/cross"
+        android:id="@+id/noLike"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_marginStart="8dp"
