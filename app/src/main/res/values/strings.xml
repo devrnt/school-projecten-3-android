@@ -19,5 +19,7 @@
     <string name="react_negative">Don\'t Like</string>
     <string name="no_werkaanbieding">Geen gepaste werkaanbieding gevonden</string>
     <string name="modify_interesses">Probeer uw interesses aan te vullen</string>
+    <string name="mijn_werkaanb_button">Mijn bewaarde werkaanbiedingen</string>
+    <string name="bew_werkaanb_title">Bewaarde Werkaanbiedingen</string>
 
 </resources>

@@ -1,9 +1,11 @@
 package com.talentcoach.id11.id11_android
 
+import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import com.beust.klaxon.Klaxon
 import com.talentcoach.id11.id11_android.models.Leerling
 import com.talentcoach.id11.id11_android.repositories.LeerlingRepository
 import com.talentcoach.id11.id11_android.repositories.WerkaanbiedingRepository
@@ -25,17 +27,21 @@ class WerkaanbiedingActivity : AppCompatActivity() {
 
     private fun initButtons() {
         like.setOnClickListener {
-            leerling.bewaardeWerkaanbieding.add(leerling.huidigeWerkaanbieding!!)
+            leerling.bewaardeWerkaanbiedingen.add(leerling.huidigeWerkaanbieding!!)
             leerling.huidigeWerkaanbieding = null
-            println(leerling)
             showWerkaanbieding()
         }
 
         noLike.setOnClickListener {
             leerling.verwijderdeWerkaanbiedingen.add(leerling.huidigeWerkaanbieding!!)
             leerling.huidigeWerkaanbieding = null
-            println(leerling)
             showWerkaanbieding()
+        }
+
+        mijnWerkaanbBtn.setOnClickListener {
+            val intent = Intent(this, BewaardeWerkaanbiedingenActivity::class.java)
+            intent.putExtra("leerling", Klaxon().toJsonString(leerling))
+            startActivity(intent)
         }
     }
 
