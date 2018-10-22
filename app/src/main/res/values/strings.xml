@@ -26,5 +26,6 @@
     <string name="bekijk_werkaanb_btn">Bekijk werkaanbiedingen</string>
     <string name="werkaanbieding_bewaard">Werkaanbieding bewaard</string>
     <string name="remove_wa">Remove werkaanbieding</string>
+    <string name="geen_bew_werkaanb">Geen bewaarde werkaanbiedingen</string>
 
 </resources>

@@ -19,6 +19,11 @@ class WerkaanbiedingenListFragment : Fragment() {
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        if (werkaanbiedingenList!!.isEmpty()){
+            val textView = TextView(context)
+            textView.text = getString(R.string.geen_bew_werkaanb)
+            return textView
+        }
         val werkaanbiedingenRecView = inflater.inflate(R.layout.fragment_werkaanbiedingen_list, container, false) as RecyclerView
         val adapter = WerkaanbiedingenListAdapter(iClickListener!!, werkaanbiedingenList!!)
         werkaanbiedingenRecView.adapter = adapter
