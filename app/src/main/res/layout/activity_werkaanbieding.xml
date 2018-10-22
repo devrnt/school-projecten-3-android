@@ -21,8 +21,10 @@
     <FrameLayout
         android:id="@+id/fragmentFrame"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toggleFragmentBtn">
 
     </FrameLayout>
@@ -39,28 +41,7 @@
         app:layout_constraintTop_toBottomOf="@+id/toggleFragmentBtn"
         app:layout_constraintVertical_bias="0.45" />
 
-    <ImageButton
-        android:id="@+id/like"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        android:contentDescription="@string/react_positive"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/noLike"
-        app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/thumbs_up" />
 
-    <ImageButton
-        android:id="@+id/noLike"
-        android:layout_width="182dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:contentDescription="@string/react_negative"
-        app:layout_constraintBottom_toBottomOf="@+id/like"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/cross" />
 
 
 </android.support.constraint.ConstraintLayout>

@@ -1,6 +1,7 @@
 package com.talentcoach.id11.id11_android
 
 
+import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
@@ -10,6 +11,9 @@ import com.talentcoach.id11.id11_android.models.Werkaanbieding
 import kotlinx.android.synthetic.main.fragment_werkaanbieding.*
 
 class WerkaanbiedingFragment : Fragment() {
+    var reactInterface: ReactInterface? = null
+
+
     var werkaanbieding: Werkaanbieding? = null
         set(value) {
             field = value
@@ -28,6 +32,8 @@ class WerkaanbiedingFragment : Fragment() {
         } else {
             werkgever.text = getString(R.string.no_werkaanbieding)
             omschrijving.text = ""
+            like.visibility = View.GONE
+            noLike.visibility = View.GONE
         }
     }
 
@@ -38,11 +44,18 @@ class WerkaanbiedingFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
+        like.setOnClickListener {
+            reactInterface?.likeClicked()
+        }
+
+        noLike.setOnClickListener {
+            reactInterface?.noLikeClicked()
+        }
         showWerkaanbieding()
     }
 
-
-
-
-
+    interface ReactInterface {
+        fun likeClicked()
+        fun noLikeClicked()
+    }
 }

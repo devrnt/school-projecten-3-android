@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
+import com.talentcoach.id11.id11_android.WerkaanbiedingFragment.ReactInterface
 import com.talentcoach.id11.id11_android.models.Leerling
 import com.talentcoach.id11.id11_android.repositories.LeerlingRepository
 import com.talentcoach.id11.id11_android.repositories.WerkaanbiedingRepository
@@ -14,7 +15,7 @@ import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 import java.lang.Exception
 
-class WerkaanbiedingActivity : AppCompatActivity() {
+class WerkaanbiedingActivity : AppCompatActivity(), ReactInterface {
     private var leerling = Leerling(-1, "default")
     val werkaanbiedingenListFragment = WerkaanbiedingenListFragment()
     val werkaanbiedingFragment = WerkaanbiedingFragment()
@@ -24,6 +25,7 @@ class WerkaanbiedingActivity : AppCompatActivity() {
         setContentView(R.layout.activity_werkaanbieding)
 
         getWerkaanbieding() // Activity starts with showing a Werkaanbieding
+        werkaanbiedingFragment.reactInterface = this
         supportFragmentManager.beginTransaction()
                 .add(R.id.fragmentFrame, werkaanbiedingFragment)
                 .commit()
@@ -31,24 +33,10 @@ class WerkaanbiedingActivity : AppCompatActivity() {
     }
 
     private fun initButtons() {
-        like.setOnClickListener {
-            leerling.bewaardeWerkaanbiedingen.add(leerling.huidigeWerkaanbieding!!)
-            leerling.huidigeWerkaanbieding = null
-            getWerkaanbieding()
-        }
-
-        noLike.setOnClickListener {
-            leerling.verwijderdeWerkaanbiedingen.add(leerling.huidigeWerkaanbieding!!)
-            leerling.huidigeWerkaanbieding = null
-            getWerkaanbieding()
-        }
 
         toggleFragmentBtn.setOnClickListener {
             if (toggleFragmentBtn.text == getString(R.string.mijn_werkaanb_button)){ // show WerkaanbiedingenListFragment
                 toggleFragmentBtn.text = getString(R.string.bekijk_werkaanb_btn)
-                like.visibility = View.GONE
-                noLike.visibility = View.GONE
-
                 supportFragmentManager.beginTransaction()
                         .remove(werkaanbiedingFragment)
                         .add(R.id.fragmentFrame, werkaanbiedingenListFragment)
@@ -56,8 +44,6 @@ class WerkaanbiedingActivity : AppCompatActivity() {
                 werkaanbiedingenListFragment.werkaanbiedingenList = leerling.bewaardeWerkaanbiedingen
             } else { // show WerkaanbiedingFragment
                 toggleFragmentBtn.text = getString(R.string.mijn_werkaanb_button)
-                like.visibility = View.VISIBLE
-                noLike.visibility = View.VISIBLE
                 supportFragmentManager.beginTransaction()
                         .remove(werkaanbiedingenListFragment)
                         .add(R.id.fragmentFrame, werkaanbiedingFragment)
@@ -65,6 +51,20 @@ class WerkaanbiedingActivity : AppCompatActivity() {
             }
 
         }
+    }
+
+    override fun noLikeClicked() {
+        leerling.verwijderdeWerkaanbiedingen.add(leerling.huidigeWerkaanbieding!!)
+        leerling.huidigeWerkaanbieding = null
+        getWerkaanbieding()
+    }
+
+    override fun likeClicked() {
+        leerling.bewaardeWerkaanbiedingen.add(leerling.huidigeWerkaanbieding!!)
+        leerling.huidigeWerkaanbieding = null
+        val toaster = Toast.makeText(this, getString(R.string.werkaanbieding_bewaard), Toast.LENGTH_SHORT)
+        toaster.show()
+        getWerkaanbieding()
     }
 
     private fun getWerkaanbieding() {
@@ -81,8 +81,6 @@ class WerkaanbiedingActivity : AppCompatActivity() {
                     progress.visibility = View.GONE // verbergt progressbar
                     werkaanbiedingFragment.werkaanbieding = leerling.huidigeWerkaanbieding
                     if (werkaanbiedingFragment.werkaanbieding == null){
-                        like.visibility = View.GONE
-                        noLike.visibility = View.GONE
                         werkaanbiedingFragment.noWerkaanbiedingFound = true
                     }
                 }
