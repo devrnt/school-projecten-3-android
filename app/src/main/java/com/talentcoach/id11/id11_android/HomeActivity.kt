@@ -17,5 +17,10 @@ class HomeActivity : AppCompatActivity() {
             val intent = Intent(this, AlgemeneInfoActivity::class.java)
             startActivity(intent)
         }
+
+        communicatieBtn.setOnClickListener {
+            val intent = Intent(this, CommunicatieActivity::class.java)
+            startActivity(intent)
+        }
     }
 }

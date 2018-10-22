@@ -5,7 +5,7 @@ import com.talentcoach.id11.id11_android.models.Werkspreuk
 import java.net.URL
 
 class WerkspreukRepository {
-    val url = "http://projecten3studserver11.westeurope.cloudapp.azure.com/api/werkspreuken/"
+    val url = "http://projecten3studserver11.westeurope.cloudapp.azure.com/api/werkspreuken"
 
     fun getWerkspreuk(week: Long): Werkspreuk {
         val werkspreuk: Werkspreuk?

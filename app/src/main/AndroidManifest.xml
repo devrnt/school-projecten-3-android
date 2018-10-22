@@ -27,9 +27,10 @@
         <activity
             android:name=".AlgemeneInfoActivity"
             android:label="@string/aic_title"
-            android:parentActivityName=".HomeActivity">
-
-        </activity>
+            android:parentActivityName=".HomeActivity" />
+        <activity
+            android:name=".CommunicatieActivity"
+            android:label="Communicatie"></activity>
     </application>
 
 </manifest>
