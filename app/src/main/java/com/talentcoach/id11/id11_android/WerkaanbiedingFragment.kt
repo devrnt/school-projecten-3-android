@@ -13,19 +13,35 @@ class WerkaanbiedingFragment : Fragment() {
     var werkaanbieding: Werkaanbieding? = null
         set(value) {
             field = value
-            if (werkaanbieding != null) { // stelt tekst in
-                werkgever.text = getString(R.string.wa_werkgever, werkaanbieding?.werkgever?.naam)
-                omschrijving.text = getString(R.string.wa_beschrijving, werkaanbieding?.omschrijving)
-            } else {
-                werkgever.text = getString(R.string.no_werkaanbieding)
-                omschrijving.text = getString(R.string.modify_interesses)
-            }
+            showWerkaanbieding()
         }
+    var noWerkaanbiedingFound = false
+        set(value) {
+            field = value
+            showWerkaanbieding()
+        }
+
+    private fun showWerkaanbieding() {
+        if (!noWerkaanbiedingFound) { // stelt tekst in
+            werkgever.text = getString(R.string.wa_werkgever, werkaanbieding?.werkgever?.naam ?: "")
+            omschrijving.text = getString(R.string.wa_beschrijving, werkaanbieding?.omschrijving ?: "")
+        } else {
+            werkgever.text = getString(R.string.no_werkaanbieding)
+            omschrijving.text = ""
+        }
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_werkaanbieding, container, false)
     }
+
+    override fun onResume() {
+        super.onResume()
+        showWerkaanbieding()
+    }
+
+
 
 
 

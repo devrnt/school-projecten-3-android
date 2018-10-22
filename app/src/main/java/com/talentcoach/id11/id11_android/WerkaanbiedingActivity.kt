@@ -3,10 +3,12 @@ package com.talentcoach.id11.id11_android
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.TextView
 import android.widget.Toast
 import com.talentcoach.id11.id11_android.models.Leerling
 import com.talentcoach.id11.id11_android.repositories.LeerlingRepository
 import com.talentcoach.id11.id11_android.repositories.WerkaanbiedingRepository
+import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.activity_werkaanbieding.*
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
@@ -42,7 +44,7 @@ class WerkaanbiedingActivity : AppCompatActivity() {
         }
 
         toggleFragmentBtn.setOnClickListener {
-            if (werkaanbiedingFragment.isVisible){ // show WerkaanbiedingenListFragment
+            if (toggleFragmentBtn.text == getString(R.string.mijn_werkaanb_button)){ // show WerkaanbiedingenListFragment
                 toggleFragmentBtn.text = getString(R.string.bekijk_werkaanb_btn)
                 like.visibility = View.GONE
                 noLike.visibility = View.GONE
@@ -60,7 +62,6 @@ class WerkaanbiedingActivity : AppCompatActivity() {
                         .remove(werkaanbiedingenListFragment)
                         .add(R.id.fragmentFrame, werkaanbiedingFragment)
                         .commit()
-
             }
 
         }
@@ -69,7 +70,6 @@ class WerkaanbiedingActivity : AppCompatActivity() {
     private fun getWerkaanbieding() {
         try {
             progress.visibility = View.VISIBLE
-
             doAsync {
                 if (leerling.id < 0) // check of er een 'ingelogde' leerling is
                     leerling = LeerlingRepository().getLeerlingById(1L)
@@ -79,9 +79,12 @@ class WerkaanbiedingActivity : AppCompatActivity() {
                 }
                 uiThread {
                     progress.visibility = View.GONE // verbergt progressbar
-
                     werkaanbiedingFragment.werkaanbieding = leerling.huidigeWerkaanbieding
-
+                    if (werkaanbiedingFragment.werkaanbieding == null){
+                        like.visibility = View.GONE
+                        noLike.visibility = View.GONE
+                        werkaanbiedingFragment.noWerkaanbiedingFound = true
+                    }
                 }
 
 
