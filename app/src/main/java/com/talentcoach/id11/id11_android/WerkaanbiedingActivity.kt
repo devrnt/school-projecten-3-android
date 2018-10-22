@@ -39,16 +39,15 @@ class WerkaanbiedingActivity : AppCompatActivity() {
         }
 
         mijnWerkaanbBtn.setOnClickListener {
-            val intent = Intent(this, BewaardeWerkaanbiedingenActivity::class.java)
-            intent.putExtra("leerling", Klaxon().toJsonString(leerling))
-            startActivity(intent)
+            // TODO: change fragment
         }
     }
 
     private fun showWerkaanbieding() {
         try {
-            werkgever.text = ""
-            omschrijving.text = ""
+            supportFragmentManager.beginTransaction()
+                    .hide(werkaanbiedingFragment)
+                    .commit()
             progress.visibility = View.VISIBLE
 
             doAsync {
@@ -60,19 +59,15 @@ class WerkaanbiedingActivity : AppCompatActivity() {
                 }
                 uiThread {
                     progress.visibility = View.GONE // verbergt progressbar
-                    val wa = leerling.huidigeWerkaanbieding
-
-                    if (wa != null) { // stelt tekst in
-                        werkgever.text = getString(R.string.wa_werkgever, wa.werkgever.naam)
-                        omschrijving.text = getString(R.string.wa_beschrijving, wa.omschrijving)
-                    } else {
-                        werkgever.text = getString(R.string.no_werkaanbieding)
-                        omschrijving.text = getString(R.string.modify_interesses)
-                        noLike.visibility = View.INVISIBLE
-                        like.visibility = View.INVISIBLE
-                    }
-
+                    println(leerling.huidigeWerkaanbieding)
+                    val frag = supportFragmentManager.findFragmentById(R.id.werkaanbiedingFragment) as WerkaanbiedingFragment
+                    frag.werkaanbieding = leerling.huidigeWerkaanbieding
+                    supportFragmentManager.beginTransaction()
+                            .show(werkaanbiedingFragment)
+                            .commit()
                 }
+
+
             }
 
         } catch (e: Exception) { // eventuele exceptions tonen
