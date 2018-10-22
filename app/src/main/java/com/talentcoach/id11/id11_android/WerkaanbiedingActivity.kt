@@ -1,11 +1,9 @@
 package com.talentcoach.id11.id11_android
 
-import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
-import com.beust.klaxon.Klaxon
 import com.talentcoach.id11.id11_android.models.Leerling
 import com.talentcoach.id11.id11_android.repositories.LeerlingRepository
 import com.talentcoach.id11.id11_android.repositories.WerkaanbiedingRepository
@@ -16,6 +14,8 @@ import java.lang.Exception
 
 class WerkaanbiedingActivity : AppCompatActivity() {
     private var leerling = Leerling(-1, "default")
+    val werkaanbiedingenListFragment = WerkaanbiedingenListFragment()
+    val werkaanbiedingFragment = WerkaanbiedingFragment()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,16 +38,35 @@ class WerkaanbiedingActivity : AppCompatActivity() {
             showWerkaanbieding()
         }
 
-        mijnWerkaanbBtn.setOnClickListener {
-            // TODO: change fragment
+        toggleFragmentBtn.setOnClickListener {
+            if (werkaanbiedingFragment.isVisible){ // show WerkaanbiedingenListFragment
+                toggleFragmentBtn.text = getString(R.string.bekijk_werkaanb_btn)
+                like.visibility = View.GONE
+                noLike.visibility = View.GONE
+
+
+                supportFragmentManager.beginTransaction()
+                        .remove(werkaanbiedingFragment)
+                        .add(R.id.fragmentFrame, werkaanbiedingenListFragment)
+                        .commit()
+                werkaanbiedingenListFragment.werkaanbiedingenList = leerling.bewaardeWerkaanbiedingen
+            } else { // show WerkaanbiedingFragment
+                toggleFragmentBtn.text = getString(R.string.mijn_werkaanb_button)
+                like.visibility = View.VISIBLE
+                noLike.visibility = View.VISIBLE
+                supportFragmentManager.beginTransaction()
+                        .remove(werkaanbiedingenListFragment)
+                        .add(R.id.fragmentFrame, werkaanbiedingFragment)
+                        .commit()
+
+            }
+
+
         }
     }
 
     private fun showWerkaanbieding() {
         try {
-            supportFragmentManager.beginTransaction()
-                    .hide(werkaanbiedingFragment)
-                    .commit()
             progress.visibility = View.VISIBLE
 
             doAsync {
@@ -59,11 +78,10 @@ class WerkaanbiedingActivity : AppCompatActivity() {
                 }
                 uiThread {
                     progress.visibility = View.GONE // verbergt progressbar
-                    println(leerling.huidigeWerkaanbieding)
-                    val frag = supportFragmentManager.findFragmentById(R.id.werkaanbiedingFragment) as WerkaanbiedingFragment
-                    frag.werkaanbieding = leerling.huidigeWerkaanbieding
+
+                    werkaanbiedingFragment.werkaanbieding = leerling.huidigeWerkaanbieding
                     supportFragmentManager.beginTransaction()
-                            .show(werkaanbiedingFragment)
+                            .add(R.id.fragmentFrame, werkaanbiedingFragment)
                             .commit()
                 }
 

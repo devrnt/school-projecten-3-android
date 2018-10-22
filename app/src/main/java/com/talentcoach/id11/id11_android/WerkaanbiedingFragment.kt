@@ -23,21 +23,21 @@ private const val ARG_PARAM2 = "param2"
  */
 class WerkaanbiedingFragment : Fragment() {
     var werkaanbieding: Werkaanbieding? = null
-        set(value) {
-            field = value
-            if (werkaanbieding != null) { // stelt tekst in
-                werkgever.text = getString(R.string.wa_werkgever, werkaanbieding?.werkgever?.naam)
-                omschrijving.text = getString(R.string.wa_beschrijving, werkaanbieding?.omschrijving)
-            } else {
-                werkgever.text = getString(R.string.no_werkaanbieding)
-                omschrijving.text = getString(R.string.modify_interesses)
-            }
-        }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_werkaanbieding, container, false)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (werkaanbieding != null) { // stelt tekst in
+            werkgever.text = getString(R.string.wa_werkgever, werkaanbieding?.werkgever?.naam)
+            omschrijving.text = getString(R.string.wa_beschrijving, werkaanbieding?.omschrijving)
+        } else {
+            werkgever.text = getString(R.string.no_werkaanbieding)
+            omschrijving.text = getString(R.string.modify_interesses)
+        }
     }
 
 }
