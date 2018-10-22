@@ -21,7 +21,10 @@ class WerkaanbiedingActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_werkaanbieding)
 
-        showWerkaanbieding()
+        getWerkaanbieding() // Activity starts with showing a Werkaanbieding
+        supportFragmentManager.beginTransaction()
+                .add(R.id.fragmentFrame, werkaanbiedingFragment)
+                .commit()
         initButtons()
     }
 
@@ -29,13 +32,13 @@ class WerkaanbiedingActivity : AppCompatActivity() {
         like.setOnClickListener {
             leerling.bewaardeWerkaanbiedingen.add(leerling.huidigeWerkaanbieding!!)
             leerling.huidigeWerkaanbieding = null
-            showWerkaanbieding()
+            getWerkaanbieding()
         }
 
         noLike.setOnClickListener {
             leerling.verwijderdeWerkaanbiedingen.add(leerling.huidigeWerkaanbieding!!)
             leerling.huidigeWerkaanbieding = null
-            showWerkaanbieding()
+            getWerkaanbieding()
         }
 
         toggleFragmentBtn.setOnClickListener {
@@ -43,7 +46,6 @@ class WerkaanbiedingActivity : AppCompatActivity() {
                 toggleFragmentBtn.text = getString(R.string.bekijk_werkaanb_btn)
                 like.visibility = View.GONE
                 noLike.visibility = View.GONE
-
 
                 supportFragmentManager.beginTransaction()
                         .remove(werkaanbiedingFragment)
@@ -61,11 +63,10 @@ class WerkaanbiedingActivity : AppCompatActivity() {
 
             }
 
-
         }
     }
 
-    private fun showWerkaanbieding() {
+    private fun getWerkaanbieding() {
         try {
             progress.visibility = View.VISIBLE
 
@@ -80,9 +81,7 @@ class WerkaanbiedingActivity : AppCompatActivity() {
                     progress.visibility = View.GONE // verbergt progressbar
 
                     werkaanbiedingFragment.werkaanbieding = leerling.huidigeWerkaanbieding
-                    supportFragmentManager.beginTransaction()
-                            .add(R.id.fragmentFrame, werkaanbiedingFragment)
-                            .commit()
+
                 }
 
 
