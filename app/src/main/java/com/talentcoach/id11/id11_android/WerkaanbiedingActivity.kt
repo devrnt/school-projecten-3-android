@@ -26,17 +26,15 @@ class WerkaanbiedingActivity : AppCompatActivity(), ReactInterface {
 
         getWerkaanbieding() // Activity starts with showing a Werkaanbieding
         werkaanbiedingFragment.reactInterface = this
+        werkaanbiedingenListFragment.reactInterface = this
         supportFragmentManager.beginTransaction()
                 .add(R.id.fragmentFrame, werkaanbiedingFragment)
                 .commit()
-        initButtons()
-    }
 
-    private fun initButtons() {
-
-        toggleFragmentBtn.setOnClickListener {
+        toggleFragmentBtn.setOnClickListener {// toggle between WerkaanbiedingFragment and WerkaanbiedingenListFragment
             if (toggleFragmentBtn.text == getString(R.string.mijn_werkaanb_button)) { // show WerkaanbiedingenListFragment
                 toggleFragmentBtn.text = getString(R.string.bekijk_werkaanb_btn)
+                werkaanbiedingenListFragment.werkaanbiedingenList = leerling.bewaardeWerkaanbiedingen
                 supportFragmentManager.beginTransaction()
                         .remove(werkaanbiedingFragment)
                         .add(R.id.fragmentFrame, werkaanbiedingenListFragment)
@@ -49,9 +47,9 @@ class WerkaanbiedingActivity : AppCompatActivity(), ReactInterface {
                         .add(R.id.fragmentFrame, werkaanbiedingFragment)
                         .commit()
             }
-
         }
     }
+
 
     override fun noLikeClicked() {
         leerling.verwijderdeWerkaanbiedingen.add(leerling.huidigeWerkaanbieding!!)
@@ -91,7 +89,7 @@ class WerkaanbiedingActivity : AppCompatActivity(), ReactInterface {
     override fun onPause() {
         super.onPause()
         doAsync {
-            LeerlingRepository().saveLeerling(leerling) // als de activity zijn focus verliest dan wordt de leerling geüpdatet in de databank
+            LeerlingRepository().saveLeerling(leerling) // persists Leerling
         }
     }
 
