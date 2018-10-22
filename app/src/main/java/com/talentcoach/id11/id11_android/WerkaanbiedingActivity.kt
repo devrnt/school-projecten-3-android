@@ -35,7 +35,7 @@ class WerkaanbiedingActivity : AppCompatActivity(), ReactInterface {
     private fun initButtons() {
 
         toggleFragmentBtn.setOnClickListener {
-            if (toggleFragmentBtn.text == getString(R.string.mijn_werkaanb_button)){ // show WerkaanbiedingenListFragment
+            if (toggleFragmentBtn.text == getString(R.string.mijn_werkaanb_button)) { // show WerkaanbiedingenListFragment
                 toggleFragmentBtn.text = getString(R.string.bekijk_werkaanb_btn)
                 supportFragmentManager.beginTransaction()
                         .remove(werkaanbiedingFragment)
@@ -68,41 +68,30 @@ class WerkaanbiedingActivity : AppCompatActivity(), ReactInterface {
     }
 
     private fun getWerkaanbieding() {
-        try {
-            progress.visibility = View.VISIBLE
-            doAsync {
-                if (leerling.id < 0) // check of er een 'ingelogde' leerling is
-                    leerling = LeerlingRepository().getLeerlingById(1L)
+        progress.visibility = View.VISIBLE // show progressbar
+        doAsync {
+            if (leerling.id < 0) // check of er een 'ingelogde' leerling is
+                leerling = LeerlingRepository().getLeerlingById(1L)
 
-                if (leerling.huidigeWerkaanbieding == null) { // check of er al een huidigeWerkaanbieding wordt getoond voor de leerling
-                    leerling.huidigeWerkaanbieding = WerkaanbiedingRepository().getWerkaanbiedingVoorLeerling(leerling)
+            if (leerling.huidigeWerkaanbieding == null) { // check of er al een huidigeWerkaanbieding wordt getoond voor de leerling
+                leerling.huidigeWerkaanbieding = WerkaanbiedingRepository().getWerkaanbiedingVoorLeerling(leerling)
+            }
+            uiThread {
+                progress.visibility = View.GONE // verbergt progressbar
+                werkaanbiedingFragment.werkaanbieding = leerling.huidigeWerkaanbieding
+                if (werkaanbiedingFragment.werkaanbieding == null) {
+                    werkaanbiedingFragment.noWerkaanbiedingFound = true
                 }
-                uiThread {
-                    progress.visibility = View.GONE // verbergt progressbar
-                    werkaanbiedingFragment.werkaanbieding = leerling.huidigeWerkaanbieding
-                    if (werkaanbiedingFragment.werkaanbieding == null){
-                        werkaanbiedingFragment.noWerkaanbiedingFound = true
-                    }
-                }
-
-
             }
 
-        } catch (e: Exception) { // eventuele exceptions tonen
-            val toast = Toast.makeText(this, e.message?.substring(0, 20), Toast.LENGTH_LONG)
-            toast.show()
         }
+
     }
 
     override fun onPause() {
         super.onPause()
-        try {
-            doAsync {
-                LeerlingRepository().saveLeerling(leerling) // als de activity zijn focus verliest dan wordt de leerling geüpdatet in de databank
-            }
-        } catch (e: Exception) {
-            val toast = Toast.makeText(this@WerkaanbiedingActivity, e.message?.subSequence(0, 20), Toast.LENGTH_LONG)
-            toast.show()
+        doAsync {
+            LeerlingRepository().saveLeerling(leerling) // als de activity zijn focus verliest dan wordt de leerling geüpdatet in de databank
         }
     }
 
