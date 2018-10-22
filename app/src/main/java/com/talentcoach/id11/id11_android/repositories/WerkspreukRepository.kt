@@ -13,7 +13,7 @@ class WerkspreukRepository {
 
         try {
             val json = URL(fetchUrl).readText()
-            werkspreuk = Klaxon().parse<Werkspreuk?>(json)
+            werkspreuk = Klaxon().parse<Werkspreuk>(json)
         } catch (e: Exception) {
             throw e
         }
