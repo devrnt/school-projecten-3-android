@@ -3,19 +3,16 @@ package com.talentcoach.id11.id11_android
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import android.widget.TextView
 import android.widget.Toast
-import com.talentcoach.id11.id11_android.WerkaanbiedingFragment.ReactInterface
 import com.talentcoach.id11.id11_android.models.Leerling
 import com.talentcoach.id11.id11_android.repositories.LeerlingRepository
 import com.talentcoach.id11.id11_android.repositories.WerkaanbiedingRepository
-import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.activity_werkaanbieding.*
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
-import java.lang.Exception
 
-class WerkaanbiedingActivity : AppCompatActivity(), ReactInterface {
+class WerkaanbiedingActivity : AppCompatActivity(), IClickListener {
+
     private var leerling = Leerling(-1, "default")
     val werkaanbiedingenListFragment = WerkaanbiedingenListFragment()
     val werkaanbiedingFragment = WerkaanbiedingFragment()
@@ -25,8 +22,8 @@ class WerkaanbiedingActivity : AppCompatActivity(), ReactInterface {
         setContentView(R.layout.activity_werkaanbieding)
 
         getWerkaanbieding() // Activity starts with showing a Werkaanbieding
-        werkaanbiedingFragment.reactInterface = this
-        werkaanbiedingenListFragment.reactInterface = this
+        werkaanbiedingFragment.iClickListener = this
+        werkaanbiedingenListFragment.iClickListener = this
         supportFragmentManager.beginTransaction()
                 .add(R.id.fragmentFrame, werkaanbiedingFragment)
                 .commit()
@@ -63,6 +60,10 @@ class WerkaanbiedingActivity : AppCompatActivity(), ReactInterface {
         val toaster = Toast.makeText(this, getString(R.string.werkaanbieding_bewaard), Toast.LENGTH_SHORT)
         toaster.show()
         getWerkaanbieding()
+    }
+
+    override fun removeClicked(pos: Int) {
+        leerling.bewaardeWerkaanbiedingen.removeAt(pos)
     }
 
     private fun getWerkaanbieding() {
