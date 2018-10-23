@@ -8,7 +8,6 @@ import com.talentcoach.id11.id11_android.models.Leerling
 import com.talentcoach.id11.id11_android.repositories.LeerlingRepository
 import com.talentcoach.id11.id11_android.repositories.WerkaanbiedingRepository
 import kotlinx.android.synthetic.main.activity_werkaanbieding.*
-import kotlinx.android.synthetic.main.fragment_werkaanbieding.*
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 
@@ -16,41 +15,64 @@ class WerkaanbiedingActivity : AppCompatActivity(), IClickListener { // implemen
     private var leerling = Leerling(-1, "default")
     val werkaanbiedingenListFragment = WerkaanbiedingenListFragment() // Leerling.bewaardeWerkaanbiedingen
     val werkaanbiedingFragment = WerkaanbiedingFragment() // Leerling.huidigeWerkaanbieding
+    val werkaanbiedingButtonsFragment = WerkaanbiedingButtonsFragment()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_werkaanbieding)
 
-        getWerkaanbieding() // Activity starts with showing a Werkaanbieding
-
         // set fragment's IClickListener to this activity so it can listen to their button clicks
         werkaanbiedingFragment.iClickListener = this
         werkaanbiedingenListFragment.iClickListener = this
+        werkaanbiedingButtonsFragment.iClickListener = this
 
-        // adds werkaanbiedingFragment to this activity
+        werkaanbiedingenListFragment.werkaanbiedingenList = leerling.bewaardeWerkaanbiedingen
+
+
+        // add fragments to activity
         supportFragmentManager.beginTransaction()
-                .add(R.id.fragmentFrame, werkaanbiedingFragment)
+                .add(R.id.topFragmentFrame, werkaanbiedingFragment)
+                .hide(werkaanbiedingFragment)
+                .add(R.id.topFragmentFrame, werkaanbiedingenListFragment)
+                .hide(werkaanbiedingenListFragment)
+                .add(R.id.bottomFragmentFrame, werkaanbiedingButtonsFragment)
+                .hide(werkaanbiedingButtonsFragment)
                 .commit()
 
-        // set onClick for toggleFragmentButton
-        toggleFragmentBtn.setOnClickListener {// toggle between WerkaanbiedingFragment and WerkaanbiedingenListFragment
-            if (toggleFragmentBtn.text == getString(R.string.mijn_werkaanb_button)) { // show WerkaanbiedingenListFragment
-                toggleFragmentBtn.text = getString(R.string.bekijk_werkaanb_btn)
-                werkaanbiedingenListFragment.werkaanbiedingenList = leerling.bewaardeWerkaanbiedingen
-                // remove fragment with Leerling.huidigeWerkaanbieding and show fragment with Leerling.bewaardeWerkaanbiedingen
-                supportFragmentManager.beginTransaction()
-                        .remove(werkaanbiedingFragment)
-                        .add(R.id.fragmentFrame, werkaanbiedingenListFragment)
-                        .commit()
-                werkaanbiedingenListFragment.werkaanbiedingenList = leerling.bewaardeWerkaanbiedingen
-            } else { // remove fragment with Leerling.bewaardeWerkaanbiedingen and show fragment with Leerling.huidigeWerkaanbieding
-                toggleFragmentBtn.text = getString(R.string.mijn_werkaanb_button)
-                supportFragmentManager.beginTransaction()
-                        .remove(werkaanbiedingenListFragment)
-                        .add(R.id.fragmentFrame, werkaanbiedingFragment)
-                        .commit()
+        // Activity starts with showing a Werkaanbieding, can be toggled between 2 fragments with Button
+        getAndShowWerkaanbieding()
+
+        // toggle between WerkaanbiedingFragment and WerkaanbiedingenListFragment
+        toggleFragmentBtn.setOnClickListener {
+            if (toggleFragmentBtn.text == getString(R.string.mijn_werkaanb_button)) {
+                showBewaardeWerkaanbiedingen()
+            } else {
+                showWerkaanbieding()
             }
         }
+    }
+
+    private fun showWerkaanbieding() {
+        toggleFragmentBtn.text = getString(R.string.mijn_werkaanb_button)
+        supportFragmentManager.beginTransaction()
+                .hide(werkaanbiedingenListFragment)
+                .show(werkaanbiedingFragment)
+                .show(werkaanbiedingButtonsFragment)
+                .addToBackStack(null)
+                .commit()
+    }
+
+    private fun showBewaardeWerkaanbiedingen() {
+        println(leerling.bewaardeWerkaanbiedingen)
+        werkaanbiedingenListFragment.werkaanbiedingenList = leerling.bewaardeWerkaanbiedingen
+        werkaanbiedingenListFragment.adapter?.notifyDataSetChanged()
+        toggleFragmentBtn.text = getString(R.string.bekijk_werkaanb_btn)
+        supportFragmentManager.beginTransaction()
+                .hide(werkaanbiedingFragment)
+                .hide(werkaanbiedingButtonsFragment)
+                .show(werkaanbiedingenListFragment)
+                .addToBackStack(null)
+                .commit()
     }
 
 
@@ -58,7 +80,7 @@ class WerkaanbiedingActivity : AppCompatActivity(), IClickListener { // implemen
         // huidigeWerkaanbieding will never be null because buttons are hidden otherwise
         leerling.verwijderdeWerkaanbiedingen.add(leerling.huidigeWerkaanbieding!!)
         leerling.huidigeWerkaanbieding = null
-        getWerkaanbieding()
+        getAndShowWerkaanbieding()
     }
 
     override fun likeClicked() {
@@ -67,7 +89,7 @@ class WerkaanbiedingActivity : AppCompatActivity(), IClickListener { // implemen
         leerling.huidigeWerkaanbieding = null
         val toaster = Toast.makeText(this, getString(R.string.werkaanbieding_bewaard), Toast.LENGTH_SHORT)
         toaster.show()
-        getWerkaanbieding()
+        getAndShowWerkaanbieding()
     }
 
     override fun removeClicked(pos: Int) {
@@ -76,18 +98,13 @@ class WerkaanbiedingActivity : AppCompatActivity(), IClickListener { // implemen
     }
 
     override fun itemClicked(pos: Int) {
-        supportFragmentManager.beginTransaction()
-                .remove(werkaanbiedingenListFragment)
-                .add(R.id.fragmentFrame, werkaanbiedingFragment)
-                .commit()
-        werkaanbiedingFragment.werkaanbieding = leerling.bewaardeWerkaanbiedingen[pos]
+        werkaanbiedingButtonsFragment.onlyRemove = true
         werkaanbiedingFragment.noWerkaanbiedingFound = false
-        werkaanbiedingFragment.showingBewaardeWerkaanbieding = true
-        toggleFragmentBtn.text = getString(R.string.mijn_werkaanb_button)
-
+        werkaanbiedingFragment.werkaanbieding = leerling.bewaardeWerkaanbiedingen[pos]
+        showWerkaanbieding()
     }
 
-    private fun getWerkaanbieding() {
+    private fun getAndShowWerkaanbieding() {
         progress.visibility = View.VISIBLE // show progressbar
         doAsync {
             if (leerling.id < 0) // check for a 'logged in' Leerling
@@ -102,6 +119,7 @@ class WerkaanbiedingActivity : AppCompatActivity(), IClickListener { // implemen
                 if (werkaanbiedingFragment.werkaanbieding == null) {
                     werkaanbiedingFragment.noWerkaanbiedingFound = true
                 }
+                showWerkaanbieding()
             }
         }
     }

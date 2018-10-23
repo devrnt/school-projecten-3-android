@@ -17,6 +17,7 @@ import com.talentcoach.id11.id11_android.models.Werkaanbieding
 class WerkaanbiedingenListFragment : Fragment() {
     var werkaanbiedingenList: MutableList<Werkaanbieding>? = null
     var iClickListener: IClickListener? = null // will be set to WerkaanbiedingActivity
+    var adapter: WerkaanbiedingenListAdapter? = null
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -28,7 +29,7 @@ class WerkaanbiedingenListFragment : Fragment() {
         }
         // Inflates the RecyclerView with specified layout file and sets adapter and layoutmanager
         val werkaanbiedingenRecView = inflater.inflate(R.layout.fragment_werkaanbiedingen_list, container, false) as RecyclerView
-        val adapter = WerkaanbiedingenListAdapter(iClickListener!!, werkaanbiedingenList!!)
+        adapter = WerkaanbiedingenListAdapter(iClickListener!!, werkaanbiedingenList!!)
         werkaanbiedingenRecView.adapter = adapter
         werkaanbiedingenRecView.layoutManager = LinearLayoutManager(activity)
         return werkaanbiedingenRecView
