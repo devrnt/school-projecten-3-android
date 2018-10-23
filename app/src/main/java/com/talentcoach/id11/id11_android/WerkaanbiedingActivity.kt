@@ -8,11 +8,11 @@ import com.talentcoach.id11.id11_android.models.Leerling
 import com.talentcoach.id11.id11_android.repositories.LeerlingRepository
 import com.talentcoach.id11.id11_android.repositories.WerkaanbiedingRepository
 import kotlinx.android.synthetic.main.activity_werkaanbieding.*
+import kotlinx.android.synthetic.main.fragment_werkaanbieding.*
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 
 class WerkaanbiedingActivity : AppCompatActivity(), IClickListener { // implements IClickListener to listen to button clicks in fragments
-
     private var leerling = Leerling(-1, "default")
     val werkaanbiedingenListFragment = WerkaanbiedingenListFragment() // Leerling.bewaardeWerkaanbiedingen
     val werkaanbiedingFragment = WerkaanbiedingFragment() // Leerling.huidigeWerkaanbieding
@@ -73,6 +73,18 @@ class WerkaanbiedingActivity : AppCompatActivity(), IClickListener { // implemen
     override fun removeClicked(pos: Int) {
         val wa = leerling.bewaardeWerkaanbiedingen.removeAt(pos)
         leerling.verwijderdeWerkaanbiedingen.add(wa)
+    }
+
+    override fun itemClicked(pos: Int) {
+        supportFragmentManager.beginTransaction()
+                .remove(werkaanbiedingenListFragment)
+                .add(R.id.fragmentFrame, werkaanbiedingFragment)
+                .commit()
+        werkaanbiedingFragment.werkaanbieding = leerling.bewaardeWerkaanbiedingen[pos]
+        werkaanbiedingFragment.noWerkaanbiedingFound = false
+        werkaanbiedingFragment.showingBewaardeWerkaanbieding = true
+        toggleFragmentBtn.text = getString(R.string.mijn_werkaanb_button)
+
     }
 
     private fun getWerkaanbieding() {

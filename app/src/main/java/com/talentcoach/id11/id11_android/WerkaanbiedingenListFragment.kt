@@ -20,7 +20,7 @@ class WerkaanbiedingenListFragment : Fragment() {
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        if (werkaanbiedingenList!!.isEmpty()){ // adds a TextView with default text when there are no bewaardeWerkaanbiedingen
+        if (werkaanbiedingenList!!.isEmpty()) { // adds a TextView with default text when there are no bewaardeWerkaanbiedingen
             val textView = TextView(context)
             textView.textSize = 18f
             textView.text = getString(R.string.geen_bew_werkaanb)
@@ -42,7 +42,13 @@ class WerkaanbiedingenListFragment : Fragment() {
         override fun onBindViewHolder(holder: WerkaanbiedingenViewHolder, pos: Int) { // sets the data for an item in the RecyclerView
             // data consists out of Werkgever.name and a remove Imagebutton
             val werkaanbieding = werkaanbiedingen[pos]
-            holder.constraintLayout.findViewById<TextView>(R.id.werkgever).text = werkaanbieding.werkgever.naam
+            val textView = holder.constraintLayout.findViewById<TextView>(R.id.werkgever)
+            textView.text = werkaanbieding.werkgever.naam
+            textView.isClickable = true
+            textView.setOnClickListener {
+                iClickListener.itemClicked(pos)
+            }
+
             holder.constraintLayout.findViewById<ImageButton>(R.id.imageButton).setOnClickListener {
                 // when clicked remove the corresponding item and notify adapter of change
                 iClickListener.removeClicked(pos)

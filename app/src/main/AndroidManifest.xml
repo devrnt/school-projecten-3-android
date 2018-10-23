@@ -33,11 +33,9 @@
         <activity
             android:name=".WerkaanbiedingActivity"
             android:label="@string/wa_title"
-            android:parentActivityName=".HomeActivity" />
-        <activity
-            android:name=".BewaardeWerkaanbiedingenActivity"
-            android:label="@string/bew_werkaanb_title"
-            android:parentActivityName=".WerkaanbiedingActivity"/>
+            android:parentActivityName=".HomeActivity"
+            android:screenOrientation="portrait"/>
+
     </application>
 
 </manifest>
