@@ -11,6 +11,10 @@ import kotlinx.android.synthetic.main.fragment_werkaanbieding_buttons.*
 class WerkaanbiedingButtonsFragment : Fragment() {
     var iClickListener: IClickListener? = null // will be set to WerkaanbiedingActivity
     var onlyRemove = false
+        set(value) {
+            field = value
+            like?.visibility = if (value) View.GONE else View.VISIBLE
+        }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -24,12 +28,12 @@ class WerkaanbiedingButtonsFragment : Fragment() {
         }
 
         noLike.setOnClickListener {
-            iClickListener?.noLikeClicked()
+            if (onlyRemove)
+                iClickListener?.removeClicked(-1)
+            else
+                iClickListener?.noLikeClicked()
         }
 
-        if (onlyRemove){
-            like.visibility = View.GONE
-        }
     }
 
 }

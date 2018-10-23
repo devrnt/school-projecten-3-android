@@ -12,26 +12,21 @@ import android.widget.ImageButton
 import android.widget.TextView
 import com.beust.klaxon.Klaxon
 import com.talentcoach.id11.id11_android.models.Werkaanbieding
+import kotlinx.android.synthetic.main.fragment_werkaanbiedingen_list.*
 
 
 class WerkaanbiedingenListFragment : Fragment() {
     var werkaanbiedingenList: MutableList<Werkaanbieding>? = null
     var iClickListener: IClickListener? = null // will be set to WerkaanbiedingActivity
     var adapter: WerkaanbiedingenListAdapter? = null
-
+    var werkaanbiedingenRecView: RecyclerView? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        if (werkaanbiedingenList!!.isEmpty()) { // adds a TextView with default text when there are no bewaardeWerkaanbiedingen
-            val textView = TextView(context)
-            textView.textSize = 18f
-            textView.text = getString(R.string.geen_bew_werkaanb)
-            return textView
-        }
         // Inflates the RecyclerView with specified layout file and sets adapter and layoutmanager
-        val werkaanbiedingenRecView = inflater.inflate(R.layout.fragment_werkaanbiedingen_list, container, false) as RecyclerView
+        werkaanbiedingenRecView = inflater.inflate(R.layout.fragment_werkaanbiedingen_list, container, false) as RecyclerView
         adapter = WerkaanbiedingenListAdapter(iClickListener!!, werkaanbiedingenList!!)
-        werkaanbiedingenRecView.adapter = adapter
-        werkaanbiedingenRecView.layoutManager = LinearLayoutManager(activity)
+        werkaanbiedingenRecView?.adapter = adapter
+        werkaanbiedingenRecView?.layoutManager = LinearLayoutManager(activity)
         return werkaanbiedingenRecView
     }
 
@@ -65,6 +60,12 @@ class WerkaanbiedingenListFragment : Fragment() {
 
         override fun getItemCount(): Int {
             return werkaanbiedingen.size
+        }
+
+        fun updateList(newList: MutableList<Werkaanbieding>){
+            werkaanbiedingen.clear()
+            werkaanbiedingen.addAll(newList)
+            this.notifyDataSetChanged()
         }
 
         // Change parameter and parameterType in case ViewGroup holding each item changes

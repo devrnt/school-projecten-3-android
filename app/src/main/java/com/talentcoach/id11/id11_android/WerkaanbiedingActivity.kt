@@ -45,9 +45,13 @@ class WerkaanbiedingActivity : AppCompatActivity(), IClickListener { // implemen
         // toggle between WerkaanbiedingFragment and WerkaanbiedingenListFragment
         toggleFragmentBtn.setOnClickListener {
             if (toggleFragmentBtn.text == getString(R.string.mijn_werkaanb_button)) {
-                showBewaardeWerkaanbiedingen()
+                if (leerling.bewaardeWerkaanbiedingen.isEmpty()){
+                    val toast = Toast.makeText(this, getString(R.string.geen_bew_werkaanb), Toast.LENGTH_LONG)
+                    toast.show()
+                } else
+                    showBewaardeWerkaanbiedingen()
             } else {
-                showWerkaanbieding()
+                getAndShowWerkaanbieding()
             }
         }
     }
@@ -58,20 +62,16 @@ class WerkaanbiedingActivity : AppCompatActivity(), IClickListener { // implemen
                 .hide(werkaanbiedingenListFragment)
                 .show(werkaanbiedingFragment)
                 .show(werkaanbiedingButtonsFragment)
-                .addToBackStack(null)
                 .commit()
     }
 
     private fun showBewaardeWerkaanbiedingen() {
-        println(leerling.bewaardeWerkaanbiedingen)
         werkaanbiedingenListFragment.werkaanbiedingenList = leerling.bewaardeWerkaanbiedingen
-        werkaanbiedingenListFragment.adapter?.notifyDataSetChanged()
         toggleFragmentBtn.text = getString(R.string.bekijk_werkaanb_btn)
         supportFragmentManager.beginTransaction()
                 .hide(werkaanbiedingFragment)
                 .hide(werkaanbiedingButtonsFragment)
                 .show(werkaanbiedingenListFragment)
-                .addToBackStack(null)
                 .commit()
     }
 
@@ -81,20 +81,36 @@ class WerkaanbiedingActivity : AppCompatActivity(), IClickListener { // implemen
         leerling.verwijderdeWerkaanbiedingen.add(leerling.huidigeWerkaanbieding!!)
         leerling.huidigeWerkaanbieding = null
         getAndShowWerkaanbieding()
+        if (leerling.huidigeWerkaanbieding == null) {
+            supportFragmentManager.beginTransaction()
+                    .hide(werkaanbiedingButtonsFragment)
+                    .commit()
+        }
     }
 
     override fun likeClicked() {
         // huidigeWerkaanbieding will never be null because buttons are hidden otherwise
         leerling.bewaardeWerkaanbiedingen.add(leerling.huidigeWerkaanbieding!!)
+        werkaanbiedingenListFragment.adapter?.updateList(leerling.bewaardeWerkaanbiedingen)
         leerling.huidigeWerkaanbieding = null
         val toaster = Toast.makeText(this, getString(R.string.werkaanbieding_bewaard), Toast.LENGTH_SHORT)
         toaster.show()
         getAndShowWerkaanbieding()
+        if (leerling.huidigeWerkaanbieding == null) {
+            supportFragmentManager.beginTransaction()
+                    .hide(werkaanbiedingButtonsFragment)
+                    .commit()
+        }
     }
 
     override fun removeClicked(pos: Int) {
-        val wa = leerling.bewaardeWerkaanbiedingen.removeAt(pos)
-        leerling.verwijderdeWerkaanbiedingen.add(wa)
+        leerling.verwijderdeWerkaanbiedingen.add(leerling.huidigeWerkaanbieding!!)
+        if (pos < 0)
+            leerling.bewaardeWerkaanbiedingen.remove(leerling.huidigeWerkaanbieding!!)
+        else
+            leerling.bewaardeWerkaanbiedingen.removeAt(pos)
+        werkaanbiedingenListFragment.adapter?.updateList(leerling.bewaardeWerkaanbiedingen)
+        showBewaardeWerkaanbiedingen()
     }
 
     override fun itemClicked(pos: Int) {
