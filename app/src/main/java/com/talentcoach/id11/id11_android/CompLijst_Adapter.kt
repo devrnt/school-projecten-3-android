@@ -20,9 +20,9 @@ class CompLijst_Adapter(var cntxt: Context, var resource:Int, var items: List<Co
 
         val comp: Competentie = items[position]
 
-        imageView.setImageDrawable(cntxt.resources.getDrawable(comp.img))
+        imageView.setImageResource(R.drawable.learning)
         textView.text = comp.name
-        datum.text = comp.datum
+        datum.text = comp.behaaldOp
 
         return view
     }
