@@ -10,7 +10,7 @@ class WerkaanbiedingRepository {
 
 
     fun getWerkaanbiedingVoorLeerling(leerling: Leerling): Werkaanbieding? {
-        var werkaanbiedingen : List<Werkaanbieding>? = null
+        val werkaanbiedingen : List<Werkaanbieding>?
 
         try {
             val result = URL(url).readText()

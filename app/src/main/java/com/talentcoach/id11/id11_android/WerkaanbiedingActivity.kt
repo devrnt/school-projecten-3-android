@@ -54,6 +54,8 @@ class WerkaanbiedingActivity : AppCompatActivity(), IClickListener { // implemen
                 getAndShowWerkaanbieding()
             }
         }
+
+        // TODO: Hide buttons when there is no Werkaanbieding displayed
     }
 
     private fun showWerkaanbieding() {
@@ -104,11 +106,12 @@ class WerkaanbiedingActivity : AppCompatActivity(), IClickListener { // implemen
     }
 
     override fun removeClicked(pos: Int) {
-        leerling.verwijderdeWerkaanbiedingen.add(leerling.huidigeWerkaanbieding!!)
-        if (pos < 0)
-            leerling.bewaardeWerkaanbiedingen.remove(leerling.huidigeWerkaanbieding!!)
-        else
-            leerling.bewaardeWerkaanbiedingen.removeAt(pos)
+        var index = pos
+
+        if (pos < 0) {
+            index = leerling.bewaardeWerkaanbiedingen.indexOfFirst { bw -> bw.id == werkaanbiedingFragment.werkaanbieding?.id }
+        }
+        leerling.verwijderdeWerkaanbiedingen.add(leerling.bewaardeWerkaanbiedingen.removeAt(index))
         werkaanbiedingenListFragment.adapter?.updateList(leerling.bewaardeWerkaanbiedingen)
         showBewaardeWerkaanbiedingen()
     }
@@ -131,9 +134,13 @@ class WerkaanbiedingActivity : AppCompatActivity(), IClickListener { // implemen
             }
             uiThread {
                 progress.visibility = View.GONE // verbergt progressbar
+                werkaanbiedingButtonsFragment.onlyRemove = false
                 werkaanbiedingFragment.werkaanbieding = leerling.huidigeWerkaanbieding
                 if (werkaanbiedingFragment.werkaanbieding == null) {
                     werkaanbiedingFragment.noWerkaanbiedingFound = true
+                    supportFragmentManager.beginTransaction()
+                            .hide(werkaanbiedingButtonsFragment)
+                            .commit()
                 }
                 showWerkaanbieding()
             }
