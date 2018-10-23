@@ -10,7 +10,7 @@ import com.talentcoach.id11.id11_android.models.Werkaanbieding
 import kotlinx.android.synthetic.main.fragment_werkaanbieding.*
 
 class WerkaanbiedingFragment : Fragment() {
-    var iClickListener: IClickListener? = null
+    var iClickListener: IClickListener? = null // will be set to WerkaanbiedingActivity
 
 
     var werkaanbieding: Werkaanbieding? = null
@@ -28,7 +28,7 @@ class WerkaanbiedingFragment : Fragment() {
         if (!noWerkaanbiedingFound) { // stelt tekst in
             werkgever.text = getString(R.string.wa_werkgever, werkaanbieding?.werkgever?.naam ?: "")
             omschrijving.text = getString(R.string.wa_beschrijving, werkaanbieding?.omschrijving ?: "")
-        } else {
+        } else { // hide buttons and show default text when no Werkaanbieding is found
             werkgever.text = getString(R.string.no_werkaanbieding)
             omschrijving.text = ""
             like.visibility = View.GONE
