@@ -8,13 +8,8 @@ import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuItem
-import android.view.ViewGroup
-import android.view.Window
-import android.widget.Button
-import android.widget.Switch
-import android.widget.Toast
+import android.view.*
+import android.widget.*
 
 import kotlinx.android.synthetic.main.activity_comp__tabbed.*
 
@@ -32,6 +27,7 @@ class Comp_Tabbed : AppCompatActivity() {
     lateinit var myDialog:Dialog
     var tagFirstTab:String? = null
     var tagSecondTab:String? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -78,6 +74,7 @@ class Comp_Tabbed : AppCompatActivity() {
         var naamToggle:Switch
         var cancelBtn: Button
         var toggleState:Boolean
+        var jaarSpinner:Spinner
 
         myDialog = Dialog(this)
         myDialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -106,6 +103,31 @@ class Comp_Tabbed : AppCompatActivity() {
         cancelBtn.setOnClickListener(){
          myDialog.cancel()
         }
+
+        jaarSpinner = myDialog.findViewById(R.id.jaarSpinner)
+        val options = arrayOf("All","2015","2016","2017","2018")
+        jaarSpinner.adapter = ArrayAdapter<String>(this,android.R.layout.simple_dropdown_item_1line,options)
+
+        //spinnerTxt = findViewById(R.id.spinnerTxt)
+
+        jaarSpinner.onItemSelectedListener=object:AdapterView.OnItemSelectedListener{
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                println("Niks aangeduid")
+            }
+
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                var fragment1 = supportFragmentManager.findFragmentByTag(tagFirstTab) as TeBehalenFragment
+                var fragment2 = supportFragmentManager.findFragmentByTag(tagSecondTab) as BehaaldFragment
+
+
+                fragment1.filterOnYear(options.get(position))
+                fragment2.filterOnYear(options.get(position))
+
+            }
+
+        }
+
+
 
         myDialog.show()
 

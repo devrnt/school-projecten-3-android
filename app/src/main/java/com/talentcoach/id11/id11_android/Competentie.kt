@@ -5,9 +5,14 @@ import java.util.*
 class Competentie {
     val name: String
     val behaaldOp: String
+    var cal:Calendar=Calendar.getInstance()
 
-    constructor(name:String){
+    //Parameter jaar toegoevoegd om niet altijd dezelfde datum te hebben
+    //Tijdelijk totdat we werkende backend hebben
+    constructor(name:String,jaar:Int){
         this.name = name
-        this.behaaldOp = "${Calendar.getInstance().get(Calendar.DATE)}/${Calendar.getInstance().get(Calendar.MONTH)+1}/${Calendar.getInstance().get(Calendar.YEAR)}"
+
+        cal.set(jaar ,Calendar.MAY,23)
+        this.behaaldOp = "${cal.get(Calendar.DATE)}/${cal.get(Calendar.MONTH)+1}/${cal.get(Calendar.YEAR)}"
     }
 }

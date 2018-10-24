@@ -8,7 +8,7 @@ import android.widget.ArrayAdapter
 import android.widget.ImageView
 import android.widget.TextView
 
-class CompLijst_Adapter(var cntxt: Context, var resource:Int, var items: List<Competentie>): ArrayAdapter<Competentie>(cntxt,resource,items) {
+class CompLijstAdapter(var cntxt: Context, var resource:Int, var items: List<Competentie>): ArrayAdapter<Competentie>(cntxt,resource,items) {
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         val layoutInflater: LayoutInflater = LayoutInflater.from(cntxt)
