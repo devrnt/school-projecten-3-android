@@ -28,6 +28,10 @@ class Comp_Tabbed : AppCompatActivity() {
     var tagFirstTab:String? = null
     var tagSecondTab:String? = null
 
+    var namesSortedState:Boolean = false
+    var yearSelected:Int = 0
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,7 +51,6 @@ class Comp_Tabbed : AppCompatActivity() {
 
     }
 
-
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.menu_comp__tabbed, menu)
@@ -61,7 +64,7 @@ class Comp_Tabbed : AppCompatActivity() {
         val id = item.itemId
 
         if (id == R.id.action_tune) {
-            ShowDialogWindow()
+            ShowDialogWindow(yearSelected)
             return true
         }
 
@@ -69,50 +72,53 @@ class Comp_Tabbed : AppCompatActivity() {
     }
 
     //Toont Dialog venster waar gebruiker competenties kan sorteren/filteren
-    private fun ShowDialogWindow() {
+    private fun ShowDialogWindow(yearSelected:Int) {
 
-        var naamToggle:Switch
+        var sorteerToggle:Switch
         var cancelBtn: Button
-        var toggleState:Boolean
         var jaarSpinner:Spinner
 
         myDialog = Dialog(this)
         myDialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         myDialog.setContentView(R.layout.dialog_filter)
+        sorteerToggle = myDialog.findViewById(R.id.naamToggle) as Switch
+        if(namesSortedState){
+            sorteerToggle.isChecked = true
+        }
+        else if (!namesSortedState){
+            sorteerToggle.isChecked = false
+        }
 
-        naamToggle = myDialog.findViewById(R.id.naamToggle)
+        //Switch button om te sorteren op naam van competentie
+        sorteerToggle.setOnCheckedChangeListener{sorteerToggle,isChecked ->
 
-
-        naamToggle.setOnCheckedChangeListener{_,isChecked ->
-
-            toggleState = naamToggle.isChecked
-
-            if(toggleState){
-
+            if(isChecked){
                 getFragmentTeBehalen(tagFirstTab,true)
                 getFragmentBehaald(tagSecondTab,true)
-
+                namesSortedState = true
             }
             else{
                 getFragmentTeBehalen(tagFirstTab,false)
                 getFragmentBehaald(tagSecondTab,false)
+                namesSortedState = false
             }
         }
 
+        //Cancel Button om dialog venster te sluiten
         cancelBtn = myDialog.findViewById(R.id.cancelBtn)
         cancelBtn.setOnClickListener(){
          myDialog.cancel()
         }
 
-        jaarSpinner = myDialog.findViewById(R.id.jaarSpinner)
+        //Spinner = dropdown list om te filteren op jaartal
+        jaarSpinner = myDialog.findViewById(R.id.jaarSpinner) as Spinner
         val options = arrayOf("All","2015","2016","2017","2018")
         jaarSpinner.adapter = ArrayAdapter<String>(this,android.R.layout.simple_dropdown_item_1line,options)
-
-        //spinnerTxt = findViewById(R.id.spinnerTxt)
+        jaarSpinner.setSelection(yearSelected)
 
         jaarSpinner.onItemSelectedListener=object:AdapterView.OnItemSelectedListener{
             override fun onNothingSelected(parent: AdapterView<*>?) {
-                println("Niks aangeduid")
+                println("Nothing selected...")
             }
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
@@ -122,12 +128,11 @@ class Comp_Tabbed : AppCompatActivity() {
 
                 fragment1.filterOnYear(options.get(position))
                 fragment2.filterOnYear(options.get(position))
+                this@Comp_Tabbed.yearSelected = position
 
             }
 
         }
-
-
 
         myDialog.show()
 
