@@ -35,12 +35,16 @@ class WerkaanbiedingFragment : Fragment() {
     }
 
     private fun showWerkaanbieding() {
-        if (!noWerkaanbiedingFound) { // set text
-            werkgever?.text = getString(R.string.wa_werkgever, werkaanbieding?.werkgever?.naam ?: "")
-            omschrijving?.text = getString(R.string.wa_beschrijving, werkaanbieding?.omschrijving ?: "")
-        } else { // hide buttons and show default text when no Werkaanbieding is found
-            werkgever?.text = getString(R.string.no_werkaanbieding)
-            omschrijving?.text = ""
+        activity?.runOnUiThread {
+            if (!noWerkaanbiedingFound) { // set text
+                werkgever?.text = getString(R.string.wa_werkgever, werkaanbieding?.werkgever?.naam
+                        ?: "")
+                omschrijving?.text = getString(R.string.wa_beschrijving, werkaanbieding?.omschrijving
+                        ?: "")
+            } else { // hide buttons and show default text when no Werkaanbieding is found
+                werkgever?.text = getString(R.string.no_werkaanbieding)
+                omschrijving?.text = ""
+            }
         }
     }
 }

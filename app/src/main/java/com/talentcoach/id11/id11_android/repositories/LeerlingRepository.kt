@@ -11,15 +11,18 @@ import java.net.URL
 class LeerlingRepository {
     val url = "http://projecten3studserver11.westeurope.cloudapp.azure.com/api/leerlingen/"
 
-    fun getLeerlingById(id: Long): Leerling {
+    fun getLeerlingById(id: Int): Leerling {
         val leerling: Leerling?
 
         try {
             val json = URL(url + id).readText()
+
             leerling = Klaxon().parse<Leerling>(json)
+
         } catch (e: Exception) {
             throw e
         }
+
         return leerling!!
     }
 

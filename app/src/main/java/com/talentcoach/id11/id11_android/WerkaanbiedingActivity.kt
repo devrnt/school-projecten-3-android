@@ -12,7 +12,7 @@ import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 
 class WerkaanbiedingActivity : AppCompatActivity(), IClickListener { // implements IClickListener to listen to button clicks in fragments
-    private var leerling = Leerling(-1, "default")
+    private var leerling = Leerling(-1, "default", mutableListOf(), mutableListOf())
     val werkaanbiedingenListFragment = WerkaanbiedingenListFragment() // Leerling.bewaardeWerkaanbiedingen
     val werkaanbiedingFragment = WerkaanbiedingFragment() // Leerling.huidigeWerkaanbieding
     val werkaanbiedingButtonsFragment = WerkaanbiedingButtonsFragment()
@@ -77,16 +77,16 @@ class WerkaanbiedingActivity : AppCompatActivity(), IClickListener { // implemen
 
     override fun noLikeClicked() {
         // huidigeWerkaanbieding will never be null because buttons are hidden otherwise
-        leerling.verwijderdeWerkaanbiedingen.add(leerling.huidigeWerkaanbieding!!)
-        leerling.huidigeWerkaanbieding = null
+        leerling.verwijderdeWerkaanbiedingen.add(werkaanbiedingFragment.werkaanbieding!!)
+        werkaanbiedingFragment.werkaanbieding = null
         getAndShowWerkaanbieding()
     }
 
     override fun likeClicked() {
         // huidigeWerkaanbieding will never be null because buttons are hidden otherwise
-        leerling.bewaardeWerkaanbiedingen.add(leerling.huidigeWerkaanbieding!!)
+        leerling.bewaardeWerkaanbiedingen.add(werkaanbiedingFragment.werkaanbieding!!)
         werkaanbiedingenListFragment.adapter?.updateList(leerling.bewaardeWerkaanbiedingen)
-        leerling.huidigeWerkaanbieding = null
+        werkaanbiedingFragment.werkaanbieding = null
         val toaster = Toast.makeText(this, getString(R.string.werkaanbieding_bewaard), Toast.LENGTH_SHORT)
         toaster.show()
         getAndShowWerkaanbieding()
@@ -114,15 +114,13 @@ class WerkaanbiedingActivity : AppCompatActivity(), IClickListener { // implemen
         progress.visibility = View.VISIBLE // show progressbar
         doAsync {
             if (leerling.id < 0) // check for a 'logged in' Leerling
-                leerling = LeerlingRepository().getLeerlingById(1L) // in future, id will come from a logged in User
+                leerling = LeerlingRepository().getLeerlingById(1) // in future, id will come from a logged in User
 
-            if (leerling.huidigeWerkaanbieding == null) {
-                leerling.huidigeWerkaanbieding = WerkaanbiedingRepository().getWerkaanbiedingVoorLeerling(leerling)
-            }
+            werkaanbiedingFragment.werkaanbieding = WerkaanbiedingRepository().getWerkaanbiedingVoorLeerling(leerling)
+
             uiThread {
                 progress.visibility = View.GONE // verbergt progressbar
                 werkaanbiedingButtonsFragment.onlyRemove = false
-                werkaanbiedingFragment.werkaanbieding = leerling.huidigeWerkaanbieding
                 if (werkaanbiedingFragment.werkaanbieding == null) {
                     werkaanbiedingFragment.noWerkaanbiedingFound = true
                     supportFragmentManager.beginTransaction()

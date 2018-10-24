@@ -10,9 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.TextView
-import com.beust.klaxon.Klaxon
 import com.talentcoach.id11.id11_android.models.Werkaanbieding
-import kotlinx.android.synthetic.main.fragment_werkaanbiedingen_list.*
 
 
 class WerkaanbiedingenListFragment : Fragment() {
