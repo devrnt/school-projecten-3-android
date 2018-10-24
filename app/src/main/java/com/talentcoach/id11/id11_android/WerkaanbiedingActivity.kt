@@ -54,8 +54,6 @@ class WerkaanbiedingActivity : AppCompatActivity(), IClickListener { // implemen
                 getAndShowWerkaanbieding()
             }
         }
-
-        // TODO: Hide buttons when there is no Werkaanbieding displayed
     }
 
     private fun showWerkaanbieding() {
