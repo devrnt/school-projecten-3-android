@@ -63,7 +63,6 @@ class WerkaanbiedingActivity : AppCompatActivity(), IClickListener { // implemen
         supportFragmentManager.beginTransaction()
                 .hide(werkaanbiedingenListFragment)
                 .show(werkaanbiedingFragment)
-                .show(werkaanbiedingButtonsFragment)
                 .commit()
     }
 
@@ -83,11 +82,6 @@ class WerkaanbiedingActivity : AppCompatActivity(), IClickListener { // implemen
         leerling.verwijderdeWerkaanbiedingen.add(leerling.huidigeWerkaanbieding!!)
         leerling.huidigeWerkaanbieding = null
         getAndShowWerkaanbieding()
-        if (leerling.huidigeWerkaanbieding == null) {
-            supportFragmentManager.beginTransaction()
-                    .hide(werkaanbiedingButtonsFragment)
-                    .commit()
-        }
     }
 
     override fun likeClicked() {
@@ -98,11 +92,6 @@ class WerkaanbiedingActivity : AppCompatActivity(), IClickListener { // implemen
         val toaster = Toast.makeText(this, getString(R.string.werkaanbieding_bewaard), Toast.LENGTH_SHORT)
         toaster.show()
         getAndShowWerkaanbieding()
-        if (leerling.huidigeWerkaanbieding == null) {
-            supportFragmentManager.beginTransaction()
-                    .hide(werkaanbiedingButtonsFragment)
-                    .commit()
-        }
     }
 
     override fun removeClicked(pos: Int) {
@@ -140,6 +129,10 @@ class WerkaanbiedingActivity : AppCompatActivity(), IClickListener { // implemen
                     werkaanbiedingFragment.noWerkaanbiedingFound = true
                     supportFragmentManager.beginTransaction()
                             .hide(werkaanbiedingButtonsFragment)
+                            .commit()
+                } else {
+                    supportFragmentManager.beginTransaction()
+                            .show(werkaanbiedingButtonsFragment)
                             .commit()
                 }
                 showWerkaanbieding()
