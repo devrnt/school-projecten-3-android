@@ -1,7 +1,7 @@
 package com.talentcoach.id11.id11_android
 
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.widget.Toast
 import com.talentcoach.id11.id11_android.models.Leerling
@@ -16,6 +16,7 @@ class WerkaanbiedingActivity : AppCompatActivity(), IClickListener { // implemen
     val werkaanbiedingenListFragment = WerkaanbiedingenListFragment() // Leerling.bewaardeWerkaanbiedingen
     val werkaanbiedingFragment = WerkaanbiedingFragment() // Leerling.huidigeWerkaanbieding
     val werkaanbiedingButtonsFragment = WerkaanbiedingButtonsFragment()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,7 +46,7 @@ class WerkaanbiedingActivity : AppCompatActivity(), IClickListener { // implemen
         // toggle between WerkaanbiedingFragment and WerkaanbiedingenListFragment
         toggleFragmentBtn.setOnClickListener {
             if (toggleFragmentBtn.text == getString(R.string.mijn_werkaanb_button)) {
-                if (leerling.bewaardeWerkaanbiedingen.isEmpty()){
+                if (leerling.bewaardeWerkaanbiedingen.isEmpty()) {
                     val toast = Toast.makeText(this, getString(R.string.geen_bew_werkaanb), Toast.LENGTH_LONG)
                     toast.show()
                 } else
@@ -142,5 +143,6 @@ class WerkaanbiedingActivity : AppCompatActivity(), IClickListener { // implemen
             LeerlingRepository().saveLeerling(leerling) // persists Leerling
         }
     }
+
 
 }

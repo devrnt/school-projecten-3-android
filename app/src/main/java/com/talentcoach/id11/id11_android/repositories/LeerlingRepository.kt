@@ -11,6 +11,12 @@ import java.net.URL
 class LeerlingRepository {
     val url = "http://projecten3studserver11.westeurope.cloudapp.azure.com/api/leerlingen/"
 
+    /**
+     * Open a HTTP GET Request to get a Leerling from the server
+     * @param id The id of the Leerling to retrieve
+     * @throws Exception Thrown by the server or by the HTTP Request
+     * @return Leerling with the specified id
+     */
     fun getLeerlingById(id: Int): Leerling {
         val leerling: Leerling?
 
@@ -26,6 +32,11 @@ class LeerlingRepository {
         return leerling!!
     }
 
+    /**
+     * Persists a Leerling via a PUT Request to the server
+     * @param leerling The Leerling to persist
+     * @throws Exception Thrown by the server or HTTP request
+     */
     fun saveLeerling(leerling: Leerling) {
         try {
             val json = Klaxon().toJsonString(leerling)

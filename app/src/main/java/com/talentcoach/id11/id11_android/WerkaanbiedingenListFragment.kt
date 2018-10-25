@@ -20,11 +20,13 @@ class WerkaanbiedingenListFragment : Fragment() {
     var werkaanbiedingenRecView: RecyclerView? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        // Inflates the RecyclerView with specified layout file and sets adapter and layoutmanager
+        // Inflates the RecyclerView with specified layout file
         werkaanbiedingenRecView = inflater.inflate(R.layout.fragment_werkaanbiedingen_list, container, false) as RecyclerView
         adapter = WerkaanbiedingenListAdapter(iClickListener!!, werkaanbiedingenList!!)
+
+        // sets adapter and layoutmanager
         werkaanbiedingenRecView?.adapter = adapter
-        werkaanbiedingenRecView?.layoutManager = LinearLayoutManager(activity)
+        werkaanbiedingenRecView?.layoutManager = LinearLayoutManager(activity) // items get displayed in a vertical list
         return werkaanbiedingenRecView
     }
 
@@ -60,6 +62,10 @@ class WerkaanbiedingenListFragment : Fragment() {
             return werkaanbiedingen.size
         }
 
+        /**
+         * Updates the list contained within the adapter
+         * @param newList The changed list
+         */
         fun updateList(newList: MutableList<Werkaanbieding>){
             werkaanbiedingen.clear()
             werkaanbiedingen.addAll(newList)
