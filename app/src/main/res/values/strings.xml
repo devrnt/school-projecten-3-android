@@ -3,6 +3,12 @@
 
     <!-- Strings related to AlgemeneInfoActivity -->
     <string name="aic_title">Algemene Info</string>
+    <string name="action_werkspreuk">Werkspreuk bekijken</string>
+    <string name="werkspreuk_loading_message">Werkspreuk aan het laden…</string>
+
+    <!-- Strings related to Common Use -->
+    <string name="close">Sluit</string>
+
 
     <!-- Strings related to WerkaanbiedingActivity -->
     <string name="wa_title">Werkaanbiedingen</string>

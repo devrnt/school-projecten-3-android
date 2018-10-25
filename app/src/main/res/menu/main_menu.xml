@@ -1,0 +1,12 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="?attr/actionBarSize">
+
+    <item
+        android:id="@+id/action_werkspreuk"
+        android:icon="@drawable/ic_format_quote_white_24dp"
+        android:title="@string/action_werkspreuk"
+        app:showAsAction="ifRoom" />
+
+</menu>
