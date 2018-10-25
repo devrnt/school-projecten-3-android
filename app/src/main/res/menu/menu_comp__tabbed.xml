@@ -1,0 +1,12 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.talentcoach.id11.id11_android.Comp_Tabbed">
+
+    <!--Filter Icon-->
+    <item android:id="@+id/action_tune"
+        android:icon="@drawable/filter_icon"
+        android:title="@string/Filter_Title"
+        android:orderInCategory="100"
+        app:showAsAction="always"/>
+</menu>

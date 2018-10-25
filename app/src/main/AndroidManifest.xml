@@ -26,6 +26,7 @@
         </activity>
         <activity android:name=".LoginActivity" />
         <activity
+<<<<<<< HEAD
             android:name=".AlgemeneInfoActivity"
             android:label="@string/aic_title"
             android:parentActivityName=".HomeActivity" />
@@ -33,6 +34,11 @@
             android:name=".CommunicatieActivity"
             android:parentActivityName=".HomeActivity"
             android:label="Communicatie"></activity>
+=======
+            android:name=".Comp_Tabbed"
+            android:label="@string/title_activity_comp__tabbed"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+>>>>>>> a1e05b016d73e42c3a1e1cb2a4d75f018cbfb4c3
     </application>
 
 </manifest>
