@@ -1,6 +1,7 @@
 package com.talentcoach.id11.id11_android
 
 import android.app.Dialog
+import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.DialogFragment
 import android.support.v7.app.AlertDialog
@@ -9,6 +10,7 @@ import android.view.Menu
 import android.view.MenuItem
 import com.talentcoach.id11.id11_android.models.Werkspreuk
 import com.talentcoach.id11.id11_android.repositories.WerkspreukRepository
+import kotlinx.android.synthetic.main.activity_communicatie.*
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.toast
 import org.jetbrains.anko.uiThread
@@ -65,6 +67,10 @@ class CommunicatieActivity : AppCompatActivity() {
 
     fun addListeners() {
         // add temp listeners
+        btnWerkaanbieding.setOnClickListener {
+            val intent = Intent(this, WerkaanbiedingActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     private fun showAlert() {

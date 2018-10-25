@@ -1,7 +1,6 @@
 <resources>
     <string name="app_name">Talent Coach</string>
 
-<<<<<<< HEAD
     <!-- Strings related to AlgemeneInfoActivity -->
     <string name="aic_title">Algemene Info</string>
     <string name="action_werkspreuk">Werkspreuk bekijken</string>
@@ -35,7 +34,6 @@
     <string name="remove_wa">Remove werkaanbieding</string>
     <string name="geen_bew_werkaanb">Geen bewaarde werkaanbiedingen</string>
 
-=======
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password (optional)</string>
@@ -55,5 +53,5 @@
     <string name="tab_text_2">BEHAALD</string>
     <string name="action_settings">Settings</string>
     <string name="Filter_Title">Filteren</string>
->>>>>>> a1e05b016d73e42c3a1e1cb2a4d75f018cbfb4c3
+    <string name="werkaanbieding_title">Werkaanbieding</string>
 </resources>
