@@ -8,8 +8,9 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:paddingStart="?android:attr/expandableListPreferredItemPaddingLeft"
-        android:paddingTop="20dp"
-        android:paddingBottom="20dp"
-        android:textColor="@android:color/black" />
+        android:paddingTop="23dp"
+        android:paddingBottom="23dp"
+        android:textColor="@android:color/black"
+        android:textSize="14sp" />
 
 </LinearLayout>
