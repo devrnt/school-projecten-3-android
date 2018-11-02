@@ -8,13 +8,8 @@ import com.talentcoach.id11.id11_android.repositories.WerkaanbiedingRepository
 import java.io.Serializable
 
 object DataManager : Serializable {
-    var leerlingRepository: IRepository<Leerling>
-    var werkaanbiedingRepository: IRepository<Werkaanbieding>
-
-    init {
-        leerlingRepository = LeerlingRepository()
-        werkaanbiedingRepository = WerkaanbiedingRepository()
-    }
+    var leerlingRepository: IRepository<Leerling> = LeerlingRepository()
+    var werkaanbiedingRepository: IRepository<Werkaanbieding> = WerkaanbiedingRepository()
 
     fun getLeerlingById(id: Int): Leerling {
         return leerlingRepository.getById(id)
