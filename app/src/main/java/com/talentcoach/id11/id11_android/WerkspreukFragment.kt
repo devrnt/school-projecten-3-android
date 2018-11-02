@@ -40,7 +40,7 @@ class WerkspreukFragment : Fragment() {
 
 
         doAsync {
-            title.text = "Welkom Siebe"
+            title.text = "${getWelcomeWord()} ${getUserFirstname()}"
             fetchedWerkspreuk = werkspreukRepository.getWerkspreuk(1)
 
             activity?.runOnUiThread {
@@ -63,6 +63,21 @@ class WerkspreukFragment : Fragment() {
         urls.add("https://images.unsplash.com/photo-1541099998360-da88f154be08?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6c8fd51a5ffc1e2fb67640e50cf7f267&auto=format&fit=crop&w=1050&q=80")
         urls.add("https://images.unsplash.com/photo-1541069844610-70eda7ae4c82?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=b0a901eaf6226a7cbf1586fffe3d6a40&auto=format&fit=crop&w=675&q=80")
         return urls.shuffled().first()
+    }
+
+    private fun getWelcomeWord(): String {
+        val rightNow = Calendar.getInstance()
+        val currentHour = rightNow.get(Calendar.HOUR_OF_DAY)
+        return when (currentHour) {
+            in 0..11 -> "Goedemorgen"
+            in 12..17 -> "Goedemiddag"
+            else -> "Goedenavond"
+        }
+    }
+
+    private fun getUserFirstname(): String {
+        // get the logged in user
+        return "Siebe"
     }
 
 }
