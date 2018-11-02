@@ -3,12 +3,13 @@ package com.talentcoach.id11.id11_android.managers
 import com.talentcoach.id11.id11_android.models.IRepository
 import com.talentcoach.id11.id11_android.models.Leerling
 import com.talentcoach.id11.id11_android.models.Werkaanbieding
-import com.talentcoach.id11.id11_android.repositories.WerkspreukRepository
+import com.talentcoach.id11.id11_android.repositories.LeerlingRepository
+import com.talentcoach.id11.id11_android.repositories.WerkaanbiedingRepository
 import java.io.Serializable
 
-class DataManager(private val leerlingRepository: IRepository<Leerling>,
-                  private val werkaanbiedingRepository: IRepository<Werkaanbieding>,
-                  private val werkspreukRepository: WerkspreukRepository) : Serializable {
+object DataManager : Serializable {
+    var leerlingRepository: IRepository<Leerling> = LeerlingRepository()
+    var werkaanbiedingRepository: IRepository<Werkaanbieding> = WerkaanbiedingRepository()
 
     fun getLeerlingById(id: Int): Leerling {
         return leerlingRepository.getById(id)
@@ -24,8 +25,7 @@ class DataManager(private val leerlingRepository: IRepository<Leerling>,
         return werkaanbiedingRepository.getAll().firstOrNull { wa ->
             !leerling.bewaardeWerkaanbiedingen.any { bw -> bw.id == wa.id } // werkaanbieding mag niet al in bewaarde zitten
                     && !leerling.verwijderdeWerkaanbiedingen.any { vw -> vw.id == wa.id } // werkaanbieding mag niet al in verwijderde zitten
-                    && wa.tags.split(" ").intersect(leerling.interesses.split(" ")).any()
-        }
+                    && wa.tags.split(" ").intersect(leerling.interesses.split(" ")).any() }
         // minstens 1 tag moet voorkomen in de interesses van de leerling
     }
 }

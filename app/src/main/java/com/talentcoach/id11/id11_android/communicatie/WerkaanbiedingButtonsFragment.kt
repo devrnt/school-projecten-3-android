@@ -1,4 +1,4 @@
-package com.talentcoach.id11.id11_android
+package com.talentcoach.id11.id11_android.communicatie
 
 
 import android.os.Bundle
@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.talentcoach.id11.id11_android.R
 import kotlinx.android.synthetic.main.fragment_werkaanbieding_buttons.*
 
 class WerkaanbiedingButtonsFragment : Fragment() {

@@ -1,4 +1,4 @@
-package com.talentcoach.id11.id11_android
+package com.talentcoach.id11.id11_android.communicatie
 
 import android.os.Bundle
 import android.support.constraint.ConstraintLayout
@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.TextView
+import com.talentcoach.id11.id11_android.R
 import com.talentcoach.id11.id11_android.models.Werkaanbieding
 
 

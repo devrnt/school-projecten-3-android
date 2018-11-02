@@ -1,4 +1,4 @@
-package com.talentcoach.id11.id11_android
+package com.talentcoach.id11.id11_android.communicatie
 
 interface IClickListener {
     /**
