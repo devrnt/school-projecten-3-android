@@ -1,18 +1,22 @@
 package com.talentcoach.id11.id11_android
 
 import android.content.Intent
-
 import android.os.Bundle
-import kotlinx.android.synthetic.main.activity_home.*
 import android.support.v7.app.AppCompatActivity
 import android.widget.Button
-import com.beust.klaxon.Klaxon
 import com.talentcoach.id11.id11_android.managers.DataManager
 import com.talentcoach.id11.id11_android.repositories.LeerlingRepository
 import com.talentcoach.id11.id11_android.repositories.WerkaanbiedingRepository
+import com.talentcoach.id11.id11_android.repositories.WerkspreukRepository
+import kotlinx.android.synthetic.main.activity_home.*
 
 class HomeActivity : AppCompatActivity() {
-    var dataManager = DataManager(LeerlingRepository(), WerkaanbiedingRepository())
+    var dataManager = DataManager(
+            LeerlingRepository(),
+            WerkaanbiedingRepository(),
+            WerkspreukRepository())
+
+    val werkspreukFragment = WerkspreukFragment()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,11 +38,14 @@ class HomeActivity : AppCompatActivity() {
 
         var talentBtn: Button = findViewById(R.id.talentBtn)
 
-        talentBtn.setOnClickListener(){
+        talentBtn.setOnClickListener {
             val intent = Intent(this, Comp_Tabbed::class.java)
             startActivity(intent)
         }
 
+        supportFragmentManager.beginTransaction()
+                .add(R.id.cardFragment, werkspreukFragment)
+                .commit()
     }
 
 

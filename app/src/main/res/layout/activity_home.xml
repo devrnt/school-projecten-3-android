@@ -7,9 +7,9 @@
     <Button
         android:id="@+id/talentBtn"
         android:layout_width="173dp"
-        android:layout_height="149dp"
+        android:layout_height="140dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         android:background="@color/colorPrimary"
@@ -20,15 +20,15 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.036"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.276" />
+        app:layout_constraintTop_toBottomOf="@+id/cardFragment"
+        app:layout_constraintVertical_bias="0.050000012" />
 
     <Button
         android:id="@+id/coachBtn"
         android:layout_width="173dp"
-        android:layout_height="149dp"
+        android:layout_height="140dp"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:layout_marginBottom="8dp"
         android:background="@color/colorAccent"
         android:text="@string/coach"
@@ -36,15 +36,15 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/talentBtn"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.276" />
+        app:layout_constraintTop_toBottomOf="@+id/cardFragment"
+        app:layout_constraintVertical_bias="0.050000012" />
 
     <Button
         android:id="@+id/jobBtn"
         android:layout_width="173dp"
-        android:layout_height="149dp"
+        android:layout_height="140dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="44dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
         android:background="@color/colorAccent"
         android:text="@string/job"
@@ -57,9 +57,9 @@
     <Button
         android:id="@+id/communicatieBtn"
         android:layout_width="173dp"
-        android:layout_height="149dp"
+        android:layout_height="140dp"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="44dp"
+        android:layout_marginTop="16dp"
         android:background="#006FBA"
         android:text="@string/communicatie"
         android:textColor="@android:color/white"
@@ -76,5 +76,19 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <FrameLayout
+        android:id="@+id/cardFragment"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:minHeight="200dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/text">
+
+    </FrameLayout>
 
 </android.support.constraint.ConstraintLayout>
