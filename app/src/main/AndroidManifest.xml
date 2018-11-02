@@ -32,13 +32,13 @@
             android:label="@string/aic_title"
             android:parentActivityName=".HomeActivity" />
 
-        <activity android:name=".WerkaanbiedingActivity"
+        <activity android:name=".communicatie.WerkaanbiedingActivity"
             android:label="@string/werkaanbieding_title"
-            android:parentActivityName=".CommunicatieActivity"/>
+            android:parentActivityName=".communicatie.CommunicatieActivity"/>
 
 
         <activity
-            android:name=".CommunicatieActivity"
+            android:name=".communicatie.CommunicatieActivity"
             android:parentActivityName=".HomeActivity"
             android:label="Communicatie" />
         <activity

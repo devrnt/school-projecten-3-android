@@ -6,14 +6,12 @@ import android.os.Bundle
 import kotlinx.android.synthetic.main.activity_home.*
 import android.support.v7.app.AppCompatActivity
 import android.widget.Button
-import com.beust.klaxon.Klaxon
+import com.talentcoach.id11.id11_android.communicatie.CommunicatieActivity
 import com.talentcoach.id11.id11_android.managers.DataManager
 import com.talentcoach.id11.id11_android.repositories.LeerlingRepository
 import com.talentcoach.id11.id11_android.repositories.WerkaanbiedingRepository
 
 class HomeActivity : AppCompatActivity() {
-    var dataManager = DataManager(LeerlingRepository(), WerkaanbiedingRepository())
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,7 +26,6 @@ class HomeActivity : AppCompatActivity() {
 
         communicatieBtn.setOnClickListener {
             val intent = Intent(this, CommunicatieActivity::class.java)
-            intent.putExtra("dataManager", dataManager)
             startActivity(intent)
         }
 
