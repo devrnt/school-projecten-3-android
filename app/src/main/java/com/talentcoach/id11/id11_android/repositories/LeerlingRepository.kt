@@ -2,13 +2,16 @@ package com.talentcoach.id11.id11_android.repositories
 
 import com.beust.klaxon.Klaxon
 import com.github.kittinunf.fuel.Fuel
+import com.talentcoach.id11.id11_android.models.IRepository
 import com.talentcoach.id11.id11_android.models.Leerling
 import java.io.BufferedReader
 import java.io.InputStreamReader
+import java.io.Serializable
 import java.net.HttpURLConnection
 import java.net.URL
 
-class LeerlingRepository {
+class LeerlingRepository: IRepository<Leerling>, Serializable {
+
     val url = "http://projecten3studserver11.westeurope.cloudapp.azure.com/api/leerlingen/"
 
     /**
@@ -17,7 +20,7 @@ class LeerlingRepository {
      * @throws Exception Thrown by the server or by the HTTP Request
      * @return Leerling with the specified id
      */
-    fun getLeerlingById(id: Int): Leerling {
+    override fun getById(id: Int): Leerling {
         val leerling: Leerling?
 
         try {
@@ -37,10 +40,10 @@ class LeerlingRepository {
      * @param leerling The Leerling to persist
      * @throws Exception Thrown by the server or HTTP request
      */
-    fun saveLeerling(leerling: Leerling) {
+    override fun update(toUpdate: Leerling) {
         try {
-            val json = Klaxon().toJsonString(leerling)
-            val url = URL(url + leerling.id)
+            val json = Klaxon().toJsonString(toUpdate)
+            val url = URL(url + toUpdate.id)
             with(url.openConnection() as HttpURLConnection) {
                 requestMethod = "PUT"
                 addRequestProperty("Content-Type", "application/json")
@@ -58,5 +61,8 @@ class LeerlingRepository {
         }
     }
 
+    override fun getAll(): List<Leerling> {
+        TODO("not implemented: functionality is not yet required")
+    }
 
 }

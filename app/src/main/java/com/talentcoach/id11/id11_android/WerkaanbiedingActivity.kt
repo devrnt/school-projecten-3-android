@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.widget.Toast
+import com.beust.klaxon.Klaxon
+import com.talentcoach.id11.id11_android.managers.DataManager
 import com.talentcoach.id11.id11_android.models.Leerling
 import com.talentcoach.id11.id11_android.repositories.LeerlingRepository
 import com.talentcoach.id11.id11_android.repositories.WerkaanbiedingRepository
@@ -11,8 +13,9 @@ import kotlinx.android.synthetic.main.activity_werkaanbieding.*
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 
-class WerkaanbiedingActivity : AppCompatActivity(), IClickListener { // implements IClickListener to listen to button clicks in fragments
+class WerkaanbiedingActivity() : AppCompatActivity(), IClickListener { // implements IClickListener to listen to button clicks in fragments
     private var leerling = Leerling(-1, "default", mutableListOf(), mutableListOf())
+    var dataManager: DataManager? = null
     val werkaanbiedingenListFragment = WerkaanbiedingenListFragment() // Leerling.bewaardeWerkaanbiedingen
     val werkaanbiedingFragment = WerkaanbiedingFragment() // Leerling.huidigeWerkaanbieding
     val werkaanbiedingButtonsFragment = WerkaanbiedingButtonsFragment()
@@ -21,6 +24,8 @@ class WerkaanbiedingActivity : AppCompatActivity(), IClickListener { // implemen
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_werkaanbieding)
+
+        dataManager = intent?.extras?.get("dataManager") as DataManager
 
         // set fragment's IClickListener to this activity so it can listen to their button clicks
         werkaanbiedingFragment.iClickListener = this
@@ -115,9 +120,9 @@ class WerkaanbiedingActivity : AppCompatActivity(), IClickListener { // implemen
         progress.visibility = View.VISIBLE // show progressbar
         doAsync {
             if (leerling.id < 0) // check for a 'logged in' Leerling
-                leerling = LeerlingRepository().getLeerlingById(1) // in future, id will come from a logged in User
+                leerling = dataManager?.getLeerlingById(1)!! // in future, id will come from a logged in User
 
-            werkaanbiedingFragment.werkaanbieding = WerkaanbiedingRepository().getWerkaanbiedingVoorLeerling(leerling)
+            werkaanbiedingFragment.werkaanbieding = dataManager?.getWerkaanbiedingVoorLeerling(leerling)
 
             uiThread {
                 progress.visibility = View.GONE // verbergt progressbar
@@ -140,7 +145,7 @@ class WerkaanbiedingActivity : AppCompatActivity(), IClickListener { // implemen
     override fun onPause() {
         super.onPause()
         doAsync {
-            LeerlingRepository().saveLeerling(leerling) // persists Leerling
+            LeerlingRepository().update(leerling) // persists Leerling
         }
     }
 

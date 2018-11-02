@@ -1,15 +1,24 @@
 package com.talentcoach.id11.id11_android.repositories
 
 import com.beust.klaxon.Klaxon
+import com.talentcoach.id11.id11_android.models.IRepository
 import com.talentcoach.id11.id11_android.models.Leerling
 import com.talentcoach.id11.id11_android.models.Werkaanbieding
+import java.io.Serializable
 import java.net.URL
 
-class WerkaanbiedingRepository {
+class WerkaanbiedingRepository: IRepository<Werkaanbieding>, Serializable {
     private val url = "http://projecten3studserver11.westeurope.cloudapp.azure.com/api/werkaanbiedingen/"
 
+    override fun getById(id: Int): Werkaanbieding {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
 
-    fun getWerkaanbiedingVoorLeerling(leerling: Leerling): Werkaanbieding? {
+    override fun update(toUpdate: Werkaanbieding) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun getAll(): List<Werkaanbieding> {
         val werkaanbiedingen : List<Werkaanbieding>?
 
         try {
@@ -19,11 +28,7 @@ class WerkaanbiedingRepository {
             throw e
         }
 
-        return werkaanbiedingen.firstOrNull { wa ->
-            !leerling.bewaardeWerkaanbiedingen.any { bw -> bw.id == wa.id } // werkaanbieding mag niet al in bewaarde zitten
-                && !leerling.verwijderdeWerkaanbiedingen.any { vw -> vw.id == wa.id } // werkaanbieding mag niet al in verwijderde zitten
-                && wa.tags.split(" ").intersect(leerling.interesses.split(" ")).any() }
-                    // minstens 1 tag moet voorkomen in de interesses van de leerling
-
+        return werkaanbiedingen
     }
+
 }
