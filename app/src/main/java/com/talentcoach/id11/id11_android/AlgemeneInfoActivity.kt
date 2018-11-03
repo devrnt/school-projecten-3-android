@@ -13,17 +13,16 @@ import org.jetbrains.anko.uiThread
 class AlgemeneInfoActivity : AppCompatActivity() {
     private val algemeneInfoRepository = AlgemeneInfoRepository()
 
-    var algemeneInfo: List<AlgemeneInfo>? = null
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_algemene_info)
         spinner.visibility = View.VISIBLE
 
+
         doAsync {
-            algemeneInfo = algemeneInfoRepository.getAlgemeneInfo()
-            val header = algemeneInfo!!.map { ai -> ai.titel }.toMutableList()
-            val body = algemeneInfo!!.map { ai -> ai.omschrijving }.toMutableList()
+            val algemeneInfo = algemeneInfoRepository.getAlgemeneInfo()
+            val header = algemeneInfo.map { ai -> ai.titel }.toMutableList()
+            val body = algemeneInfo.map { ai -> ai.omschrijving }.toMutableList()
 
             uiThread {
                 spinner.visibility = View.GONE

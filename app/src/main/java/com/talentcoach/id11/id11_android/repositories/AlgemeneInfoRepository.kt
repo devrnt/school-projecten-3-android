@@ -12,7 +12,7 @@ class AlgemeneInfoRepository {
      * @throws Exception Thrown by the server or by the HTTP Request
      * @return all AlgemeneInfo
      */
-    fun getAlgemeneInfo(): List<AlgemeneInfo>? {
+    fun getAlgemeneInfo(): List<AlgemeneInfo> {
         val algemeneInfo: List<AlgemeneInfo>?
         try {
             val json = URL(url).readText()
@@ -20,6 +20,6 @@ class AlgemeneInfoRepository {
         } catch (e: Exception) {
             throw e
         }
-        return algemeneInfo
+        return algemeneInfo!!
     }
 }
