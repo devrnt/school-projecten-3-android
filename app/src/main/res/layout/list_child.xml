@@ -11,9 +11,9 @@
         android:layout_height="wrap_content"
         android:minLines="1"
         android:paddingStart="?android:attr/expandableListPreferredChildPaddingLeft"
-        android:paddingTop="7dp"
+        android:paddingTop="6dp"
         android:paddingEnd="?android:attr/expandableListPreferredChildPaddingLeft"
-        android:paddingBottom="7dp"
+        android:paddingBottom="6dp"
         android:singleLine="false" />
 
 </LinearLayout>
