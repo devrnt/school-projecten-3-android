@@ -15,6 +15,7 @@ import com.talentcoach.id11.id11_android.managers.DataManager
 import kotlinx.android.synthetic.main.activity_werkaanbieding.*
 import kotlinx.android.synthetic.main.fragment_werkaanbieding.*
 import org.junit.Assert
+import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -29,7 +30,6 @@ class BekijkWerkaanbiedingTest {
     lateinit var werkaanbiedingFragment: WerkaanbiedingFragment
     lateinit var werkaanbiedingButtonsFragment: WerkaanbiedingButtonsFragment
     lateinit var context: Context
-    private val LEERLING_ID = 1
 
     init {
         DataManager.werkaanbiedingRepository = DummyWerkaanbiedingRepository()
@@ -82,6 +82,18 @@ class BekijkWerkaanbiedingTest {
     @Test
     fun startActivity_ToggleButtonShowsBewaardeWerkaanbiedingenText() {
         Assert.assertEquals(activity.toggleFragmentBtn.text, context.getString(R.string.mijn_werkaanb_button))
+    }
+
+    @Test
+    fun onResume_WhenActivityWasPaused_ShowsWerkaanbiedingFragmentAgainWithSameWerkaanbieding(){
+        val werkaanbieding = werkaanbiedingFragment.werkaanbieding
+        activityRule.runOnUiThread {
+            InstrumentationRegistry.getInstrumentation().callActivityOnPause(activity)
+            InstrumentationRegistry.getInstrumentation().callActivityOnResume(activity)
+        }
+
+        assertEquals(werkaanbieding, werkaanbiedingFragment.werkaanbieding)
+        Assert.assertTrue("WerkaanbiedingenFragment must be visible", werkaanbiedingFragment.isVisible)
     }
 
     //endregion

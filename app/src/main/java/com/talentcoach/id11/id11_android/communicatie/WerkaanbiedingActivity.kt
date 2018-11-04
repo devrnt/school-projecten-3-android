@@ -143,6 +143,7 @@ class WerkaanbiedingActivity : AppCompatActivity(), IClickListener { // implemen
         doAsync {
             DataManager.update(leerling) // persists Leerling
         }
+        leerling = Leerling(-1, "default", mutableListOf(), mutableListOf())
     }
 
 

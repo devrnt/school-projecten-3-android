@@ -9,7 +9,8 @@ import org.junit.runners.Suite
 @RunWith(Suite::class)
 @Suite.SuiteClasses(
         BekijkWerkaanbiedingTest::class,
-        ReageerWerkaanbiedingTest::class
+        ReageerWerkaanbiedingTest::class,
+        OverzichtBewaardeWerkaanbiedingenTest::class
 )
 class WerkaanbiedingActivityTestSuite {
 
