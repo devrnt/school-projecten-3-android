@@ -46,7 +46,7 @@ class WerkaanbiedingenListFragment : Fragment() {
                 iClickListener.itemClicked(pos)
             }
 
-            holder.constraintLayout.findViewById<ImageButton>(R.id.imageButton).setOnClickListener {
+            holder.constraintLayout.findViewById<ImageButton>(R.id.removeImgBtn).setOnClickListener {
                 // when clicked remove the corresponding item and notify adapter of change
                 iClickListener.removeClicked(pos)
                 this.notifyDataSetChanged()
