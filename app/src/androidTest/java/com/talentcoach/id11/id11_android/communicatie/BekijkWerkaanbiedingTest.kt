@@ -1,13 +1,10 @@
-package com.talentcoach.id11.id11_android
+package com.talentcoach.id11.id11_android.communicatie
 
 import android.content.Context
 import android.support.test.InstrumentationRegistry
 import android.support.test.rule.ActivityTestRule
 import android.support.test.runner.AndroidJUnit4
-import com.talentcoach.id11.id11_android.communicatie.WerkaanbiedingActivity
-import com.talentcoach.id11.id11_android.communicatie.WerkaanbiedingButtonsFragment
-import com.talentcoach.id11.id11_android.communicatie.WerkaanbiedingFragment
-import com.talentcoach.id11.id11_android.communicatie.WerkaanbiedingenListFragment
+import com.talentcoach.id11.id11_android.R
 import com.talentcoach.id11.id11_android.data.DummyDbContext
 import com.talentcoach.id11.id11_android.data.DummyLeerlingRepository
 import com.talentcoach.id11.id11_android.data.DummyWerkaanbiedingRepository

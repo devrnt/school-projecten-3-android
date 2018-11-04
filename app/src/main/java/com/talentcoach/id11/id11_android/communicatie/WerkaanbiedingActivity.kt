@@ -58,12 +58,16 @@ class WerkaanbiedingActivity : AppCompatActivity(), IClickListener { // implemen
         }
     }
 
-    private fun showWerkaanbieding() {
+    private fun showWerkaanbieding(showButtonsFragment: Boolean = true) {
         toggleFragmentBtn.text = getString(R.string.mijn_werkaanb_button)
-        supportFragmentManager.beginTransaction()
+        val fragmentManager = supportFragmentManager.beginTransaction()
                 .hide(werkaanbiedingenListFragment)
                 .show(werkaanbiedingFragment)
-                .commit()
+        if (showButtonsFragment)
+            fragmentManager.show(werkaanbiedingButtonsFragment)
+        else
+            fragmentManager.hide(werkaanbiedingButtonsFragment)
+        fragmentManager.commit()
     }
 
     private fun showBewaardeWerkaanbiedingen() {
@@ -125,15 +129,11 @@ class WerkaanbiedingActivity : AppCompatActivity(), IClickListener { // implemen
                 werkaanbiedingButtonsFragment.onlyRemove = false
                 if (werkaanbiedingFragment.werkaanbieding == null) {
                     werkaanbiedingFragment.noWerkaanbiedingFound = true
-                    supportFragmentManager.beginTransaction()
-                            .hide(werkaanbiedingButtonsFragment)
-                            .commit()
+                    showWerkaanbieding(false)
                 } else {
-                    supportFragmentManager.beginTransaction()
-                            .show(werkaanbiedingButtonsFragment)
-                            .commit()
+                    showWerkaanbieding()
                 }
-                showWerkaanbieding()
+
             }
         }
     }
