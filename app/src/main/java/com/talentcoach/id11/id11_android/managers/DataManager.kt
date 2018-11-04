@@ -31,4 +31,8 @@ object DataManager : Serializable {
                     && wa.tags.split(" ").intersect(leerling.interesses.split(" ")).any() }
         // minstens 1 tag moet voorkomen in de interesses van de leerling
     }
+
+    fun update(leerling: Leerling) {
+        leerlingRepository.update(leerling)
+    }
 }

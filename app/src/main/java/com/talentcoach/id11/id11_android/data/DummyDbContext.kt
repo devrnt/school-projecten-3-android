@@ -21,7 +21,10 @@ object DummyDbContext {
         werkaanbiedingen = mutableListOf(
                 Werkaanbieding(1, werkgevers[0], "werkaanbieding 1", "teamwork"),
                 Werkaanbieding(2, werkgevers[1], "werkaanbieding 2", "kapper"),
-                Werkaanbieding(3, werkgevers[1], "werkaanbieding 3", "loodgieter")
+                Werkaanbieding(3, werkgevers[1], "werkaanbieding 3", "loodgieter"),
+                Werkaanbieding(4, werkgevers[0], "werkaanbieding 4", "teamwork"),
+                Werkaanbieding(5, werkgevers[1], "werkaanbieding 5", "zelfstandig kapper"),
+                Werkaanbieding(6, werkgevers[1], "werkaanbieding 6", "teamwork loodgieter")
         )
 
         leerlingen = mutableListOf(
