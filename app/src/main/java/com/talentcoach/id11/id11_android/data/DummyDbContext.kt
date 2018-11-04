@@ -25,8 +25,9 @@ object DummyDbContext {
         )
 
         leerlingen = mutableListOf(
-                Leerling(1, "teamwork kapper", mutableListOf(), mutableListOf(werkaanbiedingen[0])),
-                Leerling(2, "loodgieter", mutableListOf(), mutableListOf())
+                Leerling(1, "teamwork kapper", mutableListOf(), mutableListOf()),
+                Leerling(2, "loodgieter", mutableListOf(), mutableListOf()),
+                Leerling(3, "zelfstandig", mutableListOf(), mutableListOf())
         )
     }
 }

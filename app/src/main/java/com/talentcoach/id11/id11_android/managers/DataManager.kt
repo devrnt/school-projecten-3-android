@@ -22,6 +22,9 @@ object DataManager : Serializable {
      * @throws Exception thrown by the Repository
      */
     fun getWerkaanbiedingVoorLeerling(leerling: Leerling): Werkaanbieding? {
+        if (werkaanbiedingRepository.getAll().isEmpty())
+            return null
+
         return werkaanbiedingRepository.getAll().firstOrNull { wa ->
             !leerling.bewaardeWerkaanbiedingen.any { bw -> bw.id == wa.id } // werkaanbieding mag niet al in bewaarde zitten
                     && !leerling.verwijderdeWerkaanbiedingen.any { vw -> vw.id == wa.id } // werkaanbieding mag niet al in verwijderde zitten
