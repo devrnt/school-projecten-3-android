@@ -61,5 +61,9 @@
     <string name="login_button">Aanmelden</string>
     <string name="error_username">Gebruikersnaam mag niet leeg zijn</string>
     <string name="error_password">Wachtwoord moet minstens 8 letters bevatten</string>
+    <string name="succesfull_login">Succesvol ingelogd</string>
+    <string name="wrong_login_credentials">Gebruikersnaam of wachtwoord is niet juist</string>
+    <string name="something_went_wrong_login">Er ging iets fout...</string>
+
 
 </resources>

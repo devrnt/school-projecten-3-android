@@ -19,8 +19,9 @@
         tools:ignore="GoogleAppIndexingWarning">
 
         <activity
-            android:name=".HomeActivity"
-            android:label="@string/app_name">
+            android:name=".login.LoginActivity"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -32,19 +33,24 @@
             android:label="@string/aic_title"
             android:parentActivityName=".HomeActivity" />
 
-        <activity android:name=".communicatie.WerkaanbiedingActivity"
+        <activity
+            android:name=".communicatie.WerkaanbiedingActivity"
             android:label="@string/werkaanbieding_title"
-            android:parentActivityName=".communicatie.CommunicatieActivity"/>
+            android:parentActivityName=".communicatie.CommunicatieActivity" />
 
 
         <activity
             android:name=".communicatie.CommunicatieActivity"
-            android:parentActivityName=".HomeActivity"
-            android:label="Communicatie" />
+            android:label="Communicatie"
+            android:parentActivityName=".HomeActivity" />
         <activity
             android:name=".Comp_Tabbed"
             android:label="@string/title_activity_comp__tabbed"
             android:theme="@style/AppTheme.NoActionBar" />
-</application>
+
+        <activity
+            android:name=".HomeActivity"
+            android:label="@string/app_name" />
+    </application>
 
 </manifest>
