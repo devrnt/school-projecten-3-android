@@ -15,7 +15,7 @@ import com.talentcoach.id11.id11_android.models.Werkaanbieding
 
 
 class WerkaanbiedingenListFragment : Fragment() {
-    var werkaanbiedingenList: MutableList<Werkaanbieding>? = null
+    var werkaanbiedingenList: MutableList<Werkaanbieding> = mutableListOf()
     var iClickListener: IClickListener? = null // will be set to WerkaanbiedingActivity
     var adapter: WerkaanbiedingenListAdapter? = null
     var werkaanbiedingenRecView: RecyclerView? = null
@@ -23,7 +23,7 @@ class WerkaanbiedingenListFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflates the RecyclerView with specified layout file
         werkaanbiedingenRecView = inflater.inflate(R.layout.fragment_werkaanbiedingen_list, container, false) as RecyclerView
-        adapter = WerkaanbiedingenListAdapter(iClickListener!!, werkaanbiedingenList!!)
+        adapter = WerkaanbiedingenListAdapter(iClickListener!!, werkaanbiedingenList)
 
         // sets adapter and layoutmanager
         werkaanbiedingenRecView?.adapter = adapter

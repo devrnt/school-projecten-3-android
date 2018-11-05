@@ -23,39 +23,48 @@ class WerkaanbiedingActivity : AppCompatActivity(), IClickListener { // implemen
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_werkaanbieding)
 
-        // set fragment's IClickListener to this activity so it can listen to their button clicks
-        werkaanbiedingFragment.iClickListener = this
-        werkaanbiedingenListFragment.iClickListener = this
-        werkaanbiedingButtonsFragment.iClickListener = this
+        doAsync {
+            if (leerling.id < 0) // check for a 'logged in' Leerling
+                leerling = DataManager.getLeerlingById(1) // in future, id will come from a logged in User
 
-        werkaanbiedingenListFragment.werkaanbiedingenList = leerling.bewaardeWerkaanbiedingen
+            uiThread {
+                // set fragment's IClickListener to this activity so it can listen to their button clicks
+                werkaanbiedingFragment.iClickListener = this@WerkaanbiedingActivity
+                werkaanbiedingenListFragment.iClickListener = this@WerkaanbiedingActivity
+                werkaanbiedingButtonsFragment.iClickListener = this@WerkaanbiedingActivity
+
+                werkaanbiedingenListFragment.werkaanbiedingenList = leerling.bewaardeWerkaanbiedingen
 
 
-        // add fragments to activity
-        supportFragmentManager.beginTransaction()
-                .add(R.id.topFragmentFrame, werkaanbiedingFragment)
-                .hide(werkaanbiedingFragment)
-                .add(R.id.topFragmentFrame, werkaanbiedingenListFragment)
-                .hide(werkaanbiedingenListFragment)
-                .add(R.id.bottomFragmentFrame, werkaanbiedingButtonsFragment)
-                .hide(werkaanbiedingButtonsFragment)
-                .commit()
+                // add fragments to activity
+                supportFragmentManager.beginTransaction()
+                        .add(R.id.topFragmentFrame, werkaanbiedingFragment)
+                        .hide(werkaanbiedingFragment)
+                        .add(R.id.topFragmentFrame, werkaanbiedingenListFragment)
+                        .hide(werkaanbiedingenListFragment)
+                        .add(R.id.bottomFragmentFrame, werkaanbiedingButtonsFragment)
+                        .hide(werkaanbiedingButtonsFragment)
+                        .commit()
 
-        // Activity starts with showing a Werkaanbieding, can be toggled between 2 fragments with Button
-        getAndShowWerkaanbieding()
-
-        // toggle between WerkaanbiedingFragment and WerkaanbiedingenListFragment
-        toggleFragmentBtn.setOnClickListener {
-            if (toggleFragmentBtn.text == getString(R.string.mijn_werkaanb_button)) {
-                if (leerling.bewaardeWerkaanbiedingen.isEmpty()) {
-                    val toast = Toast.makeText(this, getString(R.string.geen_bew_werkaanb), Toast.LENGTH_LONG)
-                    toast.show()
-                } else
-                    showBewaardeWerkaanbiedingen()
-            } else {
+                // Activity starts with showing a Werkaanbieding, can be toggled between 2 fragments with Button
                 getAndShowWerkaanbieding()
+
+                // toggle between WerkaanbiedingFragment and WerkaanbiedingenListFragment
+                toggleFragmentBtn.setOnClickListener {
+                    if (toggleFragmentBtn.text == getString(R.string.mijn_werkaanb_button)) {
+                        if (leerling.bewaardeWerkaanbiedingen.isEmpty()) {
+                            val toast = Toast.makeText(this@WerkaanbiedingActivity, getString(R.string.geen_bew_werkaanb), Toast.LENGTH_LONG)
+                            toast.show()
+                        } else
+                            showBewaardeWerkaanbiedingen()
+                    } else {
+                        getAndShowWerkaanbieding()
+                    }
+                }
             }
         }
+
+
     }
 
     private fun showWerkaanbieding(showButtonsFragment: Boolean = true) {
@@ -91,7 +100,6 @@ class WerkaanbiedingActivity : AppCompatActivity(), IClickListener { // implemen
     override fun likeClicked() {
         // huidigeWerkaanbieding will never be null because buttons are hidden otherwise
         leerling.bewaardeWerkaanbiedingen.add(werkaanbiedingFragment.werkaanbieding!!)
-        werkaanbiedingenListFragment.adapter?.updateList(leerling.bewaardeWerkaanbiedingen)
         werkaanbiedingFragment.werkaanbieding = null
         val toaster = Toast.makeText(this, getString(R.string.werkaanbieding_bewaard), Toast.LENGTH_SHORT)
         toaster.show()
@@ -105,7 +113,6 @@ class WerkaanbiedingActivity : AppCompatActivity(), IClickListener { // implemen
             index = leerling.bewaardeWerkaanbiedingen.indexOfFirst { bw -> bw.id == werkaanbiedingFragment.werkaanbieding?.id }
         }
         leerling.verwijderdeWerkaanbiedingen.add(leerling.bewaardeWerkaanbiedingen.removeAt(index))
-        werkaanbiedingenListFragment.adapter?.updateList(leerling.bewaardeWerkaanbiedingen)
         showBewaardeWerkaanbiedingen()
     }
 
@@ -119,8 +126,6 @@ class WerkaanbiedingActivity : AppCompatActivity(), IClickListener { // implemen
     private fun getAndShowWerkaanbieding() {
         progress.visibility = View.VISIBLE // show progressbar
         doAsync {
-            if (leerling.id < 0) // check for a 'logged in' Leerling
-                leerling = DataManager.getLeerlingById(1) // in future, id will come from a logged in User
 
             werkaanbiedingFragment.werkaanbieding = DataManager.getWerkaanbiedingVoorLeerling(leerling)
 

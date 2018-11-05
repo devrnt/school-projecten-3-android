@@ -13,6 +13,7 @@ import com.talentcoach.id11.id11_android.data.DummyLeerlingRepository
 import com.talentcoach.id11.id11_android.data.DummyWerkaanbiedingRepository
 import com.talentcoach.id11.id11_android.managers.DataManager
 import kotlinx.android.synthetic.main.fragment_werkaanbieding.*
+import kotlinx.android.synthetic.main.fragment_werkaanbiedingen_list.*
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Rule
@@ -100,6 +101,19 @@ class ReageerWerkaanbiedingTest {
         Assert.assertTrue(
                 "Werkaanbieding is not present in BewaardeWerkaanbiedingen",
                 bewaardeWerkaanbiedingen.any { wa -> wa.id == werkaanbieding?.id }
+        )
+    }
+
+    @Test
+    fun clickLike_AddsWerkaanbiedingToItemsInAdapter(){
+        val initialCount = activity.werkaanbiedingenRecView.adapter!!.itemCount
+
+        Espresso.onView(ViewMatchers.withId(R.id.like)).perform(ViewActions.click())
+
+
+        Assert.assertEquals(
+                1,
+                activity.werkaanbiedingenRecView.adapter!!.itemCount - initialCount
         )
     }
 
