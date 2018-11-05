@@ -1,7 +1,9 @@
 package com.talentcoach.id11.id11_android.login
 
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
+import android.preference.PreferenceManager
 import android.support.design.widget.TextInputLayout
 import android.support.v4.app.Fragment
 import android.text.Editable
@@ -10,6 +12,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.Toast
+import com.google.gson.Gson
 import com.talentcoach.id11.id11_android.HomeActivity
 import com.talentcoach.id11.id11_android.R
 import com.talentcoach.id11.id11_android.models.Gebruiker
@@ -25,11 +28,29 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 
 class LoginFragment : Fragment() {
+    private lateinit var sharedPreferences: SharedPreferences
+    private lateinit var spEditor: SharedPreferences.Editor
+
     private var gebruikersnaamInput: EditText? = null
     private var wachtwoordInput: EditText? = null
 
     private var gebruikersnaamInputLayout: TextInputLayout? = null
     private var wachtwoordInputLayout: TextInputLayout? = null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity)
+        spEditor = sharedPreferences.edit()
+
+    }
+
+    private fun checkSharedPreferences() {
+        val gebruikersnaam = sharedPreferences.getString(getString(R.string.sp_key_username), "")
+        val wachtwoord = sharedPreferences.getString(getString(R.string.sp_key_password), "")
+        gebruikersnaamInput?.setText(gebruikersnaam)
+        wachtwoordInput?.setText(wachtwoord)
+
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_login, container, false)
@@ -39,6 +60,9 @@ class LoginFragment : Fragment() {
 
         gebruikersnaamInputLayout = view.gebruikersNaam_inputLayout
         wachtwoordInputLayout = view.wachtwoord_inputLayout
+
+        checkSharedPreferences()
+
 
         view.login_btn.setOnClickListener {
             if (!validGebruikersnaam(gebruikersNaam_input.text)) {
@@ -99,11 +123,22 @@ class LoginFragment : Fragment() {
         call.enqueue(object : Callback<LoginResponse> {
             override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
                 if (response.isSuccessful) {
+                    // Store gebruiker and wachtwoord in SharedPreferences
+                    spEditor.putString(getString(R.string.sp_key_username), gebruiksernaamStr)
+                    spEditor.commit()
+                    spEditor.putString(getString(R.string.sp_key_password), wachtwoordStr)
+                    spEditor.commit()
+
                     Toast.makeText(context, "${response.body()?.voornaam} ${getString(R.string.succesfull_login)}", Toast.LENGTH_LONG).show()
 
-                    // Store the token
-                    val token = response.body()?.token
+                    // Store the LoginResponse in SharedPreferences
+                    val gson = Gson()
+                    val jsonGebruiker = gson.toJson(response.body())
 
+                    spEditor.putString(getString(R.string.sp_key_user), jsonGebruiker)
+                    spEditor.commit()
+
+                    
                     // GOTO the HomeActivity
                     val intent = Intent(activity, HomeActivity::class.java)
                     startActivity(intent)
