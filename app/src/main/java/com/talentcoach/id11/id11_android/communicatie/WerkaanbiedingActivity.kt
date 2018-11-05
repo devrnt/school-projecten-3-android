@@ -11,11 +11,23 @@ import kotlinx.android.synthetic.main.activity_werkaanbieding.*
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 
-class WerkaanbiedingActivity : AppCompatActivity(), IClickListener { // implements IClickListener to listen to button clicks in fragments
+/**
+ * Enables the user to view and react to a Werkaanbieding and to manage his/her Bewaarde Werkaanbiedingen
+ * Implements IClickListener to listen to button clicks in its fragments
+ * @property leerling The current logged in Leerling
+ * @property werkaanbiedingenListFragment Fragment containing a RecyclerView to show Bewaarde Werkaanbiedingen
+ * @property werkaanbiedingFragment Fragment that shows a Werkaanbieding (or default text if there is none to show)
+ * @property werkaanbiedingButtonsFragment Fragment that shows a noLike and like button so the user can react to a werkaanbieding
+ */
+class WerkaanbiedingActivity : AppCompatActivity(), IClickListener {
     var leerling = Leerling(-1, "default", mutableListOf(), mutableListOf())
         private set
-    val werkaanbiedingenListFragment = WerkaanbiedingenListFragment() // Leerling.bewaardeWerkaanbiedingen
-    val werkaanbiedingFragment = WerkaanbiedingFragment() // Leerling.huidigeWerkaanbieding
+    // shown when user toggles to Bewaarde Werkaanbiedingen
+    val werkaanbiedingenListFragment = WerkaanbiedingenListFragment() // shows Leerling.bewaardeWerkaanbiedingen
+
+    // shown at the start
+    // also shown when user wants to watch a Bewaarde Werkaanbieding in detail
+    val werkaanbiedingFragment = WerkaanbiedingFragment()
     val werkaanbiedingButtonsFragment = WerkaanbiedingButtonsFragment()
 
 
@@ -33,10 +45,12 @@ class WerkaanbiedingActivity : AppCompatActivity(), IClickListener { // implemen
                 werkaanbiedingenListFragment.iClickListener = this@WerkaanbiedingActivity
                 werkaanbiedingButtonsFragment.iClickListener = this@WerkaanbiedingActivity
 
+                // set the items within the RecyclerView's adapter to the leerling's Bewaarde Werkaanbiedingen
                 werkaanbiedingenListFragment.werkaanbiedingenList = leerling.bewaardeWerkaanbiedingen
 
 
                 // add fragments to activity
+                // onCreateView of each fragment gets called
                 supportFragmentManager.beginTransaction()
                         .add(R.id.topFragmentFrame, werkaanbiedingFragment)
                         .hide(werkaanbiedingFragment)
@@ -46,7 +60,7 @@ class WerkaanbiedingActivity : AppCompatActivity(), IClickListener { // implemen
                         .hide(werkaanbiedingButtonsFragment)
                         .commit()
 
-                // Activity starts with showing a Werkaanbieding, can be toggled between 2 fragments with Button
+                // Activity starts with showing a Werkaanbieding, can be toggled between 2 fragments with toggleFragmentBtn
                 getAndShowWerkaanbieding()
 
                 // toggle between WerkaanbiedingFragment and WerkaanbiedingenListFragment
@@ -63,8 +77,6 @@ class WerkaanbiedingActivity : AppCompatActivity(), IClickListener { // implemen
                 }
             }
         }
-
-
     }
 
     private fun showWerkaanbieding(showButtonsFragment: Boolean = true) {
@@ -108,7 +120,6 @@ class WerkaanbiedingActivity : AppCompatActivity(), IClickListener { // implemen
 
     override fun removeClicked(pos: Int) {
         var index = pos
-
         if (pos < 0) {
             index = leerling.bewaardeWerkaanbiedingen.indexOfFirst { bw -> bw.id == werkaanbiedingFragment.werkaanbieding?.id }
         }
@@ -126,7 +137,8 @@ class WerkaanbiedingActivity : AppCompatActivity(), IClickListener { // implemen
     private fun getAndShowWerkaanbieding() {
         progress.visibility = View.VISIBLE // show progressbar
         doAsync {
-
+            if (leerling.id < 0) // check for a 'logged in' Leerling
+                leerling = DataManager.getLeerlingById(1) // in future, id will come from a logged in User
             werkaanbiedingFragment.werkaanbieding = DataManager.getWerkaanbiedingVoorLeerling(leerling)
 
             uiThread {
@@ -148,6 +160,7 @@ class WerkaanbiedingActivity : AppCompatActivity(), IClickListener { // implemen
         doAsync {
             DataManager.update(leerling) // persists Leerling
         }
+        // resets leerling property so Leerling gets retrieved from the database when activity resumes
         leerling = Leerling(-1, "default", mutableListOf(), mutableListOf())
     }
 

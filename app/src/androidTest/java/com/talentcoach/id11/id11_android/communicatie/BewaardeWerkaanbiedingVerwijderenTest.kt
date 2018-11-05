@@ -3,31 +3,33 @@ package com.talentcoach.id11.id11_android.communicatie
 import android.content.Context
 import android.support.test.InstrumentationRegistry
 import android.support.test.espresso.Espresso
+import android.support.test.espresso.UiController
+import android.support.test.espresso.ViewAction
 import android.support.test.espresso.action.ViewActions
 import android.support.test.espresso.contrib.RecyclerViewActions
 import android.support.test.espresso.matcher.ViewMatchers
 import android.support.test.rule.ActivityTestRule
 import android.support.test.runner.AndroidJUnit4
+import android.view.View
+import android.widget.ImageButton
 import com.talentcoach.id11.id11_android.R
 import com.talentcoach.id11.id11_android.data.DummyDbContext
 import com.talentcoach.id11.id11_android.data.DummyLeerlingRepository
 import com.talentcoach.id11.id11_android.data.DummyWerkaanbiedingRepository
 import com.talentcoach.id11.id11_android.managers.DataManager
 import kotlinx.android.synthetic.main.fragment_werkaanbiedingen_list.*
+import org.hamcrest.Matcher
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import android.support.test.espresso.UiController
-import android.support.test.espresso.ViewAction
-import android.view.View
-import android.widget.Button
-import android.widget.ImageButton
-import org.hamcrest.Matcher
 
-
+/**
+ * Contains all test cases concerning the user story
+ * "Bewaarde Werkaanbieding verwijderen"
+ */
 @RunWith(AndroidJUnit4::class)
 class BewaardeWerkaanbiedingVerwijderenTest {
     @get:Rule

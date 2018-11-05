@@ -20,6 +20,10 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 
+/**
+ * Contains all test cases concerning the user story
+ * "Reageren op een werkaanbieding"
+ */
 @RunWith(AndroidJUnit4::class)
 class ReageerWerkaanbiedingTest {
     @get:Rule

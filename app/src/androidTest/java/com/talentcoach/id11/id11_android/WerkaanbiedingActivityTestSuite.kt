@@ -5,6 +5,9 @@ import org.junit.runner.RunWith
 import org.junit.runners.Suite
 
 
+/**
+ * Runs all test cases concerning WerkaanbiedingActivity
+ */
 @RunWith(Suite::class)
 @Suite.SuiteClasses(
         BekijkWerkaanbiedingTest::class,

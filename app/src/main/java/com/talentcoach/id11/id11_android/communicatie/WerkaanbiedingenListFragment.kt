@@ -14,6 +14,13 @@ import com.talentcoach.id11.id11_android.R
 import com.talentcoach.id11.id11_android.models.Werkaanbieding
 
 
+/**
+ * Fragment that contains a RecyclerView to display Bewaarde Werkaanbiedingen
+ * @property werkaanbiedingenList The list of Bewaarde Werkaanbiedingen to be shown
+ * @property iClickListener The activity listening to this fragment
+ * @property adapter The adapter of the RecyclerView
+ * @property werkaanbiedingenRecView The RecyclerView which displays the werkaanbiedingenList
+ */
 class WerkaanbiedingenListFragment : Fragment() {
     var werkaanbiedingenList: MutableList<Werkaanbieding> = mutableListOf()
     var iClickListener: IClickListener? = null // will be set to WerkaanbiedingActivity
@@ -31,6 +38,12 @@ class WerkaanbiedingenListFragment : Fragment() {
         return werkaanbiedingenRecView
     }
 
+    /**
+     * Adapter for a RecyclerView that wants to show Werkaanbiedingen
+     * Shows the name of a Werkgever of a Werkaanbieding and a remove button for each item
+     * @property The activity that listens to the adapter
+     * @property werkaanbiedingen A list containg the Werkaanbiedingen that need to be shown
+     */
     class WerkaanbiedingenListAdapter(
             val iClickListener: IClickListener,
             val werkaanbiedingen: MutableList<Werkaanbieding>

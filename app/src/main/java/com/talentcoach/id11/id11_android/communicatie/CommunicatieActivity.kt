@@ -10,6 +10,9 @@ import com.talentcoach.id11.id11_android.repositories.WerkspreukRepository
 import kotlinx.android.synthetic.main.activity_communicatie.*
 import org.jetbrains.anko.toast
 
+/**
+ * Lets a user launch the activities concering "Communicatie"
+ */
 class CommunicatieActivity : AppCompatActivity() {
     private var timesRequested: Int = 0
     private val werkspreukRepo = WerkspreukRepository()

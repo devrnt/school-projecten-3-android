@@ -10,6 +10,12 @@ import com.talentcoach.id11.id11_android.R
 import com.talentcoach.id11.id11_android.models.Werkaanbieding
 import kotlinx.android.synthetic.main.fragment_werkaanbieding.*
 
+/**
+ * Fragment that shows a given Werkaanbieding or default text when there is no Werkaanbieding to show
+ * @property The activity that listens to this fragment
+ * @property werkaanbieding The werkaanbieding that needs to be shown
+ * @property noWerkaanbiedingFound true if there is a werkaanbieding to be shown, otherwise false
+ */
 class WerkaanbiedingFragment : Fragment() {
     var iClickListener: IClickListener? = null // will be set to WerkaanbiedingActivity
 

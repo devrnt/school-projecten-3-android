@@ -18,6 +18,10 @@ import org.junit.*
 import org.junit.Assert.*
 import org.junit.runner.RunWith
 
+/**
+ * Contains all test cases concerning the user story
+ * "Overzicht Bewaarde Werkaanbiedingen bekijken"
+ */
 @RunWith(AndroidJUnit4::class)
 class OverzichtBewaardeWerkaanbiedingenTest {
     @get:Rule
