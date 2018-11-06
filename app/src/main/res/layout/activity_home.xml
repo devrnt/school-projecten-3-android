@@ -23,14 +23,14 @@
         </FrameLayout>
 
 
-        <android.support.v7.widget.GridLayout
+        <android.support.v7.widget.GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="16dp"
-
             android:layout_marginEnd="8dp"
             app:columnCount="2"
+            app:useDefaultMargins="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/cardFragment"
@@ -42,6 +42,7 @@
                 android:background="@color/colorPrimary"
                 android:minHeight="140dp"
                 android:text="@string/talent"
+                android:gravity="center"
                 android:textColor="@android:color/white"
                 android:textStyle="bold"
                 app:layout_columnWeight="1"
@@ -62,7 +63,6 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/cardFragment"
-                app:layout_constraintVertical_bias="0.050000012"
                 app:layout_rowWeight="1" />
 
             <Button
@@ -75,7 +75,6 @@
                 android:textStyle="bold"
                 app:layout_columnWeight="1"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.04"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/talentBtn"
                 app:layout_rowWeight="1" />
@@ -87,6 +86,7 @@
                 android:minHeight="140dp"
                 android:text="@string/communicatie"
                 android:textColor="@android:color/white"
+                android:textSize="13sp"
                 android:textStyle="bold"
                 app:layout_columnWeight="1"
                 app:layout_constraintEnd_toEndOf="parent"
