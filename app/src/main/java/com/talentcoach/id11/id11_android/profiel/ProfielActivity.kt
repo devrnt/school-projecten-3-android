@@ -8,6 +8,8 @@ import android.support.v7.app.AppCompatActivity
 import android.widget.TextView
 import com.google.gson.Gson
 import com.talentcoach.id11.id11_android.R
+import com.talentcoach.id11.id11_android.R.id.logout_btn
+import com.talentcoach.id11.id11_android.R.id.userfullNameTxt
 import com.talentcoach.id11.id11_android.login.LoginActivity
 import com.talentcoach.id11.id11_android.repositories.responses.LoginResponse
 import kotlinx.android.synthetic.main.activity_profiel.*
