@@ -31,11 +31,11 @@ class LoginFragment : Fragment() {
     private lateinit var sharedPreferences: SharedPreferences
     private lateinit var spEditor: SharedPreferences.Editor
 
-    private var gebruikersnaamInput: EditText? = null
-    private var wachtwoordInput: EditText? = null
+    var gebruikersnaamInput: EditText? = null
+    var wachtwoordInput: EditText? = null
 
-    private var gebruikersnaamInputLayout: TextInputLayout? = null
-    private var wachtwoordInputLayout: TextInputLayout? = null
+    var gebruikersnaamInputLayout: TextInputLayout? = null
+    var wachtwoordInputLayout: TextInputLayout? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
