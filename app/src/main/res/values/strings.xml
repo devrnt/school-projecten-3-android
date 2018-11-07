@@ -72,5 +72,6 @@
     <!-- Strings related to Profiel -->
 
     <string name="logout_button">Afmelden</string>
+    <string name="interests_txt">Interesses</string>
 
 </resources>

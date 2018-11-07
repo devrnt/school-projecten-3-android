@@ -5,6 +5,8 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.support.v7.app.AppCompatActivity
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.TextView
 import android.widget.Toast
 import com.google.gson.Gson
@@ -15,6 +17,7 @@ import com.talentcoach.id11.id11_android.models.Geslacht
 import com.talentcoach.id11.id11_android.models.Leerling
 import com.talentcoach.id11.id11_android.repositories.LeerlingRepositoryRetrofit
 import kotlinx.android.synthetic.main.activity_profiel.*
+import org.jetbrains.anko.startActivity
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -30,8 +33,23 @@ class ProfielActivity : AppCompatActivity() {
 
     var leerlingId: Long? = null
 
-
     lateinit var userfullNameText: TextView
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.edit_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        when(item?.itemId){
+            R.id.edit_btn -> {
+                val intent = Intent(this, ProfielEditActivity::class.java)
+                intent.putExtra("interesses", leerling.interesses)
+                startActivity(intent)
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,6 +64,7 @@ class ProfielActivity : AppCompatActivity() {
         // the leerling ID will be red from the sharedPreferences
         leerlingId = 1
 
+
         logout_btn.setOnClickListener {
             // remove the saved user password and user credentials
             spEditor.putString(getString(R.string.sp_key_password), "")
@@ -58,7 +77,6 @@ class ProfielActivity : AppCompatActivity() {
         }
 
         getLeerling()
-
 
     }
 

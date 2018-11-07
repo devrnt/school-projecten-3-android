@@ -46,10 +46,10 @@
         <activity
             android:name=".HomeActivity"
             android:label="@string/app_name" />
-
         <activity
             android:name=".profiel.ProfielActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+            android:label="Profiel" />
+        <activity android:name=".profiel.ProfielEditActivity"></activity>
     </application>
 
 </manifest>
