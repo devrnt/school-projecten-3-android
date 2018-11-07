@@ -8,6 +8,10 @@ class Gebruiker(
         val wachtwoord: String,
         val token: String) {
 
+    val volledigeNaam: String
+        get() = "$voornaam $naam"
+
+
     // used when a login request is sent
     // only gebruikersnaam en wachtwoord are required to send the request
     constructor(gebruikersnaam: String, wachtwoord: String) : this(-1, "", "", gebruikersnaam, wachtwoord, "")

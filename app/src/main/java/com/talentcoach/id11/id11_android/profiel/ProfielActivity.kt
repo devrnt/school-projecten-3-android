@@ -6,19 +6,29 @@ import android.os.Bundle
 import android.preference.PreferenceManager
 import android.support.v7.app.AppCompatActivity
 import android.widget.TextView
+import android.widget.Toast
 import com.google.gson.Gson
 import com.talentcoach.id11.id11_android.R
-import com.talentcoach.id11.id11_android.R.id.logout_btn
-import com.talentcoach.id11.id11_android.R.id.userfullNameTxt
 import com.talentcoach.id11.id11_android.login.LoginActivity
-import com.talentcoach.id11.id11_android.repositories.responses.LoginResponse
+import com.talentcoach.id11.id11_android.models.Gebruiker
+import com.talentcoach.id11.id11_android.models.Geslacht
+import com.talentcoach.id11.id11_android.models.Leerling
+import com.talentcoach.id11.id11_android.repositories.LeerlingRepositoryRetrofit
 import kotlinx.android.synthetic.main.activity_profiel.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
 class ProfielActivity : AppCompatActivity() {
     private lateinit var sharedPreferences: SharedPreferences
     private lateinit var spEditor: SharedPreferences.Editor
 
-    lateinit var user: LoginResponse
+    lateinit var leerling: Leerling
+    lateinit var gebruiker: Gebruiker
+
+    var leerlingId: Long? = null
 
 
     lateinit var userfullNameText: TextView
@@ -30,9 +40,11 @@ class ProfielActivity : AppCompatActivity() {
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
         spEditor = sharedPreferences.edit()
 
-        this.userfullNameText = userfullNameTxt
+        val gson = Gson()
+        gebruiker = gson.fromJson(sharedPreferences.getString(getString(R.string.sp_key_user), "Default"), Gebruiker::class.java)
 
-        readFromSharedPrerences()
+        // the leerling ID will be red from the sharedPreferences
+        leerlingId = 1
 
         logout_btn.setOnClickListener {
             // remove the saved user password and user credentials
@@ -45,13 +57,53 @@ class ProfielActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        this.userfullNameText.text = "${user.voornaam} ${user.naam}"
+        getLeerling()
+
 
     }
 
-    private fun readFromSharedPrerences() {
-        val gson = Gson()
-        val jsonGebruiker = sharedPreferences.getString(getString(R.string.sp_key_user), "Geen ingelogde gebruiker")
-        user = gson.fromJson(jsonGebruiker, LoginResponse::class.java)
+    private fun getLeerling() {
+        val url = "http://projecten3studserver11.westeurope.cloudapp.azure.com/api/"
+        val retrofit = Retrofit
+                .Builder()
+                .addConverterFactory(GsonConverterFactory.create())
+                .baseUrl(url)
+                .build()
+
+        val leerlingRepository = retrofit.create(LeerlingRepositoryRetrofit::class.java)
+        val call = leerlingRepository.getById(1)
+
+        call.enqueue(object : Callback<Leerling> {
+            // Got response from the server
+            // Check response.IsSuccesfull to check for any codes (UnAuthorized...)
+            override fun onResponse(call: Call<Leerling>, response: Response<Leerling>) {
+                if (response.isSuccessful) {
+                    Toast.makeText(applicationContext, "Succes", Toast.LENGTH_LONG)
+                    leerling = response.body()!!
+                    fillDetails()
+
+                } else {
+                    when (response.code()) {
+                        404 -> Toast.makeText(applicationContext, "Leerling niet gevonden", Toast.LENGTH_LONG).show()
+                        401 -> Toast.makeText(applicationContext, "Je hebt niet de nodige rechten", Toast.LENGTH_LONG).show()
+                    }
+                }
+            }
+
+            // This case the server is down, 502_Bad_Gateway...
+            override fun onFailure(call: Call<Leerling>, t: Throwable) {
+                Toast.makeText(applicationContext, getString(R.string.something_went_wrong_login), Toast.LENGTH_LONG)
+            }
+        })
+
+    }
+
+    private fun fillDetails() {
+        userfullNameTxt.text = gebruiker.gebruikersnaam.capitalize()
+        firstAndLastnameTxt.text = gebruiker.volledigeNaam
+        emailadressTxt.text = "email"
+        richtingTxt.text = leerling.richting.naam.capitalize()
+        genderTxt.text = Geslacht.valueOf(leerling.geslacht).toString().capitalize()
+        interestsTxt.text = leerling.interesses.capitalize()
     }
 }

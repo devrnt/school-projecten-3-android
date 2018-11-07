@@ -7,13 +7,14 @@ import android.widget.Toast
 import com.talentcoach.id11.id11_android.R
 import com.talentcoach.id11.id11_android.managers.DataManager
 import com.talentcoach.id11.id11_android.models.Leerling
+import com.talentcoach.id11.id11_android.models.Richting
 import com.talentcoach.id11.id11_android.repositories.LeerlingRepository
 import kotlinx.android.synthetic.main.activity_werkaanbieding.*
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 
 class WerkaanbiedingActivity : AppCompatActivity(), IClickListener { // implements IClickListener to listen to button clicks in fragments
-    private var leerling = Leerling(-1, "default", mutableListOf(), mutableListOf())
+    private var leerling = Leerling(-1, Richting(), 0, "default", mutableListOf(), mutableListOf())
     val werkaanbiedingenListFragment = WerkaanbiedingenListFragment() // Leerling.bewaardeWerkaanbiedingen
     val werkaanbiedingFragment = WerkaanbiedingFragment() // Leerling.huidigeWerkaanbieding
     val werkaanbiedingButtonsFragment = WerkaanbiedingButtonsFragment()

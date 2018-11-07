@@ -13,7 +13,6 @@ import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.Toast
 import com.google.gson.Gson
-import com.talentcoach.id11.id11_android.HomeActivity
 import com.talentcoach.id11.id11_android.R
 import com.talentcoach.id11.id11_android.models.Gebruiker
 import com.talentcoach.id11.id11_android.profiel.ProfielActivity
@@ -139,7 +138,7 @@ class LoginFragment : Fragment() {
                     spEditor.putString(getString(R.string.sp_key_user), jsonGebruiker)
                     spEditor.commit()
 
-                    
+
                     // GOTO the HomeActivity
                     val intent = Intent(activity, ProfielActivity::class.java)
                     startActivity(intent)
