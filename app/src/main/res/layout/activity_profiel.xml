@@ -143,6 +143,7 @@
             android:orientation="vertical">
             
             <TextView
+                android:id="@+id/firstAndLastnameTxt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
@@ -152,10 +153,10 @@
                 android:paddingTop="16dp"
                 android:paddingRight="25dp"
                 android:paddingBottom="16dp"
-                android:text="voor + achternaam"
                 android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/emailadressTxt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
@@ -165,10 +166,10 @@
                 android:paddingTop="16dp"
                 android:paddingRight="25dp"
                 android:paddingBottom="16dp"
-                android:text="emailadress"
                 android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/genderTxt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
@@ -178,11 +179,11 @@
                 android:paddingTop="16dp"
                 android:paddingRight="25dp"
                 android:paddingBottom="16dp"
-                android:text="Geslacht"
                 android:textStyle="bold" />
 
 
             <TextView
+                android:id="@+id/interestsTxt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
@@ -192,11 +193,11 @@
                 android:paddingTop="16dp"
                 android:paddingRight="25dp"
                 android:paddingBottom="16dp"
-                android:text="Interesses"
                 android:textStyle="bold" />
 
 
             <TextView
+                android:id="@+id/richtingTxt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
