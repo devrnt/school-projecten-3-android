@@ -2,47 +2,89 @@ package com.talentcoach.id11.id11_android
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ListView
+import com.example.bruno.recyclerviewdemo2.CompTeBehalenAdapter
+import com.talentcoach.id11.id11_android.models.Competentie
+import com.talentcoach.id11.id11_android.models.SubCompetentie
+import kotlinx.android.synthetic.main.fragment_tebehalen.*
 import java.util.*
 
 class TeBehalenFragment: Fragment(){
 
-    lateinit var adapter:CompLijstAdapter
-    var lijst = mutableListOf<Competentie>()
-    var copyList = mutableListOf<Competentie>()
+    lateinit var adapter: CompTeBehalenAdapter
+    lateinit var lijst :ArrayList<Competentie>
+    lateinit var recycle: RecyclerView
+    var copyListGraad = mutableListOf<Competentie>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_tebehalen, container, false)
-        val listView: ListView
 
-        listView = view.findViewById(R.id.teBehalenLv)
+        lijst = arrayListOf(
+                Competentie("Scheert en/of knipt baard, bakkerbaard en snor",
+                        arrayListOf(
+                                SubCompetentie("Voert indien nodig voorverzorging uit"),
+                                SubCompetentie("Zeept de huid indien nodig in"),
+                                SubCompetentie("Spoelt de huid indien nodig")), 2018, "1e graad"),
+                Competentie("Voert een gelegenheidskapsel uit"
+                        ,arrayListOf(
+                                SubCompetentie("Stemt techniek en materiaal af op gelegenheidskapsel"),
+                                SubCompetentie("Realiseert opsteekkaspels of vlechten"),
+                                SubCompetentie("Werkt het kaspel af")) ,2018, "3e graad"),
+                Competentie("Voert make-up en/of manicure uit",
+                        arrayListOf(
+                                SubCompetentie("Reinigt de huid in functie van de verdere behandeling"),
+                                SubCompetentie("Stemt de techniek en het materiaal af op de opdracht"),
+                                SubCompetentie("Past de massagetechniek toe")),2016, "2e graad"),
+                Competentie("Vormt het haar tijdelijk om (brushen, föhnen)",
+                        arrayListOf(
+                                SubCompetentie("Stemt de techniek en materiaal af op de omvorming"),
+                                SubCompetentie("Werkt het kapsel af"),
+                                SubCompetentie("Voert indien nodig naverzorging uit")),2017, "2e graad"),
+                Competentie("Voert gecombineerde snitten uit",
+                        arrayListOf(
+                                SubCompetentie("Stemt de techniek en materiaal af op de snit"),
+                                SubCompetentie("Maakt verdelingen"),
+                                SubCompetentie("Analyseert en verbetert het resultaat indien nodig")),2018, "1e graad"),
+                Competentie("Voert basissnitten uit",
+                        arrayListOf(
+                                SubCompetentie("Stemt de techniek en materiaal af op de snit"),
+                                SubCompetentie("Maakt verdelingen"),
+                                SubCompetentie("Analyseert en verbetert het resultaat indien nodig")),2016, "1e graad"),
+                Competentie("Neemt afscheid van de klant",
+                        arrayListOf(
+                                SubCompetentie("Gaat na of de klant tevreden is"),
+                                SubCompetentie("Geeft de klant advies in functie van het volgend bezoek"),
+                                SubCompetentie("Geeft de jas aan de klant")),2018, "3e graad"),
+                Competentie("Verwelkomt de klant en spoort de verwachtingen op",
+                        arrayListOf(
+                                SubCompetentie("Ontvangt de klant beleefd"),
+                                SubCompetentie("Informeert zich over de verwachtingen van de klant"),
+                                SubCompetentie("Neemt de jas van de klant aan en hangt deze weg")),2015, "2e graad"),
+                Competentie("Adviseert de klant",
+                        arrayListOf(
+                                SubCompetentie("Volgt evoluties/trends in het vakgebied op"),
+                                SubCompetentie("Raadt de juiste behandeling aan in overleg met de klant"),
+                                SubCompetentie("Toont voorbeelden indien gewenst")),2016, "1e graad"))
 
-        lijst.add(Competentie("Kan snippets gebruiken in Android Studio",2018))
-        lijst.add(Competentie("Kan zijn programma testen adhv zelfgemaakte unit testen",2018))
-        lijst.add(Competentie("Kan een backend opzetten",2016))
-        lijst.add(Competentie("Kan een shell script schrijven in Linux",2017))
-        lijst.add(Competentie("Kan gebruik maken van reguliere expressies",2018))
-        lijst.add(Competentie("Kan scrum-wise te werk gaan",2016))
-        lijst.add(Competentie("Kan design patterns toepassen in zijn project",2018))
-        lijst.add(Competentie("Kan use cases op de juiste manier opstellen",2015))
-        lijst.add(Competentie("Kan gebruik maken van Linux",2016))
-
-        adapter = CompLijstAdapter(view.context,R.layout.comp_lijst_item,lijst)
-        listView.adapter = adapter
+       recycle = view.findViewById(R.id.recyclerTeBehalen)
+       recycle.layoutManager = LinearLayoutManager(container?.context)
+       adapter = CompTeBehalenAdapter(lijst,activity!!.applicationContext)
+       recycle.adapter = adapter
 
         return view
     }
 
-    public fun showSortedListView(){
+    fun showSortedListView(){
         sortListOnNames()
         adapter.notifyDataSetChanged()
 
     }
 
-    public fun showUnsortedListView(){
+    fun showUnsortedListView(){
         unsortListOnNames()
         adapter.notifyDataSetChanged()
     }
@@ -60,30 +102,30 @@ class TeBehalenFragment: Fragment(){
         })
     }
 
-    //Hier maak ik gebruik van een kopie van de originele lijst omdat bij het filteren de gefilterde sublist aan de originele lijst
-    //toegekend wordt. Om dus aan de originele lijst terug te komen --> de kopie
-    //Wss niet de meest efficiënte oplossing..
-    public fun filterOnYear(year:String){
-        var sortedList:List<Competentie>
+    fun filterOnGraad(graad:String){
+        var sortedList: List<Competentie>
 
-        if(!copyList.isEmpty()){
-            adapter.clear()
-            for(item in copyList){
-                adapter.insert(item,adapter.count)
+        if(!copyListGraad.isEmpty()){
+            adapter.compList.clear()
+            for(item in copyListGraad){
+                adapter.compList.add(adapter.compList.count(), item)
             }
+            copyListGraad = mutableListOf()
+
         }
 
-            sortedList=lijst.filter { s -> s.behaaldOp.contains(year,true)}
+        sortedList = lijst.filter { c -> c.graad.equals(graad,true) }
 
-            if(!sortedList.isEmpty()){
-                copyList =  lijst.toMutableList()
-                adapter.clear()
-                for(item in sortedList){
-                    adapter.insert(item,adapter.count)
-                }
+        if(!sortedList.isEmpty()){
+            copyListGraad = lijst.toMutableList()
+            adapter.compList.clear()
+            for(item in sortedList){
+                adapter.compList.add(adapter.compList.count(), item)
             }
 
+        }
         adapter.notifyDataSetChanged()
-
     }
+
+
 }

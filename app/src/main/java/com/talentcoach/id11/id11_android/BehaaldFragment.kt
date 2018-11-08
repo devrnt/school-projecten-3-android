@@ -1,100 +1,168 @@
 package com.talentcoach.id11.id11_android
 
 import android.os.Bundle
+import android.provider.SyncStateContract.Helpers.insert
 import android.support.v4.app.Fragment
+import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ListView
 import android.widget.TextView
+import com.talentcoach.id11.id11_android.adapters.CompBehaaldAdapter
+import com.talentcoach.id11.id11_android.models.Competentie
+import com.talentcoach.id11.id11_android.models.SubCompetentie
 import java.util.*
 import kotlin.Comparator
 import kotlin.collections.ArrayList
 
 class BehaaldFragment: Fragment(){
 
-    lateinit var adapter:CompLijstAdapter
-    lateinit var listView:ListView
-    var lijst = mutableListOf<Competentie>()
-    var copyList = mutableListOf<Competentie>()
+    lateinit var adapter: CompBehaaldAdapter
+    lateinit var lijst: ArrayList<Competentie>
+    var copyListJaar = mutableListOf<Competentie>()
+    var copyListGraad = mutableListOf<Competentie>()
+
+    lateinit var recycle: RecyclerView
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         var behaaldTxt: TextView
-
         var view = inflater.inflate(R.layout.fragment_behaald, container, false)
-
-        listView = view.findViewById(R.id.compLv)
         behaaldTxt = view.findViewById(R.id.behaaldTxt2)
 
 
-        lijst.add(Competentie("Kan html toepassen in projecten",2018))
-        lijst.add(Competentie("Kan een website opmaken met CSS",2017))
-        lijst.add(Competentie("Kan een backend opzetten",2018))
-        lijst.add(Competentie("Kan een dynamische website maken met JavaScript",2018))
-        lijst.add(Competentie("Kan een programma schrijven in Java",2017))
-        lijst.add(Competentie("Kent de fundamenten van OO Programmeren",2016))
-        lijst.add(Competentie("Kan design patterns toepassen in zijn project",2016))
-        lijst.add(Competentie("Kan use cases op de juiste manier opstellen",2015))
-        lijst.add(Competentie("Kan gebruik maken van Linux",2016))
+        lijst = arrayListOf(
+                Competentie("Ruimt de werkpost op en maakt hem schoon",
+                        arrayListOf(
+                                SubCompetentie("Sorteert afval volgens richtlijnen"),
+                                SubCompetentie("Reinigt gebruikte materiaal"),
+                                SubCompetentie("Houdt zich aan richtlijnen voor hygiëne, veiligheid en ergonomie")), 2018, "1e graad"),
+                Competentie("Neemt deel aan organisatie van het kapsalon"
+                        ,arrayListOf(
+                                SubCompetentie("Werkt samen in team"),
+                                SubCompetentie("Voert opdrachten uit volgens werking van kapsalon"),
+                                SubCompetentie("Houdt zich aan regels van kapsalon")) ,2018, "2e graad"),
+                Competentie("Bereidt de werkpost voor",
+                        arrayListOf(
+                                SubCompetentie("Zorgt voor orde en netheid van de werkpost"),
+                                SubCompetentie("Bereidt het materiaal en producten eigen aan activiteit voor"),
+                                SubCompetentie("Controleert en zet materiaal klaar")),2016, "1e graad"),
+                Competentie("Legt een afspraak vast met de klant",
+                        arrayListOf(
+                                SubCompetentie("Staat klant te woord aan telefoon of aan receptie"),
+                                SubCompetentie("Schat tijdsduur van gewenste behandeling in"),
+                                SubCompetentie("Gebruikt informatie- en communicatietechnologie")),2017, "1e graad"),
+                Competentie("Volgt de klant op",
+                        arrayListOf(
+                                SubCompetentie("Houdt klantenfiche bij en vult gegevens van behandeling in"),
+                                SubCompetentie("Verstrekt uitleg over de behandeling en gebruikte producten"),
+                                SubCompetentie("Begeleidt klant naar de volgende stap en garandeert opvolging")),2018, "3e graad"),
+                Competentie("Past shampoos en specifieke haarverzorging toe",
+                        arrayListOf(
+                                SubCompetentie("Borstelt en ontwart het haar"),
+                                SubCompetentie("Voert elke stap van werkwijze uit volgens verdere behandeling"),
+                                SubCompetentie("Brengt de gewenste haar- en huidverzorging aan")),2016, "2e graad"),
+                Competentie("Vormt het haar blijvend om (krullen, ontkrullen)",
+                        arrayListOf(
+                                SubCompetentie("Voert indien nodig een voorverzorging uit"),
+                                SubCompetentie("Stelt de juiste omvormingsdiagnose"),
+                                SubCompetentie("Voert indien nodig een naverzorging uit")),2018, "1e graad"),
+                Competentie("Kleurt het haar (volledig of haarlokken)",
+                        arrayListOf(
+                                SubCompetentie("Stelt de juiste kleurdiagnose"),
+                                SubCompetentie("Berekent en past de juiste formule toe"),
+                                SubCompetentie("Emulgeert en spoelt het haar uit")),2015, "3e graad"),
+                Competentie("Ontkleurt het haar (volledig of haarlokken)",
+                        arrayListOf(
+                                SubCompetentie("Stelt de juiste diagnose"),
+                                SubCompetentie("Spoelt het haar"),
+                                SubCompetentie("Bereidt het mengsel")),2016, "2e graad"))
 
-        adapter= CompLijstAdapter(view.context,R.layout.comp_lijst_item,lijst)
-        listView.adapter = adapter
+        recycle = view.findViewById(R.id.recyclerBehaald)
+        recycle.layoutManager = LinearLayoutManager(container?.context)
+        adapter = CompBehaaldAdapter(lijst,activity!!.applicationContext)
+        recycle.adapter = adapter
 
-        behaaldTxt.text = "Totaal behaalde competenties: ${lijst.count()}"
+        behaaldTxt.text = "Behaalde competenties: ${lijst.count()}/18"
 
         return view
     }
 
 
+    fun showSortedListView(){
 
-    public fun showSortedListView(){
-        sortListOnNames()
-        adapter.notifyDataSetChanged()
-
-    }
-
-    public fun showUnsortedListView(){
-        unsortListOnNames()
-        adapter.notifyDataSetChanged()
-    }
-
-    //Hier maak ik gebruik van een kopie van de originele lijst omdat bij het filteren de gefilterde sublist aan de originele lijst
-    //toegekend wordt. Om dus aan de originele lijst terug te komen --> de kopie
-    //Wss niet de meest efficiënte oplossing..
-    public fun filterOnYear(year:String){
-        var sortedList:List<Competentie>
-
-        if(!copyList.isEmpty()){
-            adapter.clear()
-            for(item in copyList){
-                adapter.insert(item,adapter.count)
-            }
-        }
-
-        sortedList=lijst.filter { s -> s.behaaldOp.contains(year,true)}
-
-        if(!sortedList.isEmpty()){
-            copyList =  lijst.toMutableList()
-            adapter.clear()
-            for(item in sortedList){
-                adapter.insert(item,adapter.count)
-            }
-        }
-
-        adapter.notifyDataSetChanged()
-
-    }
-
-    private fun unsortListOnNames(){
-        Collections.shuffle(lijst)
-        adapter.notifyDataSetChanged()
-    }
-
-    private fun sortListOnNames(){
         Collections.sort(lijst, object: Comparator<Competentie> {
             override fun compare(o1: Competentie?, o2: Competentie?): Int {
                 return o1!!.name.compareTo(o2!!.name)
             }
         })
+        adapter.notifyDataSetChanged()
+
     }
+
+    fun showUnsortedListView(){
+        Collections.shuffle(lijst)
+        adapter.notifyDataSetChanged()
+    }
+
+
+    fun filterOnYear(year:String) {
+        var sortedList: List<Competentie>
+
+        if (!copyListJaar.isEmpty()) {
+            adapter.compList.clear()
+            for (item in copyListJaar) {
+                adapter.compList.add(adapter.compList.count(), item)
+            }
+            copyListJaar = mutableListOf()
+        }
+
+
+        sortedList = lijst.filter { c -> c.behaaldOp.contains(year,true)}
+
+
+        if (!sortedList.isEmpty()) {
+            copyListJaar = lijst.toMutableList()
+
+            adapter.compList.clear()
+            for (item in sortedList) {
+                adapter.compList.add(adapter.compList.count(), item)
+            }
+        }
+
+
+
+        adapter.notifyDataSetChanged()
+    }
+
+    fun filterOnGraad(graad:String){
+        var sortedList: List<Competentie>
+
+
+        if(!copyListGraad.isEmpty()){
+            adapter.compList.clear()
+            for(item in copyListGraad){
+                adapter.compList.add(adapter.compList.count(), item)
+            }
+            copyListGraad = mutableListOf()
+
+        }
+
+
+        sortedList = lijst.filter { c -> c.graad.equals(graad,true) }
+
+
+        if(!sortedList.isEmpty()){
+            copyListGraad = lijst.toMutableList()
+            adapter.compList.clear()
+            for(item in sortedList){
+                adapter.compList.add(adapter.compList.count(), item)
+            }
+
+        }
+
+        adapter.notifyDataSetChanged()
+    }
+
 }

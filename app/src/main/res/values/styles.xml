@@ -17,4 +17,24 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+    <style name="Button.Colored" parent="@style/Widget.AppCompat.Button">
+        <item name="android:background">@color/colorAccent</item>
+        <item name="android:textAppearance">@style/TextAppearance.AppCompat.Widget.Button</item>
+    </style>
+
+    <style name="InputText" parent="Theme.AppCompat.DayNight">
+        <item name="colorControlNormal">@android:color/white</item>
+        <item name="colorControlActivated">@color/colorAccent</item>
+    </style>
+
+    <!--Floating label text style-->
+    <style name="HintText" parent="TextAppearance.AppCompat.Small">
+        <item name="android:textColor">@android:color/secondary_text_dark_nodisable</item>
+    </style>
+
+    <!--Error label text style-->
+    <style name="ErrorText" parent="TextAppearance.AppCompat.Small">
+        <item name="android:textColor">@color/colorError</item>
+    </style>
+
 </resources>

@@ -43,6 +43,12 @@
                     android:layout_height="wrap_content"
                     android:text="TextView" />
 
+                <TextView
+                    android:id="@+id/graadTxt2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="TextView" />
+
                 <LinearLayout
                     android:id="@+id/childItems2"
                     android:layout_width="match_parent"

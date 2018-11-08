@@ -55,4 +55,24 @@
     <string name="action_settings">Settings</string>
     <string name="Filter_Title">Filteren</string>
     <string name="werkaanbieding_title">Werkaanbieding</string>
+
+    <!-- Strings related to Login -->
+    <string name="hint_username">Gebruikersnaam</string>
+    <string name="hint_password">Wachtwoord</string>
+    <string name="login_button">Aanmelden</string>
+    <string name="error_username">Gebruikersnaam mag niet leeg zijn</string>
+    <string name="error_password">Wachtwoord moet minstens 8 letters bevatten</string>
+    <string name="succesfull_login">Succesvol ingelogd</string>
+    <string name="wrong_login_credentials">Gebruikersnaam of wachtwoord is niet juist</string>
+    <string name="something_went_wrong_login">Er ging iets fout…</string>
+    <!-- Keys for share preferences used in Login -->
+    <string name="sp_key_username">com.talentcoach.id11.id11_android.login.username</string>
+    <string name="sp_key_password">com.talentcoach.id11.id11_android.login.password</string>
+    <string name="sp_key_user">com.talentcoach.id11.id11_android.login.loginResponse</string>
+
+    <!-- Strings related to Profiel -->
+
+    <string name="logout_button">Afmelden</string>
+    <string name="interests_txt">Interesses</string>
+
 </resources>

@@ -1,6 +1,7 @@
 package com.talentcoach.id11.id11_android.data
 
 import com.talentcoach.id11.id11_android.models.Leerling
+import com.talentcoach.id11.id11_android.models.Richting
 import com.talentcoach.id11.id11_android.models.Werkaanbieding
 import com.talentcoach.id11.id11_android.models.Werkgever
 
@@ -32,9 +33,9 @@ object DummyDbContext {
 
         leerlingen.clear()
         leerlingen.addAll(mutableListOf(
-                Leerling(1, "teamwork kapper", mutableListOf(), mutableListOf()),
-                Leerling(2, "loodgieter", mutableListOf(werkaanbiedingen[2]), mutableListOf()),
-                Leerling(3, "zelfstandig", mutableListOf(), mutableListOf())
+                Leerling(1, Richting(), 0, "teamwork kapper", mutableListOf(), mutableListOf()),
+                Leerling(2, Richting(), 0, "loodgieter", mutableListOf(werkaanbiedingen[2]), mutableListOf()),
+                Leerling(3, Richting(), 0, "informatica", mutableListOf(), mutableListOf())
         ))
     }
 }

@@ -1,12 +1,14 @@
 package com.example.bruno.recyclerviewdemo2
 
 import android.content.Context
+import android.graphics.Typeface
 import android.os.Build
 import android.support.annotation.RequiresApi
 import android.support.v7.widget.RecyclerView
 import android.transition.AutoTransition
 import android.transition.Transition
 import android.transition.TransitionManager
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -41,10 +43,9 @@ class CompTeBehalenAdapter(val compList: ArrayList<Competentie>,var context: Con
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
         val competentie = compList.get(position)
 
-
-
         holder.view.compName.text = competentie.name
         holder.view.arrowIcon.setImageResource(R.drawable.arrow_right_24dp)
+        holder.view.graadTxt.text = competentie.graad
 
         if(holder.view.childItems.childCount == 0){
             for(subComp in competentie.subCompetenties){
@@ -52,6 +53,7 @@ class CompTeBehalenAdapter(val compList: ArrayList<Competentie>,var context: Con
                 text.text = "${'\u25CF'} ${subComp.name}" // ${'\u25CF'} zorgt voor Bullet icon
                 holder.view.childItems.addView(text)
             }
+
         }
 
         holder.view.itemCard.setOnClickListener{
@@ -68,11 +70,7 @@ class CompTeBehalenAdapter(val compList: ArrayList<Competentie>,var context: Con
             }
             else{
                 holder.view.arrowIcon.setImageResource(R.drawable.arrow_right_24dp)
-
-                holder.view.childItems.visibility = View.INVISIBLE
-                TransitionManager.beginDelayedTransition(holder.view.itemCard, transDelay)
                 holder.view.childItems.visibility = View.GONE
-
                 opengeklapt = false
             }
         }

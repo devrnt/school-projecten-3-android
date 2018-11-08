@@ -1,6 +1,8 @@
 package com.talentcoach.id11.id11_android
 
+import android.content.SharedPreferences
 import android.os.Bundle
+import android.preference.PreferenceManager
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -8,16 +10,23 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
+import com.google.gson.Gson
 import com.squareup.picasso.Picasso
 import com.talentcoach.id11.id11_android.models.Werkspreuk
 import com.talentcoach.id11.id11_android.repositories.WerkspreukRepository
+import com.talentcoach.id11.id11_android.repositories.responses.LoginResponse
 import org.jetbrains.anko.doAsync
 import java.util.*
 
 class WerkspreukFragment : Fragment() {
     private val werkspreukRepository = WerkspreukRepository()
     private var url: String? = null
+    private lateinit var sharedPreferences: SharedPreferences
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity)
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -77,7 +86,11 @@ class WerkspreukFragment : Fragment() {
 
     private fun getUserFirstname(): String {
         // get the logged in user
-        return "Siebe"
+        val gson = Gson()
+        val jsonGebruiker = sharedPreferences.getString(getString(R.string.sp_key_user), "Geen ingelogde gebruiker")
+        val user = gson.fromJson(jsonGebruiker, LoginResponse::class.java)
+
+        return user.voornaam
     }
 
 }

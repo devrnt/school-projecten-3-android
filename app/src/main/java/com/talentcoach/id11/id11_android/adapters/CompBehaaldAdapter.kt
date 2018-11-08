@@ -41,6 +41,7 @@ class CompBehaaldAdapter(var compList: ArrayList<Competentie>, var context: Cont
         holder.view.checkMark.setImageResource(R.drawable.check)
         holder.view.arrowIcon2.setImageResource(R.drawable.arrow_right_24dp)
         holder.view.behaaldOp.text = competentie.behaaldOp
+        holder.view.graadTxt2.text = competentie.graad
 
         if(holder.view.childItems2.childCount == 0){
             for(subComp in competentie.subCompetenties){
@@ -62,13 +63,7 @@ class CompBehaaldAdapter(var compList: ArrayList<Competentie>, var context: Cont
             }
             else{
                 holder.view.arrowIcon2.setImageResource(R.drawable.arrow_right_24dp)
-
-                holder.view.childItems2.visibility = View.INVISIBLE
-                TransitionManager.beginDelayedTransition(holder.view.itemCard2, transDelay)
                 holder.view.childItems2.visibility = View.GONE
-
-
-
                 opengeklapt = false
             }
         }
