@@ -12,6 +12,7 @@ import android.view.*
 import android.widget.*
 
 import kotlinx.android.synthetic.main.activity_comp__tabbed.*
+import kotlinx.android.synthetic.main.dialog_filter.*
 
 class Comp_Tabbed : AppCompatActivity() {
 
@@ -27,9 +28,9 @@ class Comp_Tabbed : AppCompatActivity() {
     lateinit var myDialog:Dialog
     var tagFirstTab:String? = null
     var tagSecondTab:String? = null
-
     var namesSortedState:Boolean = false
     var yearSelected:Int = 0
+    var graadSelected:Int = 0
 
 
 
@@ -37,8 +38,9 @@ class Comp_Tabbed : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_comp__tabbed)
 
-
         setSupportActionBar(toolbar)
+        getSupportActionBar()!!.setDisplayHomeAsUpEnabled(true)
+
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mSectionsPagerAdapter = SectionsPagerAdapter(supportFragmentManager)
@@ -57,6 +59,7 @@ class Comp_Tabbed : AppCompatActivity() {
         return true
     }
 
+        //Handles action bar item clicks
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
@@ -64,7 +67,7 @@ class Comp_Tabbed : AppCompatActivity() {
         val id = item.itemId
 
         if (id == R.id.action_tune) {
-            ShowDialogWindow(yearSelected)
+            ShowDialogWindow(yearSelected, graadSelected)
             return true
         }
 
@@ -72,11 +75,12 @@ class Comp_Tabbed : AppCompatActivity() {
     }
 
     //Toont Dialog venster waar gebruiker competenties kan sorteren/filteren
-    private fun ShowDialogWindow(yearSelected:Int) {
+    private fun ShowDialogWindow(yearSelected:Int, graadSelected:Int) {
 
         var sorteerToggle:Switch
         var cancelBtn: Button
         var jaarSpinner:Spinner
+        var graadSpinner:Spinner
 
         myDialog = Dialog(this)
         myDialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -112,8 +116,8 @@ class Comp_Tabbed : AppCompatActivity() {
 
         //Spinner = dropdown list om te filteren op jaartal
         jaarSpinner = myDialog.findViewById(R.id.jaarSpinner) as Spinner
-        val options = arrayOf("All","2015","2016","2017","2018")
-        jaarSpinner.adapter = ArrayAdapter<String>(this,android.R.layout.simple_dropdown_item_1line,options)
+        val jaarOptions = arrayOf("Alle","2015","2016","2017","2018")
+        jaarSpinner.adapter = ArrayAdapter<String>(this,android.R.layout.simple_dropdown_item_1line,jaarOptions)
         jaarSpinner.setSelection(yearSelected)
 
         jaarSpinner.onItemSelectedListener=object:AdapterView.OnItemSelectedListener{
@@ -122,14 +126,34 @@ class Comp_Tabbed : AppCompatActivity() {
             }
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                var fragment1 = supportFragmentManager.findFragmentByTag(tagFirstTab) as TeBehalenFragment
-                var fragment2 = supportFragmentManager.findFragmentByTag(tagSecondTab) as BehaaldFragment
+                var fragmentBehaald = supportFragmentManager.findFragmentByTag(tagSecondTab) as BehaaldFragment
+
+                    fragmentBehaald.filterOnYear(jaarOptions.get(position))
 
 
-                fragment1.filterOnYear(options.get(position))
-                fragment2.filterOnYear(options.get(position))
                 this@Comp_Tabbed.yearSelected = position
+            }
 
+        }
+
+        graadSpinner = myDialog.findViewById(R.id.graadSpinner) as Spinner
+        val graadOptions = arrayOf("Alle","1e graad","2e graad","3e graad")
+        graadSpinner.adapter = ArrayAdapter<String>(this,android.R.layout.simple_dropdown_item_1line,graadOptions)
+        graadSpinner.setSelection(graadSelected)
+
+        graadSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                println("Nothing selected...")
+            }
+
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                var fragmentBehaald = supportFragmentManager.findFragmentByTag(tagSecondTab) as BehaaldFragment
+                var fragmentTeBehalen = supportFragmentManager.findFragmentByTag(tagFirstTab) as TeBehalenFragment
+
+                fragmentBehaald.filterOnGraad(graadOptions.get(position))
+                fragmentTeBehalen.filterOnGraad(graadOptions.get(position))
+                this@Comp_Tabbed.graadSelected = position
             }
 
         }
