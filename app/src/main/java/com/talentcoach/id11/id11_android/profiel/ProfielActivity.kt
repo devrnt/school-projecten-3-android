@@ -17,7 +17,6 @@ import com.talentcoach.id11.id11_android.models.Geslacht
 import com.talentcoach.id11.id11_android.models.Leerling
 import com.talentcoach.id11.id11_android.repositories.LeerlingRepositoryRetrofit
 import kotlinx.android.synthetic.main.activity_profiel.*
-import org.jetbrains.anko.startActivity
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -40,11 +39,20 @@ class ProfielActivity : AppCompatActivity() {
         return true
     }
 
+    override fun onResume() {
+        super.onResume()
+        print("De activity komt hier terug ze")
+        Toast.makeText(applicationContext, "de application is terug", Toast.LENGTH_LONG).show()
+        getLeerling()
+    }
+
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        when(item?.itemId){
+        when (item?.itemId) {
             R.id.edit_btn -> {
                 val intent = Intent(this, ProfielEditActivity::class.java)
-                intent.putExtra("interesses", leerling.interesses)
+                val gson = Gson()
+                val llnJson = gson.toJson(leerling)
+                intent.putExtra("leerling", llnJson)
                 startActivity(intent)
             }
         }
@@ -122,6 +130,6 @@ class ProfielActivity : AppCompatActivity() {
         emailadressTxt.text = "email"
         richtingTxt.text = leerling.richting.naam.capitalize()
         genderTxt.text = Geslacht.valueOf(leerling.geslacht).toString().capitalize()
-        interestsTxt.text = leerling.interesses.capitalize()
+        interestsTxt.text = leerling.interesses.capitalize().replace(" ", ", ")
     }
 }

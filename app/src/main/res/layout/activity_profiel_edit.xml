@@ -43,6 +43,13 @@
                 app:chipTextSize="16dp"
                 app:chipVerticalSpacing="3dp" />
 
+            <TextView
+                android:id="@+id/error_text"
+                style="@style/ErrorText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                 />
+
         </LinearLayout>
 
     </LinearLayout>
