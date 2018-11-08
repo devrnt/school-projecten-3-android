@@ -6,7 +6,6 @@ import android.text.SpannableStringBuilder
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.ArrayAdapter
-import android.widget.AutoCompleteTextView
 import android.widget.Toast
 import com.google.gson.Gson
 import com.hootsuite.nachos.terminator.ChipTerminatorHandler
@@ -36,9 +35,7 @@ class ProfielEditActivity : AppCompatActivity() {
         when (item?.itemId) {
             R.id.confirm_btn -> {
                 if (checkValidInteresses()) {
-                    // TODO("Perform the update to the backend")
                     UpdateLeerling()
-
                 }
             }
         }
@@ -67,7 +64,8 @@ class ProfielEditActivity : AppCompatActivity() {
             // Check response.IsSuccesfull to check for any codes (UnAuthorized...)
             override fun onResponse(call: Call<Leerling>, response: Response<Leerling>) {
                 if (response.isSuccessful) {
-                    Toast.makeText(applicationContext, "geupdate", Toast.LENGTH_LONG)
+                    Toast.makeText(applicationContext, "Succesvol bijgewerkt", Toast.LENGTH_LONG).show()
+                    finish()
                 } else {
                     when (response.code()) {
                         404 -> Toast.makeText(applicationContext, "Leerling niet gevonden", Toast.LENGTH_LONG).show()
@@ -124,7 +122,7 @@ class ProfielEditActivity : AppCompatActivity() {
             error_text.text
             false
         } else {
-            Toast.makeText(applicationContext, "Alles komt overeen", Toast.LENGTH_LONG).show()
+            //Toast.makeText(applicationContext, "Alles komt overeen", Toast.LENGTH_LONG).show()
             true
         }
     }

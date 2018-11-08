@@ -48,11 +48,12 @@
             android:label="@string/app_name" />
         <activity
             android:name=".profiel.ProfielActivity"
-            android:label="Profiel" />
+            android:label="Profiel"
+            android:parentActivityName=".HomeActivity" />
         <activity
             android:name=".profiel.ProfielEditActivity"
-            android:parentActivityName=".profiel.ProfielActivity"
-            android:label="Profiel wijzigen"></activity>
+            android:label="Profiel wijzigen"
+            android:parentActivityName=".profiel.ProfielActivity" />
     </application>
 
 </manifest>

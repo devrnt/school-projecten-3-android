@@ -27,7 +27,7 @@
                     android:layout_height="120dp"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="45dp"
-                    android:src="@drawable/ic_launcher_background" />
+                    android:src="@drawable/ic_account_circle_white_24dp" />
 
                 <TextView
                     android:id="@+id/userfullNameTxt"
@@ -69,10 +69,10 @@
                             android:textStyle="bold" />
 
                         <TextView
+                            android:id="@+id/interessesCardTxt"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:paddingTop="10dp"
-                            android:text="125"
                             android:textColor="@color/colorPrimaryDark"
                             android:textSize="18sp"
                             android:textStyle="bold" />
@@ -98,7 +98,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:paddingTop="10dp"
-                            android:text="4MOc"
+                            android:text="3HAb"
                             android:textColor="@color/colorPrimaryDark"
                             android:textSize="18sp"
                             android:textStyle="bold" />
@@ -115,12 +115,13 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="WHATEVER"
+                            android:text="AANBIEDINGEN"
                             android:textColor="@color/colorAccent"
                             android:textSize="12sp"
                             android:textStyle="bold" />
 
                         <TextView
+                            android:id="@+id/aantalWerkaanbiedingenTxt"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:paddingTop="10dp"
@@ -139,9 +140,9 @@
             android:layout_width="360dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="25dp"
+            android:layout_marginTop="20dp"
             android:orientation="vertical">
-            
+
             <TextView
                 android:id="@+id/firstAndLastnameTxt"
                 android:layout_width="wrap_content"

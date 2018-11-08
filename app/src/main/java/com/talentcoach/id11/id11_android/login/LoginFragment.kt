@@ -13,9 +13,9 @@ import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.Toast
 import com.google.gson.Gson
+import com.talentcoach.id11.id11_android.HomeActivity
 import com.talentcoach.id11.id11_android.R
 import com.talentcoach.id11.id11_android.models.Gebruiker
-import com.talentcoach.id11.id11_android.profiel.ProfielActivity
 import com.talentcoach.id11.id11_android.repositories.GebruikerRepository
 import com.talentcoach.id11.id11_android.repositories.responses.LoginResponse
 import kotlinx.android.synthetic.main.fragment_login.*
@@ -140,7 +140,7 @@ class LoginFragment : Fragment() {
 
 
                     // GOTO the HomeActivity
-                    val intent = Intent(activity, ProfielActivity::class.java)
+                    val intent = Intent(activity, HomeActivity::class.java)
                     startActivity(intent)
 
                 } else {

@@ -42,7 +42,7 @@ class ProfielActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         print("De activity komt hier terug ze")
-        Toast.makeText(applicationContext, "de application is terug", Toast.LENGTH_LONG).show()
+        // Toast.makeText(applicationContext, "de application is terug", Toast.LENGTH_LONG).show()
         getLeerling()
     }
 
@@ -125,9 +125,11 @@ class ProfielActivity : AppCompatActivity() {
     }
 
     private fun fillDetails() {
+        interessesCardTxt.text = leerling.interesses.split(" ").count().toString()
+        aantalWerkaanbiedingenTxt.text = leerling.bewaardeWerkaanbiedingen.count().toString()
         userfullNameTxt.text = gebruiker.gebruikersnaam.capitalize()
         firstAndLastnameTxt.text = gebruiker.volledigeNaam
-        emailadressTxt.text = "email"
+        emailadressTxt.text = "jonasdevrient@school.be"
         richtingTxt.text = leerling.richting.naam.capitalize()
         genderTxt.text = Geslacht.valueOf(leerling.geslacht).toString().capitalize()
         interestsTxt.text = leerling.interesses.capitalize().replace(" ", ", ")
