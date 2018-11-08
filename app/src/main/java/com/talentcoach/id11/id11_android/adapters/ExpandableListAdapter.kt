@@ -12,8 +12,8 @@ import kotlinx.android.synthetic.main.list_child.view.*
 
 class ExpandableListAdapter(
         var context: Context,
-        var header: MutableList<String>,
-        var body: MutableList<String>
+        var header: List<String>,
+        var body: List<String>
 ) : BaseExpandableListAdapter() {
     override fun getGroup(p0: Int): String {
         return header[p0]

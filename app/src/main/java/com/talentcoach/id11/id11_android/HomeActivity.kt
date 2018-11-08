@@ -4,8 +4,8 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.widget.Button
-import com.talentcoach.id11.id11_android.communicatie.CommunicatieActivity
 import com.talentcoach.id11.id11_android.communicatie.WerkaanbiedingActivity
+import com.talentcoach.id11.id11_android.joborganisatie.AlgemeneInfoActivity
 import kotlinx.android.synthetic.main.activity_home.*
 
 class HomeActivity : AppCompatActivity() {

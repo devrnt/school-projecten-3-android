@@ -28,7 +28,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".AlgemeneInfoActivity"
+            android:name=".joborganisatie.AlgemeneInfoActivity"
             android:label="@string/aic_title"
             android:parentActivityName=".HomeActivity" />
 
