@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.widget.Button
 import com.talentcoach.id11.id11_android.communicatie.CommunicatieActivity
+import com.talentcoach.id11.id11_android.communicatie.WerkaanbiedingActivity
 import kotlinx.android.synthetic.main.activity_home.*
 
 class HomeActivity : AppCompatActivity() {
@@ -22,7 +23,7 @@ class HomeActivity : AppCompatActivity() {
         }
 
         communicatieBtn.setOnClickListener {
-            val intent = Intent(this, CommunicatieActivity::class.java)
+            val intent = Intent(this, WerkaanbiedingActivity::class.java)
             startActivity(intent)
         }
 
