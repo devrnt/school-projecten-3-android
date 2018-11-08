@@ -1,0 +1,11 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="?attr/actionBarSize">
+
+    <item
+        android:id="@+id/confirm_btn"
+        android:icon="@drawable/ic_check_24dp"
+        app:showAsAction="ifRoom"
+        android:title="Wijzig" />
+</menu>

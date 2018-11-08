@@ -1,6 +1,7 @@
 package com.talentcoach.id11.id11_android.data
 
 import com.talentcoach.id11.id11_android.models.Leerling
+import com.talentcoach.id11.id11_android.models.Richting
 import com.talentcoach.id11.id11_android.models.Werkaanbieding
 import com.talentcoach.id11.id11_android.models.Werkgever
 

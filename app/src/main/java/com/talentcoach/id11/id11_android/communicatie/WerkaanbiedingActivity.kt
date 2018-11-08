@@ -7,6 +7,8 @@ import android.widget.Toast
 import com.talentcoach.id11.id11_android.R
 import com.talentcoach.id11.id11_android.managers.DataManager
 import com.talentcoach.id11.id11_android.models.Leerling
+import com.talentcoach.id11.id11_android.models.Richting
+import com.talentcoach.id11.id11_android.repositories.LeerlingRepository
 import kotlinx.android.synthetic.main.activity_werkaanbieding.*
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
