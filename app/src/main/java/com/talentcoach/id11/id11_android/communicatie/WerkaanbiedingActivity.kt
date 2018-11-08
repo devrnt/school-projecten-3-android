@@ -48,7 +48,6 @@ class WerkaanbiedingActivity : AppCompatActivity(), IClickListener {
                 // set the items within the RecyclerView's adapter to the leerling's Bewaarde Werkaanbiedingen
                 werkaanbiedingenListFragment.werkaanbiedingenList = leerling.bewaardeWerkaanbiedingen
 
-
                 // add fragments to activity
                 // onCreateView of each fragment gets called
                 supportFragmentManager.beginTransaction()

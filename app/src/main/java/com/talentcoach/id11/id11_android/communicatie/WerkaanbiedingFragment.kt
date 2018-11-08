@@ -49,8 +49,8 @@ class WerkaanbiedingFragment : Fragment() {
                 omschrijving?.text = getString(R.string.wa_beschrijving, werkaanbieding?.omschrijving
                         ?: "")
             } else { // hide buttons and show default text when no Werkaanbieding is found
-                werkgever?.text = getString(R.string.no_werkaanbieding)
-                omschrijving?.text = ""
+                werkgever?.text = getString(R.string.no_werkaanbieding_1)
+                omschrijving?.text = getString(R.string.no_werkaanbieding_2)
             }
         }
     }

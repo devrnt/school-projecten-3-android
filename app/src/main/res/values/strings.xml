@@ -12,8 +12,8 @@
 
     <!-- Strings related to WerkaanbiedingActivity -->
     <string name="wa_title">Werkaanbiedingen</string>
-    <string name="wa_werkgever">Werkgever: %s</string>
-    <string name="wa_beschrijving">Beschrijving: %s</string>
+    <string name="wa_werkgever">%s</string>
+    <string name="wa_beschrijving">%s</string>
 
 
     <!-- Strings related to HomeActivity -->
@@ -23,7 +23,8 @@
     <string name="talent">Talent</string>
     <string name="react_positive">Like</string>
     <string name="react_negative">Don\'t Like</string>
-    <string name="no_werkaanbieding">Geen gepaste werkaanbieding gevonden \nProbeer uw interesses aan te vullen</string>
+    <string name="no_werkaanbieding_1">Geen gepaste werkaanbieding gevonden</string>
+    <string name="no_werkaanbieding_2">Probeer uw interesses aan te vullen op je profiel</string>
     <string name="mijn_werkaanb_button">Mijn bewaarde werkaanbiedingen</string>
     <string name="bew_werkaanb_title">Bewaarde Werkaanbiedingen</string>
 
