@@ -1,7 +1,9 @@
 package com.talentcoach.id11.id11_android.joborganisatie
 
+import android.content.Context
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v4.content.ContextCompat
 import android.view.View
 import com.talentcoach.id11.id11_android.R
 import com.talentcoach.id11.id11_android.managers.DataManager
@@ -41,14 +43,18 @@ class InfoActivity : AppCompatActivity() {
                         .add(R.id.infoFragmentFrame, specifiekeInfoFragment)
                         .hide(specifiekeInfoFragment)
                         .commit()
+
+                algInfoBtn.isClickable = false
+                addListeners()
             }
         }
 
-        addListeners()
     }
 
     private fun addListeners() {
         algInfoBtn.setOnClickListener {
+            algInfoBtn.setBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimaryDark))
+            specInfoBtn.setBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimary))
             supportFragmentManager.beginTransaction()
                     .hide(specifiekeInfoFragment)
                     .show(algemeneInfoFragment)
@@ -56,6 +62,8 @@ class InfoActivity : AppCompatActivity() {
         }
 
         specInfoBtn.setOnClickListener {
+            algInfoBtn.setBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimary))
+            specInfoBtn.setBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimaryDark))
             supportFragmentManager.beginTransaction()
                     .hide(algemeneInfoFragment)
                     .show(specifiekeInfoFragment)
