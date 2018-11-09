@@ -139,7 +139,7 @@ class WerkaanbiedingActivity : AppCompatActivity(), IClickListener {
         doAsync {
             if (leerling.id < 0) // check for a 'logged in' Leerling
                 leerling = DataManager.getLeerlingById(1) // in future, id will come from a logged in User
-            werkaanbiedingFragment.werkaanbieding = DataManager.getWerkaanbiedingVoorLeerling(leerling)
+            werkaanbiedingFragment.werkaanbieding = DataManager.getWerkaanbiedingForLeerling(leerling)
 
             uiThread {
                 progress.visibility = View.GONE // verbergt progressbar

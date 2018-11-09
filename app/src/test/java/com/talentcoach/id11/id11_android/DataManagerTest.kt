@@ -24,14 +24,14 @@ class DataManagerTest {
     @Test
     fun getWerkaanbiedingForLeerling_WhenMatchExists_ReturnsWerkaanbieding() {
         val leerling = DataManager.getLeerlingById(1)
-        val werkaanbieding = DataManager.getWerkaanbiedingVoorLeerling(leerling)
+        val werkaanbieding = DataManager.getWerkaanbiedingForLeerling(leerling)
         Assert.assertTrue(werkaanbieding != null)
     }
 
     @Test
     fun getWerkaanbiedingForLeerling_WhenNoMatchExists_ReturnsNull() {
         val leerling = DataManager.getLeerlingById(3)
-        val werkaanbieding = DataManager.getWerkaanbiedingVoorLeerling(leerling)
+        val werkaanbieding = DataManager.getWerkaanbiedingForLeerling(leerling)
         Assert.assertTrue(werkaanbieding == null)
     }
     //endregion
