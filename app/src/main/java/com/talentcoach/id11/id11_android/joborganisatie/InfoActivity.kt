@@ -27,7 +27,7 @@ class InfoActivity : AppCompatActivity() {
             val algHeader = algemeneInfo.map { ai -> ai.titel }.toTypedArray()
             val algBody = algemeneInfo.map { ai -> ai.omschrijving }.toTypedArray()
 
-            val specifiekeInfo = DataManager.getSpecifiekeInfoForWerkgever(Werkgever("Werkgever"))
+            val specifiekeInfo = DataManager.getSpecifiekeInfoForWerkgever(Werkgever("Jan De Nul"))
             val specHeader = specifiekeInfo.map { si -> si.titel }.toTypedArray()
             val specBody = specifiekeInfo.map { si -> si.omschrijving }.toTypedArray()
 
