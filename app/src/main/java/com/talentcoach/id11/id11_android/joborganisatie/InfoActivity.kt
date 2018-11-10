@@ -12,10 +12,15 @@ import kotlinx.android.synthetic.main.activity_info.*
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 
+/**
+ * Shows two fragments which can be toggled with tabs (Button views)
+ * @property algemeneInfoFragment InfoFragment with AlgemeneInfo in its ExpandableListView
+ * @property algemeneInfoFragment InfoFragment with SpecifiekeInfo in its ExpandableListView
+ */
 class InfoActivity : AppCompatActivity() {
     lateinit var algemeneInfoFragment: InfoFragment
         private set
-    lateinit var specifiekeInfoFragment: InfoFragment
+    lateinit var specifiekeInfoFragment: InfoFragment // TODO: Show default text when Leerling has no Werkgever yet
         private set
     private val algemeneInfoRepository = AlgemeneInfoRepository()
     private lateinit var werkgever : Werkgever
@@ -46,8 +51,6 @@ class InfoActivity : AppCompatActivity() {
                         .add(R.id.infoFragmentFrame, specifiekeInfoFragment)
                         .hide(specifiekeInfoFragment)
                         .commit()
-
-                algInfoBtn.isClickable = false
                 addListeners()
             }
         }
