@@ -7,119 +7,81 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.example.bruno.recyclerviewdemo2.CompTeBehalenAdapter
 import com.talentcoach.id11.id11_android.models.Competentie
+import com.talentcoach.id11.id11_android.models.Leerling
+import com.talentcoach.id11.id11_android.models.Richting
 import com.talentcoach.id11.id11_android.models.SubCompetentie
+import com.talentcoach.id11.id11_android.repositories.LeerlingRepositoryRetrofit
+import com.talentcoach.id11.id11_android.repositories.RichtingRepository
 import kotlinx.android.synthetic.main.fragment_tebehalen.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 import java.util.*
 
-class TeBehalenFragment: Fragment(){
+class TeBehalenFragment: Fragment() {
 
     lateinit var adapter: CompTeBehalenAdapter
-    lateinit var lijst :ArrayList<Competentie>
+    var lijst: MutableList<Competentie> = mutableListOf()
     lateinit var recycle: RecyclerView
     var copyListGraad = mutableListOf<Competentie>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_tebehalen, container, false)
 
-        lijst = arrayListOf(
-                Competentie("Scheert en/of knipt baard, bakkerbaard en snor",
-                        arrayListOf(
-                                SubCompetentie("Voert indien nodig voorverzorging uit"),
-                                SubCompetentie("Zeept de huid indien nodig in"),
-                                SubCompetentie("Spoelt de huid indien nodig")), 2018, "1e graad"),
-                Competentie("Voert een gelegenheidskapsel uit"
-                        ,arrayListOf(
-                                SubCompetentie("Stemt techniek en materiaal af op gelegenheidskapsel"),
-                                SubCompetentie("Realiseert opsteekkaspels of vlechten"),
-                                SubCompetentie("Werkt het kaspel af")) ,2018, "3e graad"),
-                Competentie("Voert make-up en/of manicure uit",
-                        arrayListOf(
-                                SubCompetentie("Reinigt de huid in functie van de verdere behandeling"),
-                                SubCompetentie("Stemt de techniek en het materiaal af op de opdracht"),
-                                SubCompetentie("Past de massagetechniek toe")),2016, "2e graad"),
-                Competentie("Vormt het haar tijdelijk om (brushen, föhnen)",
-                        arrayListOf(
-                                SubCompetentie("Stemt de techniek en materiaal af op de omvorming"),
-                                SubCompetentie("Werkt het kapsel af"),
-                                SubCompetentie("Voert indien nodig naverzorging uit")),2017, "2e graad"),
-                Competentie("Voert gecombineerde snitten uit",
-                        arrayListOf(
-                                SubCompetentie("Stemt de techniek en materiaal af op de snit"),
-                                SubCompetentie("Maakt verdelingen"),
-                                SubCompetentie("Analyseert en verbetert het resultaat indien nodig")),2018, "1e graad"),
-                Competentie("Voert basissnitten uit",
-                        arrayListOf(
-                                SubCompetentie("Stemt de techniek en materiaal af op de snit"),
-                                SubCompetentie("Maakt verdelingen"),
-                                SubCompetentie("Analyseert en verbetert het resultaat indien nodig")),2016, "1e graad"),
-                Competentie("Neemt afscheid van de klant",
-                        arrayListOf(
-                                SubCompetentie("Gaat na of de klant tevreden is"),
-                                SubCompetentie("Geeft de klant advies in functie van het volgend bezoek"),
-                                SubCompetentie("Geeft de jas aan de klant")),2018, "3e graad"),
-                Competentie("Verwelkomt de klant en spoort de verwachtingen op",
-                        arrayListOf(
-                                SubCompetentie("Ontvangt de klant beleefd"),
-                                SubCompetentie("Informeert zich over de verwachtingen van de klant"),
-                                SubCompetentie("Neemt de jas van de klant aan en hangt deze weg")),2015, "2e graad"),
-                Competentie("Adviseert de klant",
-                        arrayListOf(
-                                SubCompetentie("Volgt evoluties/trends in het vakgebied op"),
-                                SubCompetentie("Raadt de juiste behandeling aan in overleg met de klant"),
-                                SubCompetentie("Toont voorbeelden indien gewenst")),2016, "1e graad"))
-
-       recycle = view.findViewById(R.id.recyclerTeBehalen)
-       recycle.layoutManager = LinearLayoutManager(container?.context)
-       adapter = CompTeBehalenAdapter(lijst,activity!!.applicationContext)
-       recycle.adapter = adapter
+        getAndShowCompetentiesRichting()
+        recycle = view.findViewById(R.id.recyclerTeBehalen)
+        recycle.layoutManager = LinearLayoutManager(container?.context)
 
         return view
     }
 
-    fun showSortedListView(){
+    fun showSortedListView() {
         sortListOnNames()
         adapter.notifyDataSetChanged()
 
     }
 
-    fun showUnsortedListView(){
+    fun showUnsortedListView() {
         unsortListOnNames()
         adapter.notifyDataSetChanged()
     }
 
-    private fun unsortListOnNames(){
-       Collections.shuffle(lijst)
-       adapter.notifyDataSetChanged()
+    private fun unsortListOnNames() {
+        Collections.shuffle(lijst)
+        adapter.notifyDataSetChanged()
     }
 
-    private fun sortListOnNames(){
-        Collections.sort(lijst, object:Comparator<Competentie>{
+    private fun sortListOnNames() {
+        Collections.sort(lijst, object : Comparator<Competentie> {
             override fun compare(o1: Competentie?, o2: Competentie?): Int {
-                return o1!!.name.compareTo(o2!!.name)
+                return o1!!.omschrijving.compareTo(o2!!.omschrijving)
             }
         })
     }
 
-    fun filterOnGraad(graad:String){
+    fun filterOnGraad(graad: String) {
         var sortedList: List<Competentie>
 
-        if(!copyListGraad.isEmpty()){
+        if (!copyListGraad.isEmpty()) {
             adapter.compList.clear()
-            for(item in copyListGraad){
+            for (item in copyListGraad) {
                 adapter.compList.add(adapter.compList.count(), item)
             }
             copyListGraad = mutableListOf()
 
         }
 
-        sortedList = lijst.filter { c -> c.graad.equals(graad,true) }
+        sortedList = lijst.filter { c -> c.graad.equals(graad, true) }
 
-        if(!sortedList.isEmpty()){
+        if (!sortedList.isEmpty()) {
             copyListGraad = lijst.toMutableList()
             adapter.compList.clear()
-            for(item in sortedList){
+            for (item in sortedList) {
                 adapter.compList.add(adapter.compList.count(), item)
             }
 
@@ -127,5 +89,71 @@ class TeBehalenFragment: Fragment(){
         adapter.notifyDataSetChanged()
     }
 
+    /**
+     * GET Leerling with his RichtingId
+     * Then GET Competenties and SubCompetenties from Richting
+     */
+    private fun getAndShowCompetentiesRichting() {
+        val url = "http://projecten3studserver11.westeurope.cloudapp.azure.com/api/"
+        var richtingId: Int?
 
+        //Ophalen van de leerling en richtingId
+        val retrofitLeerling = Retrofit
+                .Builder()
+                .addConverterFactory(GsonConverterFactory.create())
+                .baseUrl(url)
+                .build()
+
+        val leerlingRepository = retrofitLeerling.create(LeerlingRepositoryRetrofit::class.java)
+        val callLeerling = leerlingRepository.getById(1)
+
+        callLeerling.enqueue(object : Callback<Leerling> {
+            override fun onFailure(call: Call<Leerling>, t: Throwable) {
+                println("WERKT NIET")
+            }
+
+            override fun onResponse(call: Call<Leerling>, response: Response<Leerling>) {
+
+                if (response.isSuccessful) {
+                    var leerling = response.body()
+                    richtingId = leerling?.richting?.id
+
+                    //Ophalen van Hoofdcompetenties van de richitng
+                    val retrofitRichting = Retrofit
+                            .Builder()
+                            .addConverterFactory(GsonConverterFactory.create())
+                            .baseUrl(url)
+                            .build()
+                    val richtingRepository = retrofitRichting.create(RichtingRepository::class.java)
+                    val callRichting = richtingRepository.getById(richtingId)
+
+                    callRichting.enqueue(object : Callback<Richting> {
+                        override fun onFailure(call: Call<Richting>, t: Throwable) {
+                            println("WERKT NIET")
+                        }
+
+                        override fun onResponse(call: Call<Richting>, response: Response<Richting>) {
+                            if(response.isSuccessful){
+                                var richting = response.body()
+
+                                lijst = richting!!.competenties
+
+                                //Progressbar doen verdwijnen en lijst weergeven
+                                recycle = view!!.findViewById(R.id.recyclerTeBehalen)
+                                recycle.visibility = View.VISIBLE
+                                teBehalenProgress.visibility = View.GONE
+
+                                adapter = CompTeBehalenAdapter(lijst, activity!!.applicationContext)
+                                recycle.adapter = adapter
+                            }
+                        }
+
+                    })
+                } else {
+                    Toast.makeText(context, "Hier ging iets fout", Toast.LENGTH_LONG).show()
+                }
+            }
+        })
+
+    }
 }

@@ -1,18 +1,22 @@
 package com.talentcoach.id11.id11_android.models
 
+import com.google.gson.annotations.SerializedName
 import java.util.*
 import kotlin.collections.ArrayList
 
-class Competentie(val name:String) {
+class Competentie(val id:Int,val omschrijving:String) {
+
 
     var behaaldOp: String = ""
     var cal:Calendar=Calendar.getInstance()
     var graad: String = ""
-    lateinit var subCompetenties: ArrayList<SubCompetentie>
+
+    @SerializedName("competenties")
+    lateinit var subCompetenties: MutableList<SubCompetentie>
 
     //Parameter jaar toegoevoegd om niet altijd dezelfde datum te hebben
     //Tijdelijk totdat we werkende backend hebben
-    constructor(name:String,subCompetenties: ArrayList<SubCompetentie> ,jaar:Int?, graad: String):this(name)
+    constructor(id:Int,omschrijving: String,subCompetenties: ArrayList<SubCompetentie> ,jaar:Int?, graad: String):this(id,omschrijving)
     {
         if(jaar != null){
             cal.set(jaar ,Calendar.MAY,23)

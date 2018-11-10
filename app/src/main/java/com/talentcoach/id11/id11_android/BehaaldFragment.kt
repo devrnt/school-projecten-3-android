@@ -10,9 +10,18 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ListView
 import android.widget.TextView
+import android.widget.Toast
 import com.talentcoach.id11.id11_android.adapters.CompBehaaldAdapter
 import com.talentcoach.id11.id11_android.models.Competentie
+import com.talentcoach.id11.id11_android.models.Leerling
 import com.talentcoach.id11.id11_android.models.SubCompetentie
+import com.talentcoach.id11.id11_android.repositories.LeerlingRepositoryRetrofit
+import kotlinx.android.synthetic.main.fragment_behaald.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 import java.util.*
 import kotlin.Comparator
 import kotlin.collections.ArrayList
@@ -20,71 +29,19 @@ import kotlin.collections.ArrayList
 class BehaaldFragment: Fragment(){
 
     lateinit var adapter: CompBehaaldAdapter
-    lateinit var lijst: ArrayList<Competentie>
+    var lijst: MutableList<Competentie> = mutableListOf()
     var copyListJaar = mutableListOf<Competentie>()
     var copyListGraad = mutableListOf<Competentie>()
 
     lateinit var recycle: RecyclerView
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        var behaaldTxt: TextView
         var view = inflater.inflate(R.layout.fragment_behaald, container, false)
-        behaaldTxt = view.findViewById(R.id.behaaldTxt2)
 
-
-        lijst = arrayListOf(
-                Competentie("Ruimt de werkpost op en maakt hem schoon",
-                        arrayListOf(
-                                SubCompetentie("Sorteert afval volgens richtlijnen"),
-                                SubCompetentie("Reinigt gebruikte materiaal"),
-                                SubCompetentie("Houdt zich aan richtlijnen voor hygiëne, veiligheid en ergonomie")), 2018, "1e graad"),
-                Competentie("Neemt deel aan organisatie van het kapsalon"
-                        ,arrayListOf(
-                                SubCompetentie("Werkt samen in team"),
-                                SubCompetentie("Voert opdrachten uit volgens werking van kapsalon"),
-                                SubCompetentie("Houdt zich aan regels van kapsalon")) ,2018, "2e graad"),
-                Competentie("Bereidt de werkpost voor",
-                        arrayListOf(
-                                SubCompetentie("Zorgt voor orde en netheid van de werkpost"),
-                                SubCompetentie("Bereidt het materiaal en producten eigen aan activiteit voor"),
-                                SubCompetentie("Controleert en zet materiaal klaar")),2016, "1e graad"),
-                Competentie("Legt een afspraak vast met de klant",
-                        arrayListOf(
-                                SubCompetentie("Staat klant te woord aan telefoon of aan receptie"),
-                                SubCompetentie("Schat tijdsduur van gewenste behandeling in"),
-                                SubCompetentie("Gebruikt informatie- en communicatietechnologie")),2017, "1e graad"),
-                Competentie("Volgt de klant op",
-                        arrayListOf(
-                                SubCompetentie("Houdt klantenfiche bij en vult gegevens van behandeling in"),
-                                SubCompetentie("Verstrekt uitleg over de behandeling en gebruikte producten"),
-                                SubCompetentie("Begeleidt klant naar de volgende stap en garandeert opvolging")),2018, "3e graad"),
-                Competentie("Past shampoos en specifieke haarverzorging toe",
-                        arrayListOf(
-                                SubCompetentie("Borstelt en ontwart het haar"),
-                                SubCompetentie("Voert elke stap van werkwijze uit volgens verdere behandeling"),
-                                SubCompetentie("Brengt de gewenste haar- en huidverzorging aan")),2016, "2e graad"),
-                Competentie("Vormt het haar blijvend om (krullen, ontkrullen)",
-                        arrayListOf(
-                                SubCompetentie("Voert indien nodig een voorverzorging uit"),
-                                SubCompetentie("Stelt de juiste omvormingsdiagnose"),
-                                SubCompetentie("Voert indien nodig een naverzorging uit")),2018, "1e graad"),
-                Competentie("Kleurt het haar (volledig of haarlokken)",
-                        arrayListOf(
-                                SubCompetentie("Stelt de juiste kleurdiagnose"),
-                                SubCompetentie("Berekent en past de juiste formule toe"),
-                                SubCompetentie("Emulgeert en spoelt het haar uit")),2015, "3e graad"),
-                Competentie("Ontkleurt het haar (volledig of haarlokken)",
-                        arrayListOf(
-                                SubCompetentie("Stelt de juiste diagnose"),
-                                SubCompetentie("Spoelt het haar"),
-                                SubCompetentie("Bereidt het mengsel")),2016, "2e graad"))
-
+        getAndShowCompetentiesLeerling()
         recycle = view.findViewById(R.id.recyclerBehaald)
         recycle.layoutManager = LinearLayoutManager(container?.context)
-        adapter = CompBehaaldAdapter(lijst,activity!!.applicationContext)
-        recycle.adapter = adapter
 
-        behaaldTxt.text = "Behaalde competenties: ${lijst.count()}/18"
 
         return view
     }
@@ -94,7 +51,7 @@ class BehaaldFragment: Fragment(){
 
         Collections.sort(lijst, object: Comparator<Competentie> {
             override fun compare(o1: Competentie?, o2: Competentie?): Int {
-                return o1!!.name.compareTo(o2!!.name)
+                return o1!!.omschrijving.compareTo(o2!!.omschrijving)
             }
         })
         adapter.notifyDataSetChanged()
@@ -110,7 +67,7 @@ class BehaaldFragment: Fragment(){
     fun filterOnYear(year:String) {
         var sortedList: List<Competentie>
 
-        if (!copyListJaar.isEmpty()) {
+        if (copyListJaar.isNotEmpty()) {
             adapter.compList.clear()
             for (item in copyListJaar) {
                 adapter.compList.add(adapter.compList.count(), item)
@@ -118,11 +75,10 @@ class BehaaldFragment: Fragment(){
             copyListJaar = mutableListOf()
         }
 
-
         sortedList = lijst.filter { c -> c.behaaldOp.contains(year,true)}
 
 
-        if (!sortedList.isEmpty()) {
+        if (sortedList.isNotEmpty()) {
             copyListJaar = lijst.toMutableList()
 
             adapter.compList.clear()
@@ -131,8 +87,6 @@ class BehaaldFragment: Fragment(){
             }
         }
 
-
-
         adapter.notifyDataSetChanged()
     }
 
@@ -140,7 +94,7 @@ class BehaaldFragment: Fragment(){
         var sortedList: List<Competentie>
 
 
-        if(!copyListGraad.isEmpty()){
+        if(copyListGraad.isNotEmpty()){
             adapter.compList.clear()
             for(item in copyListGraad){
                 adapter.compList.add(adapter.compList.count(), item)
@@ -149,20 +103,63 @@ class BehaaldFragment: Fragment(){
 
         }
 
-
         sortedList = lijst.filter { c -> c.graad.equals(graad,true) }
 
 
-        if(!sortedList.isEmpty()){
+        if(sortedList.isNotEmpty()){
             copyListGraad = lijst.toMutableList()
             adapter.compList.clear()
             for(item in sortedList){
                 adapter.compList.add(adapter.compList.count(), item)
             }
-
         }
 
         adapter.notifyDataSetChanged()
+    }
+
+    private fun getAndShowCompetentiesLeerling(){
+        val url = "http://projecten3studserver11.westeurope.cloudapp.azure.com/api/"
+
+        //Ophalen van de leerling en richtingId
+        val retrofitLeerling = Retrofit
+                .Builder()
+                .addConverterFactory(GsonConverterFactory.create())
+                .baseUrl(url)
+                .build()
+
+        val leerlingRepository = retrofitLeerling.create(LeerlingRepositoryRetrofit::class.java)
+        val callLeerling = leerlingRepository.getById(1)
+
+        callLeerling.enqueue(object : Callback<Leerling> {
+            override fun onFailure(call: Call<Leerling>, t: Throwable) {
+                println("WERKT NIET")
+            }
+
+            override fun onResponse(call: Call<Leerling>, response: Response<Leerling>) {
+
+                if(response.isSuccessful){
+                    var leerling = response.body()
+
+                    lijst = leerling!!.competenties
+                    behaaldTxt2.text = "Behaalde competenties: ${lijst.count()}"
+
+                    //Progressbar doen verdwijnen en lijst weergeven
+
+                    recycle = view!!.findViewById(R.id.recyclerBehaald)
+                    recycle.visibility = View.VISIBLE
+                    behaaldTxt2.visibility = View.VISIBLE
+                    behaaldProgress.visibility = View.GONE
+
+                    adapter = CompBehaaldAdapter(lijst,activity!!.applicationContext)
+                    recycle.adapter = adapter
+                }
+                else {
+                    Toast.makeText(context, "Hier ging iets fout", Toast.LENGTH_LONG).show()
+                }
+
+            }
+
+        })
     }
 
 }

@@ -15,6 +15,7 @@ import android.view.ViewGroup
 import android.view.animation.AlphaAnimation
 import android.widget.TextView
 import com.talentcoach.id11.id11_android.R
+import com.talentcoach.id11.id11_android.adapters.CustomViewHolder
 import com.talentcoach.id11.id11_android.models.Competentie
 import kotlinx.android.synthetic.main.comp_behaald_item.view.*
 import kotlinx.android.synthetic.main.comp_tebehalen_item.view.*
@@ -22,7 +23,7 @@ import kotlinx.android.synthetic.main.fragment_tebehalen.view.*
 import java.util.*
 
 
-class CompTeBehalenAdapter(val compList: ArrayList<Competentie>,var context: Context):RecyclerView.Adapter<CustomViewHolder>(){
+class CompTeBehalenAdapter(val compList: MutableList<Competentie>,var context: Context):RecyclerView.Adapter<CustomViewHolder>(){
 
     var opengeklapt:Boolean = false
 
@@ -43,14 +44,15 @@ class CompTeBehalenAdapter(val compList: ArrayList<Competentie>,var context: Con
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
         val competentie = compList.get(position)
 
-        holder.view.compName.text = competentie.name
+        holder.view.compName.text = competentie.omschrijving
         holder.view.arrowIcon.setImageResource(R.drawable.arrow_right_24dp)
         holder.view.graadTxt.text = competentie.graad
 
         if(holder.view.childItems.childCount == 0){
             for(subComp in competentie.subCompetenties){
                 var text: TextView = TextView(context)
-                text.text = "${'\u25CF'} ${subComp.name}" // ${'\u25CF'} zorgt voor Bullet icon
+                text.text = "${'\u25CF'} ${subComp.omschrijving}" // ${'\u25CF'} zorgt voor Bullet icon
+                text.setPadding(0,0,0,40)
                 holder.view.childItems.addView(text)
             }
 

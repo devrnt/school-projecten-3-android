@@ -33,9 +33,12 @@ object DummyDbContext {
 
         leerlingen.clear()
         leerlingen.addAll(mutableListOf(
-                Leerling(1, Richting(), 0, "teamwork kapper", mutableListOf(), mutableListOf()),
-                Leerling(2, Richting(), 0, "loodgieter", mutableListOf(werkaanbiedingen[2]), mutableListOf()),
-                Leerling(3, Richting(), 0, "informatica", mutableListOf(), mutableListOf())
+                Leerling(1, Richting(1,"", mutableListOf()), 0, "teamwork kapper",
+                        mutableListOf(), mutableListOf(),"Stroobants","Bruno",mutableListOf()),
+                Leerling(2, Richting(1,"", mutableListOf()), 0, "loodgieter",
+                        mutableListOf(werkaanbiedingen[2]), mutableListOf(),"Stroobants","Bruno",mutableListOf()),
+                Leerling(3, Richting(1,"", mutableListOf()), 0, "informatica",
+                        mutableListOf(), mutableListOf(),"Stroobants","bruno",mutableListOf())
         ))
     }
 }

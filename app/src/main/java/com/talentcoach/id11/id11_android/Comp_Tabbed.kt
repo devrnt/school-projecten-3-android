@@ -1,6 +1,7 @@
 package com.talentcoach.id11.id11_android
 
 import android.app.Dialog
+import android.content.Intent
 import android.support.design.widget.TabLayout
 import android.support.v7.app.AppCompatActivity
 
@@ -10,9 +11,21 @@ import android.support.v4.app.FragmentPagerAdapter
 import android.os.Bundle
 import android.view.*
 import android.widget.*
+import com.google.gson.Gson
+import com.talentcoach.id11.id11_android.models.Leerling
+import com.talentcoach.id11.id11_android.models.Richting
+import com.talentcoach.id11.id11_android.repositories.GebruikerRepository
+import com.talentcoach.id11.id11_android.repositories.LeerlingRepositoryRetrofit
+import com.talentcoach.id11.id11_android.repositories.RichtingRepository
+import com.talentcoach.id11.id11_android.repositories.responses.LoginResponse
 
 import kotlinx.android.synthetic.main.activity_comp__tabbed.*
 import kotlinx.android.synthetic.main.dialog_filter.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
 class Comp_Tabbed : AppCompatActivity() {
 
@@ -182,7 +195,6 @@ class Comp_Tabbed : AppCompatActivity() {
         else if(!toggleNaam)
             fragment.showUnsortedListView()
     }
-
 
     /**
      * A [FragmentPagerAdapter] that returns a fragment corresponding to
