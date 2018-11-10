@@ -16,6 +16,4 @@ import org.junit.runners.Suite
         BewaardeWerkaanbiedingDetailTest::class,
         BewaardeWerkaanbiedingVerwijderenTest::class
 )
-class WerkaanbiedingActivityTestSuite {
-
-}
+class WerkaanbiedingActivityTestSuite

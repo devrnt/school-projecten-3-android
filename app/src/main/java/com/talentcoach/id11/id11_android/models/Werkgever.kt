@@ -1,3 +1,3 @@
 package com.talentcoach.id11.id11_android.models
 
-class Werkgever(val naam: String)
+class Werkgever(val id: Int, val naam: String)

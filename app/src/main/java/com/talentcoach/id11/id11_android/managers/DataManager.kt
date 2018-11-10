@@ -4,15 +4,21 @@ import com.talentcoach.id11.id11_android.models.*
 import com.talentcoach.id11.id11_android.repositories.LeerlingRepository
 import com.talentcoach.id11.id11_android.repositories.SpecifiekeInfoRepository
 import com.talentcoach.id11.id11_android.repositories.WerkaanbiedingRepository
+import com.talentcoach.id11.id11_android.repositories.WerkgeverRepository
 import java.io.Serializable
 
 object DataManager : Serializable {
     var leerlingRepository: IRepository<Leerling> = LeerlingRepository()
     var werkaanbiedingRepository: IRepository<Werkaanbieding> = WerkaanbiedingRepository()
     var specifiekeInfoRepository: IRepository<SpecifiekeInfo> = SpecifiekeInfoRepository()
+    var werkgeverRepository: IRepository<Werkgever> = WerkgeverRepository()
 
     fun getLeerlingById(id: Int): Leerling {
         return leerlingRepository.getById(id)
+    }
+
+    fun getWerkgeverById(id: Int): Werkgever {
+        return werkgeverRepository.getById(id)
     }
 
     /**

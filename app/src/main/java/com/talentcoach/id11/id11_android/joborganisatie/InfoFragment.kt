@@ -21,8 +21,10 @@ private const val BODY_LIST = "BODY_LIST"
  * @property bodyList ArrayList of Strings containing the body texts for the list
  */
 class InfoFragment : Fragment() {
-    private var headerList: List<String>? = null
-    private var bodyList: List<String>? = null
+    var headerList: List<String>? = null
+        private set
+    var bodyList: List<String>? = null
+        private set
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

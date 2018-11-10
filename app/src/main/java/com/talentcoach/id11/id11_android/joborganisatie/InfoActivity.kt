@@ -1,9 +1,8 @@
 package com.talentcoach.id11.id11_android.joborganisatie
 
-import android.content.Context
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
+import android.support.v7.app.AppCompatActivity
 import android.view.View
 import com.talentcoach.id11.id11_android.R
 import com.talentcoach.id11.id11_android.managers.DataManager
@@ -14,9 +13,12 @@ import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 
 class InfoActivity : AppCompatActivity() {
-    private lateinit var algemeneInfoFragment: InfoFragment
-    private lateinit var specifiekeInfoFragment: InfoFragment
+    lateinit var algemeneInfoFragment: InfoFragment
+        private set
+    lateinit var specifiekeInfoFragment: InfoFragment
+        private set
     private val algemeneInfoRepository = AlgemeneInfoRepository()
+    private lateinit var werkgever : Werkgever
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,11 +27,12 @@ class InfoActivity : AppCompatActivity() {
 
         infoProgBar.visibility = View.VISIBLE
         doAsync {
+            werkgever = DataManager.getWerkgeverById(1)
             val algemeneInfo = algemeneInfoRepository.getAlgemeneInfo()
             val algHeader = algemeneInfo.map { ai -> ai.titel }.toTypedArray()
             val algBody = algemeneInfo.map { ai -> ai.omschrijving }.toTypedArray()
 
-            val specifiekeInfo = DataManager.getSpecifiekeInfoForWerkgever(Werkgever("Jan De Nul"))
+            val specifiekeInfo = DataManager.getSpecifiekeInfoForWerkgever(werkgever)
             val specHeader = specifiekeInfo.map { si -> si.titel }.toTypedArray()
             val specBody = specifiekeInfo.map { si -> si.omschrijving }.toTypedArray()
 
