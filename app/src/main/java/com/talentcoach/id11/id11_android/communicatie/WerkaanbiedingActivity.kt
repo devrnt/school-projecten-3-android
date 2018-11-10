@@ -8,10 +8,10 @@ import com.talentcoach.id11.id11_android.R
 import com.talentcoach.id11.id11_android.managers.DataManager
 import com.talentcoach.id11.id11_android.models.Leerling
 import com.talentcoach.id11.id11_android.models.Richting
-import com.talentcoach.id11.id11_android.repositories.LeerlingRepository
 import kotlinx.android.synthetic.main.activity_werkaanbieding.*
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
+import java.util.*
 
 /**
  * Enables the user to view and react to a Werkaanbieding and to manage his/her Bewaarde Werkaanbiedingen
@@ -22,8 +22,8 @@ import org.jetbrains.anko.uiThread
  * @property werkaanbiedingButtonsFragment Fragment that shows a noLike and like button so the user can react to a werkaanbieding
  */
 class WerkaanbiedingActivity : AppCompatActivity(), IClickListener {
-    var leerling = Leerling(-1, Richting(1,"", mutableListOf()), 0, "default", mutableListOf(),
-            mutableListOf(),"Stroobants","Bruno",mutableListOf())
+    var leerling = Leerling(-1, Richting(1, "", mutableListOf()), 0, Date(), "leerling@school.be", "default", mutableListOf(),
+            mutableListOf(), "Stroobants", "Bruno", mutableListOf())
         private set
     // shown when user toggles to Bewaarde Werkaanbiedingen
     val werkaanbiedingenListFragment = WerkaanbiedingenListFragment() // shows Leerling.bewaardeWerkaanbiedingen
@@ -163,8 +163,8 @@ class WerkaanbiedingActivity : AppCompatActivity(), IClickListener {
             DataManager.update(leerling) // persists Leerling
         }
         // resets leerling property so Leerling gets retrieved from the database when activity resumes
-        leerling = Leerling(-1, Richting(1,"", mutableListOf()), 0, "default",
-                mutableListOf(), mutableListOf(),"Stroobants","Bruno",mutableListOf())
+        leerling = Leerling(-1, Richting(1, "", mutableListOf()), 0, Date(), "leerling@school.be", "default",
+                mutableListOf(), mutableListOf(), "Stroobants", "Bruno", mutableListOf())
     }
 
 

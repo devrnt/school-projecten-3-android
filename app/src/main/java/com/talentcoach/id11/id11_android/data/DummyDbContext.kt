@@ -4,6 +4,7 @@ import com.talentcoach.id11.id11_android.models.Leerling
 import com.talentcoach.id11.id11_android.models.Richting
 import com.talentcoach.id11.id11_android.models.Werkaanbieding
 import com.talentcoach.id11.id11_android.models.Werkgever
+import java.util.*
 
 object DummyDbContext {
     val werkgevers: MutableList<Werkgever> = mutableListOf()
@@ -14,7 +15,7 @@ object DummyDbContext {
         resetDbContext()
     }
 
-    fun resetDbContext(){
+    fun resetDbContext() {
         werkgevers.clear()
         werkgevers.addAll(mutableListOf(
                 Werkgever("Werkgever 1"),
@@ -33,12 +34,12 @@ object DummyDbContext {
 
         leerlingen.clear()
         leerlingen.addAll(mutableListOf(
-                Leerling(1, Richting(1,"", mutableListOf()), 0, "teamwork kapper",
-                        mutableListOf(), mutableListOf(),"Stroobants","Bruno",mutableListOf()),
-                Leerling(2, Richting(1,"", mutableListOf()), 0, "loodgieter",
-                        mutableListOf(werkaanbiedingen[2]), mutableListOf(),"Stroobants","Bruno",mutableListOf()),
-                Leerling(3, Richting(1,"", mutableListOf()), 0, "informatica",
-                        mutableListOf(), mutableListOf(),"Stroobants","bruno",mutableListOf())
+                Leerling(1, Richting(1, "", mutableListOf()), 0, Date(), "leerling@school.be", "teamwork kapper",
+                        mutableListOf(), mutableListOf(), "Stroobants", "Bruno", mutableListOf()),
+                Leerling(2, Richting(1, "", mutableListOf()), 0, Date(), "leerling@school.be", "loodgieter",
+                        mutableListOf(werkaanbiedingen[2]), mutableListOf(), "Stroobants", "Bruno", mutableListOf()),
+                Leerling(3, Richting(1, "", mutableListOf()), 0, Date(), "leerling@school.be", "informatica",
+                        mutableListOf(), mutableListOf(), "Stroobants", "bruno", mutableListOf())
         ))
     }
 }

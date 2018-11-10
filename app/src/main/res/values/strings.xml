@@ -74,6 +74,14 @@
     <!-- Strings related to Profiel -->
     <string name="logout_button">Afmelden</string>
     <string name="interests_txt">Interesses</string>
+    <string name="profile_updated">Succesvol bijgewerkt</string>
+    <string name="no_interests">Geen interesses</string>
+    <string name="klas_txt">Klas</string>
+    <string name="aanbiedingen_txt">Aanbiedingen</string>
+    <string name="foute_suggesties_enkel">%s is geen geldige interesse</string>
+    <string name="foute_suggesties_meervoud">%s zijn geen geldige interesses</string>
+
+    <string name="sp_key_leerling">leerling</string>
 
     <!-- Strings related to Backend -->
     <string name="BASE_URL_API">http://projecten3studserver11.westeurope.cloudapp.azure.com/api/</string>

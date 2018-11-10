@@ -50,6 +50,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:baselineAligned="false"
                     android:orientation="horizontal"
                     android:weightSum="3">
 
@@ -63,7 +64,8 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="INTERESSES"
+                            android:text="@string/interests_txt"
+                            android:textAllCaps="true"
                             android:textColor="@color/colorAccent"
                             android:textSize="12sp"
                             android:textStyle="bold" />
@@ -89,16 +91,17 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="KLAS"
+                            android:text="@string/klas_txt"
+                            android:textAllCaps="true"
                             android:textColor="@color/colorAccent"
                             android:textSize="12sp"
                             android:textStyle="bold" />
 
                         <TextView
+                            android:id="@+id/klas_text"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:paddingTop="10dp"
-                            android:text="3HAb"
                             android:textColor="@color/colorPrimaryDark"
                             android:textSize="18sp"
                             android:textStyle="bold" />
@@ -115,7 +118,8 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="AANBIEDINGEN"
+                            android:text="@string/aanbiedingen_txt"
+                            android:textAllCaps="true"
                             android:textColor="@color/colorAccent"
                             android:textSize="12sp"
                             android:textStyle="bold" />
@@ -125,7 +129,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:paddingTop="10dp"
-                            android:text="360"
                             android:textColor="@color/colorPrimaryDark"
                             android:textSize="18sp"
                             android:textStyle="bold" />
@@ -148,7 +151,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:drawableLeft="@drawable/ic_account_circle_24dp"
+                android:drawableStart="@drawable/ic_account_circle_24dp"
                 android:drawablePadding="24dp"
                 android:paddingLeft="25dp"
                 android:paddingTop="16dp"
@@ -161,7 +164,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:drawableLeft="@drawable/ic_email_24dp"
+                android:drawableStart="@drawable/ic_email_24dp"
                 android:drawablePadding="24dp"
                 android:paddingLeft="25dp"
                 android:paddingTop="16dp"
@@ -170,11 +173,25 @@
                 android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/geboorteDatumTxt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:drawableStart="@drawable/ic_today__24dp"
+                android:drawablePadding="24dp"
+                android:paddingLeft="25dp"
+                android:paddingTop="16dp"
+                android:paddingRight="25dp"
+                android:paddingBottom="16dp"
+                android:textStyle="bold" />
+
+
+            <TextView
                 android:id="@+id/genderTxt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:drawableLeft="@drawable/ic_whatshot_24dp"
+                android:drawableStart="@drawable/ic_whatshot_24dp"
                 android:drawablePadding="24dp"
                 android:paddingLeft="25dp"
                 android:paddingTop="16dp"
@@ -188,7 +205,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:drawableLeft="@drawable/ic_star_24dp"
+                android:drawableStart="@drawable/ic_star_24dp"
                 android:drawablePadding="24dp"
                 android:paddingLeft="25dp"
                 android:paddingTop="16dp"
@@ -202,13 +219,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:drawableLeft="@drawable/ic_school_24dp"
+                android:drawableStart="@drawable/ic_school_24dp"
                 android:drawablePadding="24dp"
                 android:paddingLeft="25dp"
                 android:paddingTop="16dp"
                 android:paddingRight="25dp"
                 android:paddingBottom="16dp"
-                android:text="Richting"
                 android:textStyle="bold" />
         </LinearLayout>
 

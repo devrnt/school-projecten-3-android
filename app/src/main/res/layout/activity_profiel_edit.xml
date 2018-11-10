@@ -46,7 +46,8 @@
 
             <TextView
                 android:id="@+id/error_text"
-                style="@style/ErrorText"
+                style="@style/TextAppearance.Design.Error"
+                android:textSize="15sp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 

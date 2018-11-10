@@ -142,7 +142,7 @@ class LoginFragment : Fragment() {
                 }
             }
 
-            // if backend can't be reached
+            // backend can't be reached
             override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
                 Toast.makeText(context, getString(R.string.something_went_wrong_login), Toast.LENGTH_LONG).show()
             }
