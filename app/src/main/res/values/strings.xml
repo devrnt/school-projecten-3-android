@@ -47,6 +47,7 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
+    <string name="logo_description">Logo van de applicatie</string>
 
     <!-- Strings related to Competenties Tab -->
     <string name="title_activity_comp__tabbed">Competenties</string>
@@ -71,8 +72,9 @@
     <string name="sp_key_user">com.talentcoach.id11.id11_android.login.loginResponse</string>
 
     <!-- Strings related to Profiel -->
-
     <string name="logout_button">Afmelden</string>
     <string name="interests_txt">Interesses</string>
 
+    <!-- Strings related to Backend -->
+    <string name="BASE_URL_API">http://projecten3studserver11.westeurope.cloudapp.azure.com/api/</string>
 </resources>

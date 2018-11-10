@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.preference.PreferenceManager
 import android.support.design.widget.TextInputLayout
 import android.support.v4.app.Fragment
-import android.text.Editable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,138 +15,134 @@ import com.google.gson.Gson
 import com.talentcoach.id11.id11_android.HomeActivity
 import com.talentcoach.id11.id11_android.R
 import com.talentcoach.id11.id11_android.models.Gebruiker
-import com.talentcoach.id11.id11_android.repositories.GebruikerRepository
+import com.talentcoach.id11.id11_android.repositories.GebruikersAPI
 import com.talentcoach.id11.id11_android.repositories.responses.LoginResponse
-import kotlinx.android.synthetic.main.fragment_login.*
 import kotlinx.android.synthetic.main.fragment_login.view.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 
-
+/**
+ * Fragment that shows an input for username and password and a login button
+ * @property gebruikersnaamInput The text input that is used to type the username
+ * @property wachtwoordInput The text input that is used to type the password
+ * @property gebruikersnaamInputLayout The input layout that is used to display username error messages
+ * @property wachtwoordInputLayout The input layout that is used to display password error message
+ */
 class LoginFragment : Fragment() {
     private lateinit var sharedPreferences: SharedPreferences
     private lateinit var spEditor: SharedPreferences.Editor
 
-    var gebruikersnaamInput: EditText? = null
-    var wachtwoordInput: EditText? = null
+    // actual text inputs
+    lateinit var gebruikersnaamInput: EditText
+    lateinit var wachtwoordInput: EditText
 
-    var gebruikersnaamInputLayout: TextInputLayout? = null
-    var wachtwoordInputLayout: TextInputLayout? = null
+    // input layouts for the text inputs
+    lateinit var gebruikersnaamInputLayout: TextInputLayout
+    lateinit var wachtwoordInputLayout: TextInputLayout
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity)
         spEditor = sharedPreferences.edit()
-
-    }
-
-    private fun checkSharedPreferences() {
-        val gebruikersnaam = sharedPreferences.getString(getString(R.string.sp_key_username), "")
-        val wachtwoord = sharedPreferences.getString(getString(R.string.sp_key_password), "")
-        gebruikersnaamInput?.setText(gebruikersnaam)
-        wachtwoordInput?.setText(wachtwoord)
-
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_login, container, false)
 
+        // set the class attributes to the corresponding elements in the xml
         gebruikersnaamInput = view.gebruikersNaam_input
         wachtwoordInput = view.wachtwoord_input
 
         gebruikersnaamInputLayout = view.gebruikersNaam_inputLayout
         wachtwoordInputLayout = view.wachtwoord_inputLayout
 
-        checkSharedPreferences()
-
+        readSharedPreferences()
 
         view.login_btn.setOnClickListener {
-            if (!validGebruikersnaam(gebruikersNaam_input.text)) {
-                gebruikersNaam_inputLayout.error = getString(R.string.error_username)
-            } else {
-                gebruikersNaam_inputLayout.error = null
+            when {
+                // if not valid set error message for username
+                !validGebruikersnaam() -> gebruikersnaamInputLayout.error = getString(R.string.error_username)
+                // remove the error message for username
+                else -> gebruikersnaamInputLayout.error = null
             }
 
-            if (!validWachtwoord(wachtwoord_input.text)) {
-                wachtwoord_inputLayout.error = getString(R.string.error_password)
-            } else {
-                wachtwoord_inputLayout.error = null
+            when {
+                // if not valid set error message for password
+                !validWachtwoord() -> wachtwoordInputLayout.error = getString(R.string.error_password)
+                // remove the error message for password
+                else -> wachtwoordInputLayout.error = null
             }
 
-            if (validGebruikersnaam(gebruikersNaam_input.text) && validWachtwoord(wachtwoord_input.text)) {
-                attemptLogin()
+            // if username and password valid attempt to login
+            when {
+                validGebruikersnaam() && validWachtwoord() -> attemptLogin()
             }
         }
-
-        //  TODO("Clear the error once more than 8 characters are typed", )
 
         return view
     }
 
-    private fun validGebruikersnaam(text: Editable?): Boolean {
-        return text != null && text.isNotBlank()
+    private fun validGebruikersnaam(): Boolean {
+        return gebruikersnaamInput.text != null && gebruikersnaamInput.text.isNotBlank()
     }
 
-    private fun validWachtwoord(text: Editable?): Boolean {
-        return text != null && text.trim().length >= 8
+    private fun validWachtwoord(): Boolean {
+        return wachtwoordInput.text != null && wachtwoordInput.text.trim().length >= 8
     }
 
+    private fun readSharedPreferences() {
+        val gebruikersnaam = sharedPreferences.getString(getString(R.string.sp_key_username), "")
+        val wachtwoord = sharedPreferences.getString(getString(R.string.sp_key_password), "")
+
+        // set the input with the username and password that was red from the sharedPreferences
+        gebruikersnaamInput.setText(gebruikersnaam)
+        wachtwoordInput.setText(wachtwoord)
+    }
 
     private fun attemptLogin() {
-        // Reset errors
-        gebruikersnaamInputLayout?.error = null
-        wachtwoordInputLayout?.error = null
+        // reset error messages
+        gebruikersnaamInputLayout.error = null
+        wachtwoordInputLayout.error = null
 
-        // Store values at the time of the login attempt
-        val gebruiksernaamStr = gebruikersnaamInput?.text.toString()
-        val wachtwoordStr = wachtwoordInput?.text.toString()
+        // store values at the time of the login attempt
+        val gebruiksernaamStr = gebruikersnaamInput.text.toString()
+        val wachtwoordStr = wachtwoordInput.text.toString()
 
         val gebruiker = Gebruiker(gebruiksernaamStr, wachtwoordStr)
 
-
-        // Validation checks are done above
-        val url = "http://projecten3studserver11.westeurope.cloudapp.azure.com/api/gebruikers/"
-
-        val retrofit = Retrofit
-                .Builder()
-                .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl(url)
-                .build()
-
-        val gebruikersRepository = retrofit.create(GebruikerRepository::class.java)
-        val call = gebruikersRepository.login(gebruiker)
+        val call = GebruikersAPI.repository.login(gebruiker)
 
         call.enqueue(object : Callback<LoginResponse> {
             override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
                 if (response.isSuccessful) {
-                    // Store gebruiker and wachtwoord in SharedPreferences
+                    // store gebruiker and wachtwoord in SharedPreferences
                     spEditor.putString(getString(R.string.sp_key_username), gebruiksernaamStr)
-                    spEditor.commit()
+                    spEditor.apply()
                     spEditor.putString(getString(R.string.sp_key_password), wachtwoordStr)
-                    spEditor.commit()
+                    spEditor.apply()
 
                     Toast.makeText(context, "${response.body()?.voornaam} ${getString(R.string.succesfull_login)}", Toast.LENGTH_LONG).show()
 
-                    // Store the LoginResponse in SharedPreferences
+                    // store the LoginResponse in SharedPreferences
                     val gson = Gson()
                     val jsonGebruiker = gson.toJson(response.body())
 
                     spEditor.putString(getString(R.string.sp_key_user), jsonGebruiker)
-                    spEditor.commit()
+                    spEditor.apply()
 
-
-                    // GOTO the HomeActivity
+                    // goto the HomeActivity
                     val intent = Intent(activity, HomeActivity::class.java)
                     startActivity(intent)
+                    activity?.finish()
 
                 } else {
                     Toast.makeText(context, getString(R.string.wrong_login_credentials), Toast.LENGTH_LONG).show()
                 }
             }
 
+            // if backend can't be reached
             override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
                 Toast.makeText(context, getString(R.string.something_went_wrong_login), Toast.LENGTH_LONG).show()
             }
