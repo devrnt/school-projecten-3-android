@@ -28,8 +28,6 @@
     <string name="mijn_werkaanb_button">Mijn bewaarde werkaanbiedingen</string>
     <string name="bew_werkaanb_title">Bewaarde Werkaanbiedingen</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="bekijk_werkaanb_btn">Bekijk werkaanbiedingen</string>
     <string name="werkaanbieding_bewaard">Werkaanbieding bewaard</string>
     <string name="remove_wa">Remove werkaanbieding</string>

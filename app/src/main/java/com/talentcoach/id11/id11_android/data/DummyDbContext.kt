@@ -34,11 +34,11 @@ object DummyDbContext {
 
         leerlingen.clear()
         leerlingen.addAll(mutableListOf(
-                Leerling(1, Richting(1, "", mutableListOf()), 0, Date(), "leerling@school.be", "teamwork kapper",
+                Leerling(1, Richting(1, "", mutableListOf()), 0, "1993-07-05T00:00:00", "leerling@school.be", "teamwork kapper",
                         mutableListOf(), mutableListOf(), "Stroobants", "Bruno", mutableListOf()),
-                Leerling(2, Richting(1, "", mutableListOf()), 0, Date(), "leerling@school.be", "loodgieter",
+                Leerling(2, Richting(1, "", mutableListOf()), 0, "1993-07-05T00:00:00", "leerling@school.be", "loodgieter",
                         mutableListOf(werkaanbiedingen[2]), mutableListOf(), "Stroobants", "Bruno", mutableListOf()),
-                Leerling(3, Richting(1, "", mutableListOf()), 0, Date(), "leerling@school.be", "informatica",
+                Leerling(3, Richting(1, "", mutableListOf()), 0, "1993-07-05T00:00:00", "leerling@school.be", "informatica",
                         mutableListOf(), mutableListOf(), "Stroobants", "bruno", mutableListOf())
         ))
     }

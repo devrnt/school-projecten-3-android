@@ -77,7 +77,7 @@ class BekijkWerkaanbiedingTest {
     @Test
     fun startActivity_WhenNoWerkaanbiedingFound_ShowsDefaultText() {
         if (werkaanbiedingFragment.noWerkaanbiedingFound)
-            Assert.assertEquals(activity.werkgever.text, context.getString(R.string.no_werkaanbieding))
+            Assert.assertEquals(activity.werkgever.text, context.getString(R.string.no_werkaanbieding_1))
     }
 
     @Test

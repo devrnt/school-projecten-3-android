@@ -12,7 +12,7 @@ class Competentie(val id:Int,val omschrijving:String) {
     var graad: String = ""
 
     @SerializedName("competenties")
-    lateinit var subCompetenties: MutableList<SubCompetentie>
+    var subCompetenties: MutableList<SubCompetentie> = mutableListOf()
 
     //Parameter jaar toegoevoegd om niet altijd dezelfde datum te hebben
     //Tijdelijk totdat we werkende backend hebben

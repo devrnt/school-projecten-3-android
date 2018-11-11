@@ -1,11 +1,8 @@
 package com.talentcoach.id11.id11_android.repositories
 
 import com.beust.klaxon.Klaxon
-import com.github.kittinunf.fuel.Fuel
 import com.talentcoach.id11.id11_android.models.IRepository
 import com.talentcoach.id11.id11_android.models.Leerling
-import java.io.BufferedReader
-import java.io.InputStreamReader
 import java.io.Serializable
 import java.net.HttpURLConnection
 import java.net.URL
@@ -37,7 +34,7 @@ class LeerlingRepository: IRepository<Leerling>, Serializable {
 
     /**
      * Persists a Leerling via a PUT Request to the server
-     * @param leerling The Leerling to persist
+     * @param toUpdate The Leerling to persist
      * @throws Exception Thrown by the server or HTTP request
      */
     override fun update(toUpdate: Leerling) {
@@ -45,6 +42,7 @@ class LeerlingRepository: IRepository<Leerling>, Serializable {
             val json = Klaxon().toJsonString(toUpdate)
             val url = URL(url + toUpdate.id)
             with(url.openConnection() as HttpURLConnection) {
+                connectTimeout = 5000
                 requestMethod = "PUT"
                 addRequestProperty("Content-Type", "application/json")
                 outputStream.write(json.toByteArray())

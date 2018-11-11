@@ -7,11 +7,9 @@ import android.widget.Toast
 import com.talentcoach.id11.id11_android.R
 import com.talentcoach.id11.id11_android.managers.DataManager
 import com.talentcoach.id11.id11_android.models.Leerling
-import com.talentcoach.id11.id11_android.models.Richting
 import kotlinx.android.synthetic.main.activity_werkaanbieding.*
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
-import java.util.*
 
 /**
  * Enables the user to view and react to a Werkaanbieding and to manage his/her Bewaarde Werkaanbiedingen
@@ -22,8 +20,7 @@ import java.util.*
  * @property werkaanbiedingButtonsFragment Fragment that shows a noLike and like button so the user can react to a werkaanbieding
  */
 class WerkaanbiedingActivity : AppCompatActivity(), IClickListener {
-    var leerling = Leerling(-1, Richting(1, "", mutableListOf()), 0, Date(), "leerling@school.be", "default", mutableListOf(),
-            mutableListOf(), "Stroobants", "Bruno", mutableListOf())
+    lateinit var leerling: Leerling
         private set
     // shown when user toggles to Bewaarde Werkaanbiedingen
     val werkaanbiedingenListFragment = WerkaanbiedingenListFragment() // shows Leerling.bewaardeWerkaanbiedingen
@@ -39,8 +36,7 @@ class WerkaanbiedingActivity : AppCompatActivity(), IClickListener {
         setContentView(R.layout.activity_werkaanbieding)
 
         doAsync {
-            if (leerling.id < 0) // check for a 'logged in' Leerling
-                leerling = DataManager.getLeerlingById(1) // in future, id will come from a logged in User
+            leerling = DataManager.getLeerlingById(1) // in future, id will come from a logged in User
 
             uiThread {
                 // set fragment's IClickListener to this activity so it can listen to their button clicks
@@ -139,8 +135,6 @@ class WerkaanbiedingActivity : AppCompatActivity(), IClickListener {
     private fun getAndShowWerkaanbieding() {
         progress.visibility = View.VISIBLE // show progressbar
         doAsync {
-            if (leerling.id < 0) // check for a 'logged in' Leerling
-                leerling = DataManager.getLeerlingById(1) // in future, id will come from a logged in User
             werkaanbiedingFragment.werkaanbieding = DataManager.getWerkaanbiedingVoorLeerling(leerling)
 
             uiThread {
@@ -162,9 +156,6 @@ class WerkaanbiedingActivity : AppCompatActivity(), IClickListener {
         doAsync {
             DataManager.update(leerling) // persists Leerling
         }
-        // resets leerling property so Leerling gets retrieved from the database when activity resumes
-        leerling = Leerling(-1, Richting(1, "", mutableListOf()), 0, Date(), "leerling@school.be", "default",
-                mutableListOf(), mutableListOf(), "Stroobants", "Bruno", mutableListOf())
     }
 
 

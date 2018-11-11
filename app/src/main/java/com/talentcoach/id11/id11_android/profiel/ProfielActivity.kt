@@ -20,6 +20,9 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import java.util.*
 
 class ProfielActivity : AppCompatActivity() {
     private lateinit var sharedPreferences: SharedPreferences
@@ -129,7 +132,7 @@ class ProfielActivity : AppCompatActivity() {
         userfullNameTxt.text = gebruiker.gebruikersnaam.capitalize()
         firstAndLastnameTxt.text = gebruiker.volledigeNaam
         emailadressTxt.text = leerling.email
-        geboorteDatumTxt.text = dateFormat.format(leerling.geboorteDatum)
+        geboorteDatumTxt.text = leerling.geboorteDatum
         richtingTxt.text = leerling.richting.naam.capitalize()
         genderTxt.text = Geslacht.valueOf(leerling.geslacht).toString().capitalize()
         when {

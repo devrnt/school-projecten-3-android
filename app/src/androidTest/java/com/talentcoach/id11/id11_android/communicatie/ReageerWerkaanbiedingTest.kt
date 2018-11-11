@@ -136,7 +136,7 @@ class ReageerWerkaanbiedingTest {
         while (werkaanbiedingFragment.werkaanbieding != null)
             Espresso.onView(ViewMatchers.withId(R.id.noLike)).perform(ViewActions.click())
         Assert.assertEquals(
-                context.getString(R.string.no_werkaanbieding),
+                context.getString(R.string.no_werkaanbieding_1),
                 werkaanbiedingFragment.werkgever.text
         )
     }
