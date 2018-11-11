@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import android.view.View
+import android.widget.Toast
 import com.talentcoach.id11.id11_android.R
 import com.talentcoach.id11.id11_android.managers.DataManager
 import com.talentcoach.id11.id11_android.models.Werkgever
@@ -18,9 +19,11 @@ import org.jetbrains.anko.uiThread
  * @property algemeneInfoFragment InfoFragment with SpecifiekeInfo in its ExpandableListView
  */
 class InfoActivity : AppCompatActivity() {
+    // id should be supplied by the parent activity
+    private var WERKGEVER_ID = 1
     lateinit var algemeneInfoFragment: InfoFragment
         private set
-    lateinit var specifiekeInfoFragment: InfoFragment // TODO: Show default text when Leerling has no Werkgever yet
+    lateinit var specifiekeInfoFragment: InfoFragment
         private set
     private val algemeneInfoRepository = AlgemeneInfoRepository()
     private lateinit var werkgever : Werkgever
@@ -32,7 +35,7 @@ class InfoActivity : AppCompatActivity() {
 
         infoProgBar.visibility = View.VISIBLE
         doAsync {
-            werkgever = DataManager.getWerkgeverById(1)
+            werkgever = DataManager.getWerkgeverById(WERKGEVER_ID)
             val algemeneInfo = algemeneInfoRepository.getAlgemeneInfo()
             val algHeader = algemeneInfo.map { ai -> ai.titel }.toTypedArray()
             val algBody = algemeneInfo.map { ai -> ai.omschrijving }.toTypedArray()
@@ -68,12 +71,16 @@ class InfoActivity : AppCompatActivity() {
         }
 
         specInfoBtn.setOnClickListener {
-            algInfoBtn.setBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimary))
-            specInfoBtn.setBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimaryDark))
-            supportFragmentManager.beginTransaction()
-                    .hide(algemeneInfoFragment)
-                    .show(specifiekeInfoFragment)
-                    .commit()
+            if (WERKGEVER_ID > -1){ // check if there is an id supplied by parent activity
+                algInfoBtn.setBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimary))
+                specInfoBtn.setBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimaryDark))
+                supportFragmentManager.beginTransaction()
+                        .hide(algemeneInfoFragment)
+                        .show(specifiekeInfoFragment)
+                        .commit()
+            } else {
+                Toast.makeText(this, "Je hebt momenteel geen werkgever om specifieke info over te bekijken", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 }
