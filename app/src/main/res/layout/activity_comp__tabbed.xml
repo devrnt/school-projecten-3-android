@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context=".Comp_Tabbed">
+    tools:context=".competenties.Comp_Tabbed">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar"

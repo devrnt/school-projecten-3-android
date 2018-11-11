@@ -1,4 +1,4 @@
-package com.talentcoach.id11.id11_android
+package com.talentcoach.id11.id11_android.competenties
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -9,10 +9,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import com.example.bruno.recyclerviewdemo2.CompTeBehalenAdapter
+import com.talentcoach.id11.id11_android.R
 import com.talentcoach.id11.id11_android.models.Competentie
 import com.talentcoach.id11.id11_android.models.Leerling
 import com.talentcoach.id11.id11_android.models.Richting
-import com.talentcoach.id11.id11_android.models.SubCompetentie
 import com.talentcoach.id11.id11_android.repositories.LeerlingRepositoryRetrofit
 import com.talentcoach.id11.id11_android.repositories.RichtingRepository
 import kotlinx.android.synthetic.main.fragment_tebehalen.*

@@ -7,6 +7,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.Button
 import com.talentcoach.id11.id11_android.communicatie.WerkaanbiedingActivity
+import com.talentcoach.id11.id11_android.competenties.Comp_Tabbed
 import com.talentcoach.id11.id11_android.joborganisatie.InfoActivity
 import com.talentcoach.id11.id11_android.profiel.ProfielActivity
 import kotlinx.android.synthetic.main.activity_home.*

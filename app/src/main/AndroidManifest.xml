@@ -40,7 +40,7 @@
             android:label="Communicatie"
             android:parentActivityName=".HomeActivity" />
         <activity
-            android:name=".Comp_Tabbed"
+            android:name=".competenties.Comp_Tabbed"
             android:label="@string/title_activity_comp__tabbed"
             android:theme="@style/AppTheme.NoActionBar"
 android:parentActivityName=".HomeActivity"/>

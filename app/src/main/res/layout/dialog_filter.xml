@@ -54,9 +54,9 @@
             android:layout_alignParentBottom="true"
             android:layout_marginStart="62dp"
             android:layout_marginLeft="62dp"
-            android:layout_marginEnd="7dp"
+            android:layout_marginEnd="6dp"
             android:layout_marginRight="170dp"
-            android:layout_marginBottom="160dp"
+            android:layout_marginBottom="166dp"
             android:gravity="center_vertical"
             android:textAlignment="center"
             tools:checked="false" />
@@ -65,9 +65,21 @@
             android:id="@+id/cancelBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/textView4"
             android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
+            android:layout_marginStart="63dp"
+            android:layout_marginBottom="6dp"
             android:text="Terug" />
+
+        <Button
+            android:id="@+id/toepassenBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="22dp"
+            android:layout_marginBottom="7dp"
+            android:text="Toepassen" />
 
         <Spinner
             android:id="@+id/jaarSpinner"

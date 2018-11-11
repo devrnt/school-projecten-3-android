@@ -1,7 +1,6 @@
-package com.talentcoach.id11.id11_android
+package com.talentcoach.id11.id11_android.competenties
 
 import android.app.Dialog
-import android.content.Intent
 import android.support.design.widget.TabLayout
 import android.support.v7.app.AppCompatActivity
 
@@ -11,21 +10,9 @@ import android.support.v4.app.FragmentPagerAdapter
 import android.os.Bundle
 import android.view.*
 import android.widget.*
-import com.google.gson.Gson
-import com.talentcoach.id11.id11_android.models.Leerling
-import com.talentcoach.id11.id11_android.models.Richting
-import com.talentcoach.id11.id11_android.repositories.GebruikerRepository
-import com.talentcoach.id11.id11_android.repositories.LeerlingRepositoryRetrofit
-import com.talentcoach.id11.id11_android.repositories.RichtingRepository
-import com.talentcoach.id11.id11_android.repositories.responses.LoginResponse
+import com.talentcoach.id11.id11_android.R
 
 import kotlinx.android.synthetic.main.activity_comp__tabbed.*
-import kotlinx.android.synthetic.main.dialog_filter.*
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 
 class Comp_Tabbed : AppCompatActivity() {
 
@@ -139,10 +126,6 @@ class Comp_Tabbed : AppCompatActivity() {
             }
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                var fragmentBehaald = supportFragmentManager.findFragmentByTag(tagSecondTab) as BehaaldFragment
-
-                    fragmentBehaald.filterOnYear(jaarOptions.get(position))
-
 
                 this@Comp_Tabbed.yearSelected = position
             }
@@ -161,14 +144,21 @@ class Comp_Tabbed : AppCompatActivity() {
             }
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                var fragmentBehaald = supportFragmentManager.findFragmentByTag(tagSecondTab) as BehaaldFragment
-                var fragmentTeBehalen = supportFragmentManager.findFragmentByTag(tagFirstTab) as TeBehalenFragment
-
-                fragmentBehaald.filterOnGraad(graadOptions.get(position))
-                fragmentTeBehalen.filterOnGraad(graadOptions.get(position))
                 this@Comp_Tabbed.graadSelected = position
             }
 
+        }
+
+        //Toepassen Button om filter in te stellen
+        var toepassenBtn = myDialog.findViewById<Button>(R.id.toepassenBtn)
+        toepassenBtn.setOnClickListener(){
+            var fragmentBehaald = supportFragmentManager.findFragmentByTag(tagSecondTab) as BehaaldFragment
+            fragmentBehaald.applyFilter(jaarSpinner.selectedItem.toString(), graadSpinner.selectedItem.toString())
+
+            var fragmentTeBehalen = supportFragmentManager.findFragmentByTag(tagFirstTab) as TeBehalenFragment
+            fragmentTeBehalen.filterOnGraad(graadSpinner.selectedItem.toString())
+
+            myDialog.cancel()
         }
 
         myDialog.show()

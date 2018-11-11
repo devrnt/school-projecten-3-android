@@ -1,20 +1,17 @@
-package com.talentcoach.id11.id11_android
+package com.talentcoach.id11.id11_android.competenties
 
 import android.os.Bundle
-import android.provider.SyncStateContract.Helpers.insert
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ListView
-import android.widget.TextView
 import android.widget.Toast
+import com.talentcoach.id11.id11_android.R
 import com.talentcoach.id11.id11_android.adapters.CompBehaaldAdapter
 import com.talentcoach.id11.id11_android.models.Competentie
 import com.talentcoach.id11.id11_android.models.Leerling
-import com.talentcoach.id11.id11_android.models.SubCompetentie
 import com.talentcoach.id11.id11_android.repositories.LeerlingRepositoryRetrofit
 import kotlinx.android.synthetic.main.fragment_behaald.*
 import retrofit2.Call
@@ -24,16 +21,16 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.*
 import kotlin.Comparator
-import kotlin.collections.ArrayList
 
 class BehaaldFragment: Fragment(){
 
     lateinit var adapter: CompBehaaldAdapter
-    var lijst: MutableList<Competentie> = mutableListOf()
-    var copyListJaar = mutableListOf<Competentie>()
-    var copyListGraad = mutableListOf<Competentie>()
-
     lateinit var recycle: RecyclerView
+
+    var lijst: MutableList<Competentie> = mutableListOf()
+    var copyList = mutableListOf<Competentie>()
+
+
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         var view = inflater.inflate(R.layout.fragment_behaald, container, false)
@@ -64,58 +61,40 @@ class BehaaldFragment: Fragment(){
     }
 
 
-    fun filterOnYear(year:String) {
-        var sortedList: List<Competentie>
+    fun applyFilter(year:String, graad:String){
 
-        if (copyListJaar.isNotEmpty()) {
+        var sortedList: List<Competentie> = listOf()
+
+        if (copyList.isNotEmpty()) {
             adapter.compList.clear()
-            for (item in copyListJaar) {
+            for (item in copyList) {
                 adapter.compList.add(adapter.compList.count(), item)
             }
-            copyListJaar = mutableListOf()
+            copyList = mutableListOf()
         }
 
-        sortedList = lijst.filter { c -> c.behaaldOp.contains(year,true)}
+        sortedList = lijst.filter { c -> c.behaaldOp.contains(year,true) && c.graad.equals(graad,true) }
 
-
-        if (sortedList.isNotEmpty()) {
-            copyListJaar = lijst.toMutableList()
-
-            adapter.compList.clear()
-            for (item in sortedList) {
-                adapter.compList.add(adapter.compList.count(), item)
-            }
+        if(year.contains("Alle",true) && !graad.contains("Alle",true)){
+            sortedList = lijst.filter { c -> c.graad.equals(graad, true) }
         }
-
-        adapter.notifyDataSetChanged()
-    }
-
-    fun filterOnGraad(graad:String){
-        var sortedList: List<Competentie>
-
-
-        if(copyListGraad.isNotEmpty()){
-            adapter.compList.clear()
-            for(item in copyListGraad){
-                adapter.compList.add(adapter.compList.count(), item)
-            }
-            copyListGraad = mutableListOf()
-
+        if(graad.contains("Alle",true) && !year.contains("Alle",true)){
+            sortedList = lijst.filter { c -> c.behaaldOp.contains(year,true) }
         }
-
-        sortedList = lijst.filter { c -> c.graad.equals(graad,true) }
-
 
         if(sortedList.isNotEmpty()){
-            copyListGraad = lijst.toMutableList()
+            copyList = lijst.toMutableList()
             adapter.compList.clear()
             for(item in sortedList){
                 adapter.compList.add(adapter.compList.count(), item)
             }
         }
 
+
         adapter.notifyDataSetChanged()
+
     }
+
 
     private fun getAndShowCompetentiesLeerling(){
         val url = "http://projecten3studserver11.westeurope.cloudapp.azure.com/api/"
