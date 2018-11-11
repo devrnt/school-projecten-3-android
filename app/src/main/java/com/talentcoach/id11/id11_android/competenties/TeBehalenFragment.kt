@@ -29,6 +29,7 @@ class TeBehalenFragment: Fragment() {
     var lijst: MutableList<Competentie> = mutableListOf()
     lateinit var recycle: RecyclerView
     var copyListGraad = mutableListOf<Competentie>()
+    var copyListSwitch = mutableListOf<Competentie>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_tebehalen, container, false)
@@ -52,16 +53,25 @@ class TeBehalenFragment: Fragment() {
     }
 
     private fun unsortListOnNames() {
-        Collections.shuffle(lijst)
-        adapter.notifyDataSetChanged()
+        adapter.compList.clear()
+        for(item in copyListSwitch){
+            adapter.compList.add(adapter.compList.count(), item)
+        }
     }
 
     private fun sortListOnNames() {
-        Collections.sort(lijst, object : Comparator<Competentie> {
+        copyListSwitch = lijst.toMutableList()
+        var copyList = lijst.toMutableList()
+
+        Collections.sort(copyList, object : Comparator<Competentie> {
             override fun compare(o1: Competentie?, o2: Competentie?): Int {
                 return o1!!.omschrijving.compareTo(o2!!.omschrijving)
             }
         })
+        adapter.compList.clear()
+        for(item in copyList){
+            adapter.compList.add(adapter.compList.count(), item)
+        }
     }
 
     fun filterOnGraad(graad: String) {

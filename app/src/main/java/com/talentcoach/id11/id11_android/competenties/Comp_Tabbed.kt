@@ -97,13 +97,19 @@ class Comp_Tabbed : AppCompatActivity() {
         sorteerToggle.setOnCheckedChangeListener{sorteerToggle,isChecked ->
 
             if(isChecked){
-                getFragmentTeBehalen(tagFirstTab,true)
-                getFragmentBehaald(tagSecondTab,true)
+                var fragmentTeBehalen = getFragmentTeBehalen() as TeBehalenFragment
+                fragmentTeBehalen.showSortedListView()
+
+                var fragmentBehaald = getFragmentBehaald() as BehaaldFragment
+                fragmentBehaald.showSortedListView()
                 namesSortedState = true
             }
             else{
-                getFragmentTeBehalen(tagFirstTab,false)
-                getFragmentBehaald(tagSecondTab,false)
+                var fragmentTeBehalen = getFragmentTeBehalen() as TeBehalenFragment
+                fragmentTeBehalen.showUnsortedListView()
+
+                var fragmentBehaald = getFragmentBehaald() as BehaaldFragment
+                fragmentBehaald.showUnsortedListView()
                 namesSortedState = false
             }
         }
@@ -126,12 +132,12 @@ class Comp_Tabbed : AppCompatActivity() {
             }
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-
                 this@Comp_Tabbed.yearSelected = position
             }
 
         }
 
+        //Spinner = dropdown list om te filteren op graad
         graadSpinner = myDialog.findViewById(R.id.graadSpinner) as Spinner
         val graadOptions = arrayOf("Alle","1e graad","2e graad","3e graad")
         graadSpinner.adapter = ArrayAdapter<String>(this,android.R.layout.simple_dropdown_item_1line,graadOptions)
@@ -149,7 +155,7 @@ class Comp_Tabbed : AppCompatActivity() {
 
         }
 
-        //Toepassen Button om filter in te stellen
+        //bevestig Button om filter in te stellen
         var toepassenBtn = myDialog.findViewById<Button>(R.id.toepassenBtn)
         toepassenBtn.setOnClickListener(){
             var fragmentBehaald = supportFragmentManager.findFragmentByTag(tagSecondTab) as BehaaldFragment
@@ -167,23 +173,12 @@ class Comp_Tabbed : AppCompatActivity() {
 
     //Met behulp van de fragmentmanager haal ik in deze functies de fragments op
     // en kan ik functies uit de fragemnts oproepen
-    private fun getFragmentTeBehalen(tab:String?, toggleNaam:Boolean){
-
-        var fragment = supportFragmentManager.findFragmentByTag(tab) as TeBehalenFragment
-
-        if(toggleNaam)
-            fragment.showSortedListView()
-        else if(!toggleNaam)
-            fragment.showUnsortedListView()
+    private fun getFragmentTeBehalen():Fragment{
+        return supportFragmentManager.findFragmentByTag(tagFirstTab) as TeBehalenFragment
     }
 
-    private fun getFragmentBehaald(tab:String?, toggleNaam:Boolean){
-        var fragment = supportFragmentManager.findFragmentByTag(tab) as BehaaldFragment
-
-        if(toggleNaam)
-            fragment.showSortedListView()
-        else if(!toggleNaam)
-            fragment.showUnsortedListView()
+    private fun getFragmentBehaald():Fragment{
+        return supportFragmentManager.findFragmentByTag(tagSecondTab) as BehaaldFragment
     }
 
     /**

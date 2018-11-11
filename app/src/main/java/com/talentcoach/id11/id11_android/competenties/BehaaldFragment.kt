@@ -29,6 +29,7 @@ class BehaaldFragment: Fragment(){
 
     var lijst: MutableList<Competentie> = mutableListOf()
     var copyList = mutableListOf<Competentie>()
+    var copyListSwitch = mutableListOf<Competentie>()
 
 
 
@@ -46,17 +47,29 @@ class BehaaldFragment: Fragment(){
 
     fun showSortedListView(){
 
-        Collections.sort(lijst, object: Comparator<Competentie> {
+        copyListSwitch = lijst.toMutableList()
+        var copyList = lijst.toMutableList()
+
+        Collections.sort(copyList, object : java.util.Comparator<Competentie> {
             override fun compare(o1: Competentie?, o2: Competentie?): Int {
                 return o1!!.omschrijving.compareTo(o2!!.omschrijving)
             }
         })
+        adapter.compList.clear()
+        for(item in copyList){
+            adapter.compList.add(adapter.compList.count(), item)
+        }
+
         adapter.notifyDataSetChanged()
 
     }
 
     fun showUnsortedListView(){
-        Collections.shuffle(lijst)
+        adapter.compList.clear()
+        for(item in copyListSwitch){
+            adapter.compList.add(adapter.compList.count(), item)
+        }
+
         adapter.notifyDataSetChanged()
     }
 
