@@ -21,7 +21,8 @@ import org.jetbrains.anko.uiThread
  * @property werkaanbiedingButtonsFragment Fragment that shows a noLike and like button so the user can react to a werkaanbieding
  */
 class WerkaanbiedingActivity : AppCompatActivity(), IClickListener {
-    var leerling = Leerling(-1, Richting(), 0, "", "mail@mail.be", "haarzorg", mutableListOf(), mutableListOf())
+    var leerling = Leerling(1, Richting(1, "", mutableListOf()), 0, "1993-07-05T00:00:00", "leerling@school.be", "teamwork kapper",
+            mutableListOf(), mutableListOf(), "Stroobants", "Bruno", mutableListOf())
         private set
     // shown when user toggles to Bewaarde Werkaanbiedingen
     val werkaanbiedingenListFragment = WerkaanbiedingenListFragment() // shows Leerling.bewaardeWerkaanbiedingen
@@ -162,7 +163,8 @@ class WerkaanbiedingActivity : AppCompatActivity(), IClickListener {
             DataManager.update(leerling) // persists Leerling
         }
         // resets leerling property so Leerling gets retrieved from the database when activity resumes
-        leerling = Leerling(-1, "default", mutableListOf(), mutableListOf())
+        leerling = Leerling(1, Richting(1, "", mutableListOf()), 0, "1993-07-05T00:00:00", "leerling@school.be", "teamwork kapper",
+                mutableListOf(), mutableListOf(), "Stroobants", "Bruno", mutableListOf())
     }
 
 

@@ -15,6 +15,8 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 
+// Test should start with a clean app install
+// TODO("Sharedpreferences clearen zodat de username en password zoieso leeg zijn")
 @RunWith(AndroidJUnit4::class)
 class LoginActivityTest {
     @get:Rule
@@ -35,8 +37,8 @@ class LoginActivityTest {
     fun clickLoginButtonOnFreshInstall_EmptyUsernameAndEmptyPassword_ShowsErrorBothUserAndPass() {
         Espresso.onView(ViewMatchers.withId(R.id.login_btn)).perform(ViewActions.click())
 
-        val usernameError = loginFragment.gebruikersnaamInputLayout?.error
-        val passwordError = loginFragment.wachtwoordInputLayout?.error
+        val usernameError = loginFragment.gebruikersnaamInputLayout.error
+        val passwordError = loginFragment.wachtwoordInputLayout.error
 
         Assert.assertEquals(context.getString(R.string.error_username), usernameError)
         Assert.assertEquals(context.getString(R.string.error_password), passwordError)
@@ -50,8 +52,8 @@ class LoginActivityTest {
 
         Espresso.onView(ViewMatchers.withId(R.id.login_btn)).perform(ViewActions.click())
 
-        val usernameError = loginFragment.gebruikersnaamInputLayout?.error
-        val passwordError = loginFragment.wachtwoordInputLayout?.error
+        val usernameError = loginFragment.gebruikersnaamInputLayout.error
+        val passwordError = loginFragment.wachtwoordInputLayout.error
 
         Assert.assertNull(passwordError)
         Assert.assertEquals(context.getString(R.string.error_username), usernameError)
@@ -65,8 +67,8 @@ class LoginActivityTest {
 
         Espresso.onView(ViewMatchers.withId(R.id.login_btn)).perform(ViewActions.click())
 
-        val usernameError = loginFragment.gebruikersnaamInputLayout?.error
-        val passwordError = loginFragment.wachtwoordInputLayout?.error
+        val usernameError = loginFragment.gebruikersnaamInputLayout.error
+        val passwordError = loginFragment.wachtwoordInputLayout.error
 
         Assert.assertNull(usernameError)
         Assert.assertEquals(context.getString(R.string.error_password), passwordError)

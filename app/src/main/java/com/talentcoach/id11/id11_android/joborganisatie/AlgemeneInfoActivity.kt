@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.View
 import com.talentcoach.id11.id11_android.R
-import com.talentcoach.id11.id11_android.adapters.ExpandableListAdapter
 import com.talentcoach.id11.id11_android.repositories.AlgemeneInfoRepository
 import kotlinx.android.synthetic.main.activity_algemene_info.*
 import org.jetbrains.anko.doAsync
