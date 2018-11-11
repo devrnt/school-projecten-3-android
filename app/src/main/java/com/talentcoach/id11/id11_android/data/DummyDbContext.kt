@@ -1,15 +1,12 @@
 package com.talentcoach.id11.id11_android.data
 
-import com.talentcoach.id11.id11_android.models.Leerling
-import com.talentcoach.id11.id11_android.models.Richting
-import com.talentcoach.id11.id11_android.models.Werkaanbieding
-import com.talentcoach.id11.id11_android.models.Werkgever
-import java.util.*
+import com.talentcoach.id11.id11_android.models.*
 
 object DummyDbContext {
     val werkgevers: MutableList<Werkgever> = mutableListOf()
     val werkaanbiedingen: MutableList<Werkaanbieding> = mutableListOf()
     val leerlingen: MutableList<Leerling> = mutableListOf()
+    val specifiekeInfos: MutableList<SpecifiekeInfo> = mutableListOf()
 
     init {
         resetDbContext()
@@ -18,8 +15,8 @@ object DummyDbContext {
     fun resetDbContext() {
         werkgevers.clear()
         werkgevers.addAll(mutableListOf(
-                Werkgever("Werkgever 1"),
-                Werkgever("Werkgever 2")
+                Werkgever(1, "Werkgever 1"),
+                Werkgever(2, "Werkgever 2")
         ))
 
         werkaanbiedingen.clear()
@@ -40,6 +37,11 @@ object DummyDbContext {
                         mutableListOf(werkaanbiedingen[2]), mutableListOf(), "Stroobants", "Bruno", mutableListOf()),
                 Leerling(3, Richting(1, "", mutableListOf()), 0, "1993-07-05T00:00:00", "leerling@school.be", "informatica",
                         mutableListOf(), mutableListOf(), "Stroobants", "bruno", mutableListOf())
+        ))
+
+        specifiekeInfos.clear()
+        specifiekeInfos.addAll(mutableListOf(
+                SpecifiekeInfo(1, "Titel 1", "Omschrijving 1", werkgevers[0])
         ))
     }
 }

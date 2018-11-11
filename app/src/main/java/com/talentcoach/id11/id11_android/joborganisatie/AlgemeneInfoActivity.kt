@@ -1,10 +1,10 @@
-package com.talentcoach.id11.id11_android
+package com.talentcoach.id11.id11_android.joborganisatie
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.View
+import com.talentcoach.id11.id11_android.R
 import com.talentcoach.id11.id11_android.adapters.ExpandableListAdapter
-import com.talentcoach.id11.id11_android.models.AlgemeneInfo
 import com.talentcoach.id11.id11_android.repositories.AlgemeneInfoRepository
 import kotlinx.android.synthetic.main.activity_algemene_info.*
 import org.jetbrains.anko.doAsync
@@ -12,6 +12,7 @@ import org.jetbrains.anko.uiThread
 
 class AlgemeneInfoActivity : AppCompatActivity() {
     private val algemeneInfoRepository = AlgemeneInfoRepository()
+    private lateinit var algemeneInfoFragment: InfoFragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,18 +22,19 @@ class AlgemeneInfoActivity : AppCompatActivity() {
 
         doAsync {
             val algemeneInfo = algemeneInfoRepository.getAlgemeneInfo()
-            val header = algemeneInfo.map { ai -> ai.titel }.toMutableList()
-            val body = algemeneInfo.map { ai -> ai.omschrijving }.toMutableList()
+            val header = algemeneInfo.map { ai -> ai.titel }.toTypedArray()
+            val body = algemeneInfo.map { ai -> ai.omschrijving }.toTypedArray()
 
             uiThread {
                 spinner.visibility = View.GONE
-                createExpandableList(header, body)
+                algemeneInfoFragment = InfoFragment.newInstance(header, body)
+                supportFragmentManager.beginTransaction()
+                        .add(R.id.infoFragmentFrame, algemeneInfoFragment)
+                        .commit()
             }
         }
     }
 
-    private fun createExpandableList(header: MutableList<String>, body: MutableList<String>) {
-        expandedListView.setAdapter(ExpandableListAdapter(this, header, body))
-    }
+
 
 }

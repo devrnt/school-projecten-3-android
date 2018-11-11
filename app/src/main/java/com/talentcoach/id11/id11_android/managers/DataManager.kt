@@ -1,18 +1,24 @@
 package com.talentcoach.id11.id11_android.managers
 
-import com.talentcoach.id11.id11_android.models.IRepository
-import com.talentcoach.id11.id11_android.models.Leerling
-import com.talentcoach.id11.id11_android.models.Werkaanbieding
+import com.talentcoach.id11.id11_android.models.*
 import com.talentcoach.id11.id11_android.repositories.LeerlingRepository
+import com.talentcoach.id11.id11_android.repositories.SpecifiekeInfoRepository
 import com.talentcoach.id11.id11_android.repositories.WerkaanbiedingRepository
+import com.talentcoach.id11.id11_android.repositories.WerkgeverRepository
 import java.io.Serializable
 
 object DataManager : Serializable {
     var leerlingRepository: IRepository<Leerling> = LeerlingRepository()
     var werkaanbiedingRepository: IRepository<Werkaanbieding> = WerkaanbiedingRepository()
+    var specifiekeInfoRepository: IRepository<SpecifiekeInfo> = SpecifiekeInfoRepository()
+    var werkgeverRepository: IRepository<Werkgever> = WerkgeverRepository()
 
     fun getLeerlingById(id: Int): Leerling {
         return leerlingRepository.getById(id)
+    }
+
+    fun getWerkgeverById(id: Int): Werkgever {
+        return werkgeverRepository.getById(id)
     }
 
     /**
@@ -21,7 +27,7 @@ object DataManager : Serializable {
      * @return A corresponding Werkaanbieding, or null if none is found
      * @throws Exception thrown by the Repository
      */
-    fun getWerkaanbiedingVoorLeerling(leerling: Leerling): Werkaanbieding? {
+    fun getWerkaanbiedingForLeerling(leerling: Leerling): Werkaanbieding? {
         if (werkaanbiedingRepository.getAll().isEmpty())
             return null
 
@@ -30,6 +36,17 @@ object DataManager : Serializable {
                     && !leerling.verwijderdeWerkaanbiedingen.any { vw -> vw.id == wa.id } // werkaanbieding mag niet al in verwijderde zitten
                     && wa.tags.split(" ").intersect(leerling.interesses.split(" ")).any() }
         // minstens 1 tag moet voorkomen in de interesses van de leerling
+    }
+
+    /**
+     * Gets all the SpecifiekeInfos for a corresponding Werkgever
+     * @param werkgever The Werkgever to whom the SpecifiekeInfo is realted
+     * @returns A list of SpecifiekeInfo
+     */
+    fun getSpecifiekeInfoForWerkgever(werkgever: Werkgever): List<SpecifiekeInfo> {
+        return specifiekeInfoRepository.getAll().filter {
+            specifiekeInfo -> specifiekeInfo.werkgever.naam == werkgever.naam
+        }
     }
 
     fun update(leerling: Leerling) {

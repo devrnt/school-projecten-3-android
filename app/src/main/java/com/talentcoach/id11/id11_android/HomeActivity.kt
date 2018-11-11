@@ -6,8 +6,8 @@ import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Button
-import com.talentcoach.id11.id11_android.communicatie.CommunicatieActivity
 import com.talentcoach.id11.id11_android.communicatie.WerkaanbiedingActivity
+import com.talentcoach.id11.id11_android.joborganisatie.InfoActivity
 import com.talentcoach.id11.id11_android.profiel.ProfielActivity
 import kotlinx.android.synthetic.main.activity_home.*
 
@@ -21,7 +21,7 @@ class HomeActivity : AppCompatActivity() {
         // madeby Jonas
         // dit is tijdelijk
         jobBtn.setOnClickListener {
-            val intent = Intent(this, AlgemeneInfoActivity::class.java)
+            val intent = Intent(this, InfoActivity::class.java)
             startActivity(intent)
         }
 

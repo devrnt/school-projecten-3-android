@@ -54,6 +54,8 @@
     <string name="action_settings">Settings</string>
     <string name="Filter_Title">Filteren</string>
     <string name="werkaanbieding_title">Werkaanbieding</string>
+    <string name="alg_info_btn">Algemene Info</string>
+    <string name="spec_info_btn">Specifieke Info</string>
 
     <!-- Strings related to Login -->
     <string name="hint_username">Gebruikersnaam</string>
@@ -83,4 +85,5 @@
 
     <!-- Strings related to Backend -->
     <string name="BASE_URL_API">http://projecten3studserver11.westeurope.cloudapp.azure.com/api/</string>
+
 </resources>

@@ -28,7 +28,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".AlgemeneInfoActivity"
+            android:name=".joborganisatie.AlgemeneInfoActivity"
             android:label="@string/aic_title"
             android:parentActivityName=".HomeActivity" />
         <activity
@@ -43,7 +43,7 @@
             android:name=".Comp_Tabbed"
             android:label="@string/title_activity_comp__tabbed"
             android:theme="@style/AppTheme.NoActionBar"
-            android:parentActivityName=".HomeActivity"/>
+android:parentActivityName=".HomeActivity"/>
         <activity
             android:name=".HomeActivity"
             android:label="@string/app_name" />
@@ -54,7 +54,10 @@
         <activity
             android:name=".profiel.ProfielEditActivity"
             android:label="Profiel wijzigen"
-            android:parentActivityName=".profiel.ProfielActivity" />
+            android:parentActivityName=".profiel.ProfielActivity" /><activity
+            android:name=".joborganisatie.InfoActivity"
+            android:label="Info"
+            android:parentActivityName=".HomeActivity"/>
     </application>
 
 </manifest>

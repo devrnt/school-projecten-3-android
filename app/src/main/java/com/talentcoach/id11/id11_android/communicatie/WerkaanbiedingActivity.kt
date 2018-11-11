@@ -7,6 +7,7 @@ import android.widget.Toast
 import com.talentcoach.id11.id11_android.R
 import com.talentcoach.id11.id11_android.managers.DataManager
 import com.talentcoach.id11.id11_android.models.Leerling
+import com.talentcoach.id11.id11_android.models.Richting
 import kotlinx.android.synthetic.main.activity_werkaanbieding.*
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
@@ -20,7 +21,7 @@ import org.jetbrains.anko.uiThread
  * @property werkaanbiedingButtonsFragment Fragment that shows a noLike and like button so the user can react to a werkaanbieding
  */
 class WerkaanbiedingActivity : AppCompatActivity(), IClickListener {
-    lateinit var leerling: Leerling
+    var leerling = Leerling(-1, Richting(), 0, "", "mail@mail.be", "haarzorg", mutableListOf(), mutableListOf())
         private set
     // shown when user toggles to Bewaarde Werkaanbiedingen
     val werkaanbiedingenListFragment = WerkaanbiedingenListFragment() // shows Leerling.bewaardeWerkaanbiedingen
@@ -30,16 +31,14 @@ class WerkaanbiedingActivity : AppCompatActivity(), IClickListener {
     val werkaanbiedingFragment = WerkaanbiedingFragment()
     val werkaanbiedingButtonsFragment = WerkaanbiedingButtonsFragment()
 
-    fun isLeerlingInitialized() : Boolean {
-        return this::leerling.isInitialized
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_werkaanbieding)
 
         doAsync {
-            leerling = DataManager.getLeerlingById(1) // in future, id will come from a logged in User
+            if (leerling.id < 0) // check for a 'logged in' Leerling
+                leerling = DataManager.getLeerlingById(1) // in future, id will come from a logged in User
 
             uiThread {
                 // set fragment's IClickListener to this activity so it can listen to their button clicks
@@ -49,6 +48,7 @@ class WerkaanbiedingActivity : AppCompatActivity(), IClickListener {
 
                 // set the items within the RecyclerView's adapter to the leerling's Bewaarde Werkaanbiedingen
                 werkaanbiedingenListFragment.werkaanbiedingenList = leerling.bewaardeWerkaanbiedingen
+
 
                 // add fragments to activity
                 // onCreateView of each fragment gets called
@@ -138,7 +138,9 @@ class WerkaanbiedingActivity : AppCompatActivity(), IClickListener {
     private fun getAndShowWerkaanbieding() {
         progress.visibility = View.VISIBLE // show progressbar
         doAsync {
-            werkaanbiedingFragment.werkaanbieding = DataManager.getWerkaanbiedingVoorLeerling(leerling)
+            if (leerling.id < 0) // check for a 'logged in' Leerling
+                leerling = DataManager.getLeerlingById(1) // in future, id will come from a logged in User
+            werkaanbiedingFragment.werkaanbieding = DataManager.getWerkaanbiedingForLeerling(leerling)
 
             uiThread {
                 progress.visibility = View.GONE // verbergt progressbar
@@ -159,21 +161,8 @@ class WerkaanbiedingActivity : AppCompatActivity(), IClickListener {
         doAsync {
             DataManager.update(leerling) // persists Leerling
         }
-    }
-
-    override fun onResume() {
-        super.onResume()
-        doAsync {
-            val update = DataManager.getLeerlingById(1)
-
-            uiThread {
-                leerling.bewaardeWerkaanbiedingen.clear()
-                leerling.bewaardeWerkaanbiedingen.addAll(update.bewaardeWerkaanbiedingen)
-                leerling.verwijderdeWerkaanbiedingen.clear()
-                leerling.verwijderdeWerkaanbiedingen.addAll(update.verwijderdeWerkaanbiedingen)
-            }
-        }
-
+        // resets leerling property so Leerling gets retrieved from the database when activity resumes
+        leerling = Leerling(-1, "default", mutableListOf(), mutableListOf())
     }
 
 
