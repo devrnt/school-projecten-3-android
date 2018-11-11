@@ -30,6 +30,9 @@ class WerkaanbiedingActivity : AppCompatActivity(), IClickListener {
     val werkaanbiedingFragment = WerkaanbiedingFragment()
     val werkaanbiedingButtonsFragment = WerkaanbiedingButtonsFragment()
 
+    fun isLeerlingInitialized() : Boolean {
+        return this::leerling.isInitialized
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -156,6 +159,21 @@ class WerkaanbiedingActivity : AppCompatActivity(), IClickListener {
         doAsync {
             DataManager.update(leerling) // persists Leerling
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        doAsync {
+            val update = DataManager.getLeerlingById(1)
+
+            uiThread {
+                leerling.bewaardeWerkaanbiedingen.clear()
+                leerling.bewaardeWerkaanbiedingen.addAll(update.bewaardeWerkaanbiedingen)
+                leerling.verwijderdeWerkaanbiedingen.clear()
+                leerling.verwijderdeWerkaanbiedingen.addAll(update.verwijderdeWerkaanbiedingen)
+            }
+        }
+
     }
 
 

@@ -2,6 +2,9 @@ package com.talentcoach.id11.id11_android.communicatie
 
 import android.content.Context
 import android.support.test.InstrumentationRegistry
+import android.support.test.espresso.Espresso.onView
+import android.support.test.espresso.action.ViewActions.click
+import android.support.test.espresso.matcher.ViewMatchers.withId
 import android.support.test.rule.ActivityTestRule
 import android.support.test.runner.AndroidJUnit4
 import com.talentcoach.id11.id11_android.R
@@ -88,9 +91,10 @@ class BekijkWerkaanbiedingTest {
     @Test
     fun onResume_WhenActivityWasPaused_ShowsWerkaanbiedingFragmentAgainWithSameWerkaanbieding(){
         val werkaanbieding = werkaanbiedingFragment.werkaanbieding
+
         activityRule.runOnUiThread {
-            InstrumentationRegistry.getInstrumentation().callActivityOnPause(activity)
-            InstrumentationRegistry.getInstrumentation().callActivityOnResume(activity)
+                InstrumentationRegistry.getInstrumentation().callActivityOnPause(activity)
+                InstrumentationRegistry.getInstrumentation().callActivityOnResume(activity)
         }
 
         assertEquals(werkaanbieding, werkaanbiedingFragment.werkaanbieding)
