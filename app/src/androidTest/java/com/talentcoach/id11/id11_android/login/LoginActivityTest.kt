@@ -1,4 +1,4 @@
-package com.talentcoach.id11.id11_android
+package com.talentcoach.id11.id11_android.login
 
 import android.content.Context
 import android.content.Intent
@@ -10,8 +10,7 @@ import android.support.test.espresso.action.ViewActions
 import android.support.test.espresso.matcher.ViewMatchers
 import android.support.test.rule.ActivityTestRule
 import android.support.test.runner.AndroidJUnit4
-import com.talentcoach.id11.id11_android.login.LoginActivity
-import com.talentcoach.id11.id11_android.login.LoginFragment
+import com.talentcoach.id11.id11_android.R
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Rule
