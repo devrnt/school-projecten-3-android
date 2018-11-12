@@ -8,11 +8,14 @@ import android.support.test.espresso.matcher.ViewMatchers.withId
 import android.support.test.rule.ActivityTestRule
 import android.support.test.runner.AndroidJUnit4
 import com.talentcoach.id11.id11_android.R
+import com.talentcoach.id11.id11_android.data.DummyAlgemeneInfoRepository
 import com.talentcoach.id11.id11_android.data.DummyDbContext
 import com.talentcoach.id11.id11_android.data.DummySpecifiekeInfoRepository
 import com.talentcoach.id11.id11_android.data.DummyWerkgeverRepository
 import com.talentcoach.id11.id11_android.managers.DataManager
 import com.talentcoach.id11.id11_android.repositories.AlgemeneInfoRepository
+import kotlinx.android.synthetic.main.activity_info.*
+import org.junit.After
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Rule
@@ -30,6 +33,7 @@ class BekijkAlgemeneInfoTest {
     init {
         DataManager.specifiekeInfoRepository = DummySpecifiekeInfoRepository()
         DataManager.werkgeverRepository = DummyWerkgeverRepository()
+        DataManager.algemeneInfoRepository = DummyAlgemeneInfoRepository()
     }
 
     @Before
@@ -37,12 +41,16 @@ class BekijkAlgemeneInfoTest {
         // code to execute before each test
         context = InstrumentationRegistry.getTargetContext()
         activity = activityRule.activity
+    }
+
+    @After
+    fun resetDbContext() {
         DummyDbContext.resetDbContext()
     }
 
     @Test
     fun startActivity_showsAlgemeneInfoInExpandableListView(){
-        val algemeneInfos = AlgemeneInfoRepository().getAlgemeneInfo()
+        val algemeneInfos = DummyDbContext.algemeneInfos
         val headers = algemeneInfos.map { ai -> ai.titel }
         val bodies = algemeneInfos.map { ai -> ai.omschrijving }
         assertTrue(

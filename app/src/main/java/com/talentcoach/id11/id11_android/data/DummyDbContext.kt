@@ -7,6 +7,7 @@ object DummyDbContext {
     val werkaanbiedingen: MutableList<Werkaanbieding> = mutableListOf()
     val leerlingen: MutableList<Leerling> = mutableListOf()
     val specifiekeInfos: MutableList<SpecifiekeInfo> = mutableListOf()
+    val algemeneInfos: MutableList<AlgemeneInfo> = mutableListOf()
 
     init {
         resetDbContext()
@@ -42,6 +43,13 @@ object DummyDbContext {
         specifiekeInfos.clear()
         specifiekeInfos.addAll(mutableListOf(
                 SpecifiekeInfo(1, "Titel 1", "Omschrijving 1", werkgevers[0])
+        ))
+
+        algemeneInfos.clear()
+        algemeneInfos.addAll(mutableListOf(
+                AlgemeneInfo(1, "Titel 1", "Omschrijving 1"),
+                AlgemeneInfo(2, "Titel 2", "Omschrijving 2"),
+                AlgemeneInfo(3, "Titel 3", "Omschrijving 3")
         ))
     }
 }

@@ -36,7 +36,7 @@ class InfoActivity : AppCompatActivity() {
         infoProgBar.visibility = View.VISIBLE
         doAsync {
             werkgever = DataManager.getWerkgeverById(WERKGEVER_ID)
-            val algemeneInfo = algemeneInfoRepository.getAlgemeneInfo()
+            val algemeneInfo = DataManager.algemeneInfoRepository.getAll()
             val algHeader = algemeneInfo.map { ai -> ai.titel }.toTypedArray()
             val algBody = algemeneInfo.map { ai -> ai.omschrijving }.toTypedArray()
 

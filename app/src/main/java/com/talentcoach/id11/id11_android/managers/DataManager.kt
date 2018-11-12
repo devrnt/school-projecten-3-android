@@ -1,10 +1,7 @@
 package com.talentcoach.id11.id11_android.managers
 
 import com.talentcoach.id11.id11_android.models.*
-import com.talentcoach.id11.id11_android.repositories.LeerlingRepository
-import com.talentcoach.id11.id11_android.repositories.SpecifiekeInfoRepository
-import com.talentcoach.id11.id11_android.repositories.WerkaanbiedingRepository
-import com.talentcoach.id11.id11_android.repositories.WerkgeverRepository
+import com.talentcoach.id11.id11_android.repositories.*
 import java.io.Serializable
 
 object DataManager : Serializable {
@@ -12,6 +9,7 @@ object DataManager : Serializable {
     var werkaanbiedingRepository: IRepository<Werkaanbieding> = WerkaanbiedingRepository()
     var specifiekeInfoRepository: IRepository<SpecifiekeInfo> = SpecifiekeInfoRepository()
     var werkgeverRepository: IRepository<Werkgever> = WerkgeverRepository()
+    var algemeneInfoRepository: IRepository<AlgemeneInfo> = AlgemeneInfoRepository()
 
     fun getLeerlingById(id: Int): Leerling {
         return leerlingRepository.getById(id)
