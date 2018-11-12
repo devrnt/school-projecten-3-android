@@ -1,7 +1,10 @@
 package com.talentcoach.id11.id11_android
 
 import android.content.Context
-import android.support.test.InstrumentationRegistry
+import android.content.Intent
+import android.content.SharedPreferences
+import android.preference.PreferenceManager
+import android.support.test.InstrumentationRegistry.getInstrumentation
 import android.support.test.espresso.Espresso
 import android.support.test.espresso.action.ViewActions
 import android.support.test.espresso.matcher.ViewMatchers
@@ -15,21 +18,24 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 
-// Test should start with a clean app install
-// TODO("Sharedpreferences clearen zodat de username en password zoieso leeg zijn")
 @RunWith(AndroidJUnit4::class)
 class LoginActivityTest {
     @get:Rule
-    var activityRule: ActivityTestRule<LoginActivity> = ActivityTestRule(LoginActivity::class.java)
+    var activityRule: ActivityTestRule<LoginActivity> = ActivityTestRule(LoginActivity::class.java, true, false)
 
     private lateinit var activity: LoginActivity
     private lateinit var loginFragment: LoginFragment
     private lateinit var context: Context
+    private lateinit var preferencesEditor: SharedPreferences.Editor
 
     @Before
     fun init() {
-        context = InstrumentationRegistry.getTargetContext()
-        activity = activityRule.activity
+        context = getInstrumentation().targetContext
+
+        preferencesEditor = PreferenceManager.getDefaultSharedPreferences(context).edit()
+        removeSharedPreferences()
+
+        activity = activityRule.launchActivity(Intent())
         loginFragment = activity.loginFragment
     }
 
@@ -73,4 +79,11 @@ class LoginActivityTest {
         Assert.assertNull(usernameError)
         Assert.assertEquals(context.getString(R.string.error_password), passwordError)
     }
+
+    private fun removeSharedPreferences() {
+        // reset the previously saved values in the SharedPreferences
+        preferencesEditor.putString(context.getString(R.string.sp_key_username), "").commit()
+        preferencesEditor.putString(context.getString(R.string.sp_key_password), "").commit()
+    }
+
 }
