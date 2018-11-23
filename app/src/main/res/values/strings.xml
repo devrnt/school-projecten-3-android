@@ -56,6 +56,8 @@
     <string name="werkaanbieding_title">Werkaanbieding</string>
     <string name="alg_info_btn">Algemene Info</string>
     <string name="spec_info_btn">Specifieke Info</string>
+    <string name="omschrijvingDeelcompetentie">Hier moet dan de omschrijving komen van de deelcompetentie waar je op geklikt hebt</string>
+    <string name="title_dialog_deelcompetentie_beoordelingen">Beoordelingen</string>
 
     <!-- Strings related to Login -->
     <string name="hint_username">Gebruikersnaam</string>
