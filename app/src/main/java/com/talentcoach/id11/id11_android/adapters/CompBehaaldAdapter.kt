@@ -12,11 +12,10 @@ import android.view.ViewGroup
 import android.widget.TextView
 import com.example.bruno.recyclerviewdemo2.CustomViewHolder
 import com.talentcoach.id11.id11_android.R
-import com.talentcoach.id11.id11_android.models.Competentie
+import com.talentcoach.id11.id11_android.models.LeerlingHoofdcompetentie
 import kotlinx.android.synthetic.main.comp_behaald_item.view.*
-import kotlinx.android.synthetic.main.comp_tebehalen_item.view.*
 
-class CompBehaaldAdapter(var compList: MutableList<Competentie>, var context: Context): RecyclerView.Adapter<CustomViewHolder>() {
+class CompBehaaldAdapter(var compList: MutableList<LeerlingHoofdcompetentie>, var context: Context): RecyclerView.Adapter<CustomViewHolder>() {
 
     var opengeklapt:Boolean = false
 
@@ -35,18 +34,18 @@ class CompBehaaldAdapter(var compList: MutableList<Competentie>, var context: Co
     //deze methode wordt voor elke competentie opgeroepen die gebind wordt aan de viewholder
     @RequiresApi(Build.VERSION_CODES.KITKAT)
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
-        val competentie = compList.get(position)
+        val hoofdcompetentie = compList.get(position)
 
-        holder.view.compName2.text = competentie.omschrijving
+        holder.view.compName2.text = hoofdcompetentie.hoofdcompetentie.omschrijving
         holder.view.checkMark.setImageResource(R.drawable.check)
         holder.view.arrowIcon2.setImageResource(R.drawable.arrow_right_24dp)
-        holder.view.behaaldOp.text = competentie.behaaldOp
-        holder.view.graadTxt2.text = competentie.graad
+        holder.view.behaaldOp.text = hoofdcompetentie.datumBehaald.toString()
+        holder.view.graadTxt2.text = hoofdcompetentie.hoofdcompetentie.graad
 
         if(holder.view.childItems2.childCount == 0){
-            for(subComp in competentie.subCompetenties){
+            for(deelcompetentie in hoofdcompetentie.leerlingDeelcompetenties){
                 var text: TextView = TextView(context)
-                text.text = "${'\u25CF'} ${subComp.omschrijving}" // ${'\u25CF'} zorgt voor Bullet icon
+                text.text = "${'\u25CF'} ${deelcompetentie.deelcompetentie.omschrijving}" // ${'\u25CF'} zorgt voor Bullet icon
                 text.setPadding(0,0,0,40)
                 holder.view.childItems2.addView(text)
             }

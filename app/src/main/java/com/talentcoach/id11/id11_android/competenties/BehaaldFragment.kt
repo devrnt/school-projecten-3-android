@@ -10,7 +10,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import com.talentcoach.id11.id11_android.R
 import com.talentcoach.id11.id11_android.adapters.CompBehaaldAdapter
-import com.talentcoach.id11.id11_android.models.Competentie
+import com.talentcoach.id11.id11_android.models.LeerlingHoofdcompetentie
 import com.talentcoach.id11.id11_android.models.Leerling
 import com.talentcoach.id11.id11_android.repositories.LeerlingRepositoryRetrofit
 import kotlinx.android.synthetic.main.fragment_behaald.*
@@ -20,16 +20,15 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.*
-import kotlin.Comparator
 
 class BehaaldFragment: Fragment(){
 
     lateinit var adapter: CompBehaaldAdapter
     lateinit var recycle: RecyclerView
 
-    var lijst: MutableList<Competentie> = mutableListOf()
-    var copyList = mutableListOf<Competentie>()
-    var copyListSwitch = mutableListOf<Competentie>()
+    var lijst: MutableList<LeerlingHoofdcompetentie> = mutableListOf()
+    var copyList = mutableListOf<LeerlingHoofdcompetentie>()
+    var copyListSwitch = mutableListOf<LeerlingHoofdcompetentie>()
 
 
 
@@ -50,9 +49,9 @@ class BehaaldFragment: Fragment(){
         copyListSwitch = lijst.toMutableList()
         var copyList = lijst.toMutableList()
 
-        Collections.sort(copyList, object : java.util.Comparator<Competentie> {
-            override fun compare(o1: Competentie?, o2: Competentie?): Int {
-                return o1!!.omschrijving.compareTo(o2!!.omschrijving)
+        Collections.sort(copyList, object : java.util.Comparator<LeerlingHoofdcompetentie> {
+            override fun compare(o1: LeerlingHoofdcompetentie?, o2: LeerlingHoofdcompetentie?): Int {
+                return o1!!.hoofdcompetentie.omschrijving.compareTo(o2!!.hoofdcompetentie.omschrijving)
             }
         })
         adapter.compList.clear()
@@ -76,7 +75,7 @@ class BehaaldFragment: Fragment(){
 
     fun applyFilter(year:String, graad:String){
 
-        var sortedList: List<Competentie> = listOf()
+        var sortedList: List<LeerlingHoofdcompetentie> = listOf()
 
         if (copyList.isNotEmpty()) {
             adapter.compList.clear()
@@ -86,13 +85,13 @@ class BehaaldFragment: Fragment(){
             copyList = mutableListOf()
         }
 
-        sortedList = lijst.filter { c -> c.behaaldOp.contains(year,true) && c.graad.equals(graad,true) }
+        sortedList = lijst.filter { c -> c.datumBehaald.toString().contains(year,true) && c.hoofdcompetentie.graad.equals(graad,true) }
 
         if(year.contains("Alle",true) && !graad.contains("Alle",true)){
-            sortedList = lijst.filter { c -> c.graad.equals(graad, true) }
+            sortedList = lijst.filter { c -> c.hoofdcompetentie.graad.equals(graad, true) }
         }
         if(graad.contains("Alle",true) && !year.contains("Alle",true)){
-            sortedList = lijst.filter { c -> c.behaaldOp.contains(year,true) }
+            sortedList = lijst.filter { c -> c.datumBehaald.toString().contains(year,true) }
         }
 
         if(sortedList.isNotEmpty()){
@@ -132,7 +131,8 @@ class BehaaldFragment: Fragment(){
                 if(response.isSuccessful){
                     var leerling = response.body()
 
-                    lijst = leerling!!.competenties
+                    lijst = mutableListOf()
+//                    lijst = leerling!!.leerlingHoofdcompetenties
                     behaaldTxt2.text = "Behaalde competenties: ${lijst.count()}"
 
                     //Progressbar doen verdwijnen en lijst weergeven

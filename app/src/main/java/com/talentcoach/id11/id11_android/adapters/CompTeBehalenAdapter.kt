@@ -1,29 +1,22 @@
 package com.example.bruno.recyclerviewdemo2
 
 import android.content.Context
-import android.graphics.Typeface
 import android.os.Build
 import android.support.annotation.RequiresApi
 import android.support.v7.widget.RecyclerView
 import android.transition.AutoTransition
-import android.transition.Transition
 import android.transition.TransitionManager
-import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.AlphaAnimation
 import android.widget.TextView
 import com.talentcoach.id11.id11_android.R
 import com.talentcoach.id11.id11_android.adapters.CustomViewHolder
-import com.talentcoach.id11.id11_android.models.Competentie
-import kotlinx.android.synthetic.main.comp_behaald_item.view.*
+import com.talentcoach.id11.id11_android.models.LeerlingHoofdcompetentie
 import kotlinx.android.synthetic.main.comp_tebehalen_item.view.*
-import kotlinx.android.synthetic.main.fragment_tebehalen.view.*
-import java.util.*
 
 
-class CompTeBehalenAdapter(val compList: MutableList<Competentie>,var context: Context):RecyclerView.Adapter<CustomViewHolder>(){
+class CompTeBehalenAdapter(val compList: MutableList<LeerlingHoofdcompetentie>, var context: Context):RecyclerView.Adapter<CustomViewHolder>(){
 
     var opengeklapt:Boolean = false
 
@@ -42,16 +35,16 @@ class CompTeBehalenAdapter(val compList: MutableList<Competentie>,var context: C
     //deze methode wordt voor elke competentie opgeroepen die gebind wordt aan de viewholder
     @RequiresApi(Build.VERSION_CODES.KITKAT)
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
-        val competentie = compList.get(position)
+        val hoofdcompetentie = compList.get(position)
 
-        holder.view.compName.text = competentie.omschrijving
+        holder.view.compName.text = hoofdcompetentie.hoofdcompetentie.omschrijving
         holder.view.arrowIcon.setImageResource(R.drawable.arrow_right_24dp)
-        holder.view.graadTxt.text = competentie.graad
+        holder.view.graadTxt.text = hoofdcompetentie.hoofdcompetentie.graad
 
         if(holder.view.childItems.childCount == 0){
-            for(subComp in competentie.subCompetenties){
+            for(deelcompetentie in hoofdcompetentie.leerlingDeelcompetenties){
                 var text: TextView = TextView(context)
-                text.text = "${'\u25CF'} ${subComp.omschrijving}" // ${'\u25CF'} zorgt voor Bullet icon
+                text.text = "${'\u25CF'} ${deelcompetentie.deelcompetentie.omschrijving}" // ${'\u25CF'} zorgt voor Bullet icon
                 text.setPadding(0,0,0,40)
                 holder.view.childItems.addView(text)
             }

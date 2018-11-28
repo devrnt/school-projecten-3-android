@@ -10,7 +10,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import com.example.bruno.recyclerviewdemo2.CompTeBehalenAdapter
 import com.talentcoach.id11.id11_android.R
-import com.talentcoach.id11.id11_android.models.Competentie
+import com.talentcoach.id11.id11_android.models.LeerlingHoofdcompetentie
 import com.talentcoach.id11.id11_android.models.Leerling
 import com.talentcoach.id11.id11_android.models.Richting
 import com.talentcoach.id11.id11_android.repositories.LeerlingRepositoryRetrofit
@@ -26,10 +26,10 @@ import java.util.*
 class TeBehalenFragment: Fragment() {
 
     lateinit var adapter: CompTeBehalenAdapter
-    var lijst: MutableList<Competentie> = mutableListOf()
+    var lijst: MutableList<LeerlingHoofdcompetentie> = mutableListOf()
     lateinit var recycle: RecyclerView
-    var copyListGraad = mutableListOf<Competentie>()
-    var copyListSwitch = mutableListOf<Competentie>()
+    var copyListGraad = mutableListOf<LeerlingHoofdcompetentie>()
+    var copyListSwitch = mutableListOf<LeerlingHoofdcompetentie>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_tebehalen, container, false)
@@ -63,9 +63,9 @@ class TeBehalenFragment: Fragment() {
         copyListSwitch = lijst.toMutableList()
         var copyList = lijst.toMutableList()
 
-        Collections.sort(copyList, object : Comparator<Competentie> {
-            override fun compare(o1: Competentie?, o2: Competentie?): Int {
-                return o1!!.omschrijving.compareTo(o2!!.omschrijving)
+        Collections.sort(copyList, object : Comparator<LeerlingHoofdcompetentie> {
+            override fun compare(o1: LeerlingHoofdcompetentie?, o2: LeerlingHoofdcompetentie?): Int {
+                return o1!!.hoofdcompetentie.omschrijving.compareTo(o2!!.hoofdcompetentie.omschrijving)
             }
         })
         adapter.compList.clear()
@@ -75,7 +75,7 @@ class TeBehalenFragment: Fragment() {
     }
 
     fun filterOnGraad(graad: String) {
-        var sortedList: List<Competentie>
+        var sortedList: List<LeerlingHoofdcompetentie>
 
         if (!copyListGraad.isEmpty()) {
             adapter.compList.clear()
@@ -86,7 +86,7 @@ class TeBehalenFragment: Fragment() {
 
         }
 
-        sortedList = lijst.filter { c -> c.graad.equals(graad, true) }
+        sortedList = lijst.filter { c -> c.hoofdcompetentie.graad.equals(graad, true) }
 
         if (!sortedList.isEmpty()) {
             copyListGraad = lijst.toMutableList()
@@ -128,37 +128,46 @@ class TeBehalenFragment: Fragment() {
                     var leerling = response.body()
                     richtingId = leerling?.richting?.id
 
-                    //Ophalen van Hoofdcompetenties van de richitng
-                    val retrofitRichting = Retrofit
-                            .Builder()
-                            .addConverterFactory(GsonConverterFactory.create())
-                            .baseUrl(url)
-                            .build()
-                    val richtingRepository = retrofitRichting.create(RichtingRepository::class.java)
-                    val callRichting = richtingRepository.getById(richtingId)
+                    lijst = leerling!!.leerlingHoofdcompetenties
 
-                    callRichting.enqueue(object : Callback<Richting> {
-                        override fun onFailure(call: Call<Richting>, t: Throwable) {
-                            println("WERKT NIET")
-                        }
+                    //Progressbar doen verdwijnen en lijst weergeven
+                    recycle = view!!.findViewById(R.id.recyclerTeBehalen)
+                    recycle.visibility = View.VISIBLE
+                    teBehalenProgress.visibility = View.GONE
 
-                        override fun onResponse(call: Call<Richting>, response: Response<Richting>) {
-                            if(response.isSuccessful){
-                                var richting = response.body()
-
-                                lijst = richting!!.competenties
-
-                                //Progressbar doen verdwijnen en lijst weergeven
-                                recycle = view!!.findViewById(R.id.recyclerTeBehalen)
-                                recycle.visibility = View.VISIBLE
-                                teBehalenProgress.visibility = View.GONE
-
-                                adapter = CompTeBehalenAdapter(lijst, activity!!.applicationContext)
-                                recycle.adapter = adapter
-                            }
-                        }
-
-                    })
+                    adapter = CompTeBehalenAdapter(lijst, activity!!.applicationContext)
+                    recycle.adapter = adapter
+//                    //Ophalen van Hoofdcompetenties van de richitng
+//                    val retrofitRichting = Retrofit
+//                            .Builder()
+//                            .addConverterFactory(GsonConverterFactory.create())
+//                            .baseUrl(url)
+//                            .build()
+//                    val richtingRepository = retrofitRichting.create(RichtingRepository::class.java)
+//                    val callRichting = richtingRepository.getById(richtingId)
+//
+//                    callRichting.enqueue(object : Callback<Richting> {
+//                        override fun onFailure(call: Call<Richting>, t: Throwable) {
+//                            println("WERKT NIET")
+//                        }
+//
+//                        override fun onResponse(call: Call<Richting>, response: Response<Richting>) {
+//                            if(response.isSuccessful){
+//                                var richting = response.body()
+//
+//                                lijst = richting!!.competenties
+//
+//                                //Progressbar doen verdwijnen en lijst weergeven
+//                                recycle = view!!.findViewById(R.id.recyclerTeBehalen)
+//                                recycle.visibility = View.VISIBLE
+//                                teBehalenProgress.visibility = View.GONE
+//
+//                                adapter = CompTeBehalenAdapter(lijst, activity!!.applicationContext)
+//                                recycle.adapter = adapter
+//                            }
+//                        }
+//
+//                    })
                 } else {
                     Toast.makeText(context, "Hier ging iets fout", Toast.LENGTH_LONG).show()
                 }
