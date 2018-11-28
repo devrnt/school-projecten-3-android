@@ -1,5 +1,6 @@
 package com.talentcoach.id11.id11_android.repositories
 
+import android.util.Log
 import com.beust.klaxon.Klaxon
 import com.talentcoach.id11.id11_android.models.IRepository
 import com.talentcoach.id11.id11_android.models.Leerling
@@ -23,8 +24,8 @@ class LeerlingRepository: IRepository<Leerling>, Serializable {
         try {
             val json = URL(url + id).readText()
 
-            leerling = Klaxon().parse<Leerling>(json)
-
+            leerling = Klaxon().parse<Leerling>(json);
+            Log.d(Log.DEBUG.toString(),leerling.toString());
         } catch (e: Exception) {
             throw e
         }
