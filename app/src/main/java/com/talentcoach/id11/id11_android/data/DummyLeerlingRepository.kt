@@ -2,8 +2,15 @@ package com.talentcoach.id11.id11_android.data
 
 import com.talentcoach.id11.id11_android.models.IRepository
 import com.talentcoach.id11.id11_android.models.Leerling
+import com.talentcoach.id11.id11_android.models.LeerlingHoofdcompetentie
 
 class DummyLeerlingRepository: IRepository<Leerling> {
+    override fun getCompetentiesById(id: Int): List<LeerlingHoofdcompetentie> {
+        return DummyDbContext.leerlingen.first {
+            lln -> lln.id == id
+        }.hoofdcompetenties
+    }
+
     override fun getById(id: Int): Leerling {
         return DummyDbContext.leerlingen.first {
             leerling -> leerling.id == id

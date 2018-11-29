@@ -3,10 +3,15 @@ package com.talentcoach.id11.id11_android.repositories
 import com.beust.klaxon.Klaxon
 import com.talentcoach.id11.id11_android.models.IRepository
 import com.talentcoach.id11.id11_android.models.Leerling
+import com.talentcoach.id11.id11_android.models.LeerlingHoofdcompetentie
 import com.talentcoach.id11.id11_android.models.Werkgever
 import java.net.URL
 
 class WerkgeverRepository: IRepository<Werkgever> {
+    override fun getCompetentiesById(id: Int): List<LeerlingHoofdcompetentie> {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
     val url = "http://projecten3studserver11.westeurope.cloudapp.azure.com/api/werkgevers/"
 
     override fun getById(id: Int): Werkgever {

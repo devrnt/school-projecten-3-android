@@ -26,7 +26,7 @@ import java.util.*
 class TeBehalenFragment: Fragment() {
 
     lateinit var adapter: CompTeBehalenAdapter
-    var lijst: MutableList<LeerlingHoofdcompetentie> = mutableListOf()
+    var teBehalenLeerlingHoofdcompetenties: MutableList<LeerlingHoofdcompetentie> = mutableListOf()
     lateinit var recycle: RecyclerView
     var copyListGraad = mutableListOf<LeerlingHoofdcompetentie>()
     var copyListSwitch = mutableListOf<LeerlingHoofdcompetentie>()
@@ -53,24 +53,24 @@ class TeBehalenFragment: Fragment() {
     }
 
     private fun unsortListOnNames() {
-        adapter.compList.clear()
+        adapter.leerlingHoofdcompetenties.clear()
         for(item in copyListSwitch){
-            adapter.compList.add(adapter.compList.count(), item)
+            adapter.leerlingHoofdcompetenties.add(adapter.leerlingHoofdcompetenties.count(), item)
         }
     }
 
     private fun sortListOnNames() {
-        copyListSwitch = lijst.toMutableList()
-        var copyList = lijst.toMutableList()
+        copyListSwitch = teBehalenLeerlingHoofdcompetenties.toMutableList()
+        var copyList = teBehalenLeerlingHoofdcompetenties.toMutableList()
 
         Collections.sort(copyList, object : Comparator<LeerlingHoofdcompetentie> {
             override fun compare(o1: LeerlingHoofdcompetentie?, o2: LeerlingHoofdcompetentie?): Int {
                 return o1!!.hoofdcompetentie.omschrijving.compareTo(o2!!.hoofdcompetentie.omschrijving)
             }
         })
-        adapter.compList.clear()
+        adapter.leerlingHoofdcompetenties.clear()
         for(item in copyList){
-            adapter.compList.add(adapter.compList.count(), item)
+            adapter.leerlingHoofdcompetenties.add(adapter.leerlingHoofdcompetenties.count(), item)
         }
     }
 
@@ -78,21 +78,21 @@ class TeBehalenFragment: Fragment() {
         var sortedList: List<LeerlingHoofdcompetentie>
 
         if (!copyListGraad.isEmpty()) {
-            adapter.compList.clear()
+            adapter.leerlingHoofdcompetenties.clear()
             for (item in copyListGraad) {
-                adapter.compList.add(adapter.compList.count(), item)
+                adapter.leerlingHoofdcompetenties.add(adapter.leerlingHoofdcompetenties.count(), item)
             }
             copyListGraad = mutableListOf()
 
         }
 
-        sortedList = lijst.filter { c -> c.hoofdcompetentie.graad.equals(graad, true) }
+        sortedList = teBehalenLeerlingHoofdcompetenties.filter { c -> c.hoofdcompetentie.graad.equals(graad, true) }
 
         if (!sortedList.isEmpty()) {
-            copyListGraad = lijst.toMutableList()
-            adapter.compList.clear()
+            copyListGraad = teBehalenLeerlingHoofdcompetenties.toMutableList()
+            adapter.leerlingHoofdcompetenties.clear()
             for (item in sortedList) {
-                adapter.compList.add(adapter.compList.count(), item)
+                adapter.leerlingHoofdcompetenties.add(adapter.leerlingHoofdcompetenties.count(), item)
             }
 
         }
@@ -128,14 +128,14 @@ class TeBehalenFragment: Fragment() {
                     var leerling = response.body()
                     richtingId = leerling?.richting?.id
 
-                    lijst = leerling!!.leerlingHoofdcompetenties
+                    teBehalenLeerlingHoofdcompetenties = leerling!!.hoofdcompetenties.filter { hc -> hc.behaald }.toMutableList()
 
                     //Progressbar doen verdwijnen en lijst weergeven
                     recycle = view!!.findViewById(R.id.recyclerTeBehalen)
                     recycle.visibility = View.VISIBLE
                     teBehalenProgress.visibility = View.GONE
 
-                    adapter = CompTeBehalenAdapter(lijst, activity!!.applicationContext)
+                    adapter = CompTeBehalenAdapter(teBehalenLeerlingHoofdcompetenties, activity!!.applicationContext)
                     recycle.adapter = adapter
 //                    //Ophalen van Hoofdcompetenties van de richitng
 //                    val retrofitRichting = Retrofit
@@ -155,14 +155,14 @@ class TeBehalenFragment: Fragment() {
 //                            if(response.isSuccessful){
 //                                var richting = response.body()
 //
-//                                lijst = richting!!.competenties
+//                                teBehalenLeerlingHoofdcompetenties = richting!!.competenties
 //
 //                                //Progressbar doen verdwijnen en lijst weergeven
 //                                recycle = view!!.findViewById(R.id.recyclerTeBehalen)
 //                                recycle.visibility = View.VISIBLE
 //                                teBehalenProgress.visibility = View.GONE
 //
-//                                adapter = CompTeBehalenAdapter(lijst, activity!!.applicationContext)
+//                                adapter = CompTeBehalenAdapter(teBehalenLeerlingHoofdcompetenties, activity!!.applicationContext)
 //                                recycle.adapter = adapter
 //                            }
 //                        }
