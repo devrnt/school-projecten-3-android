@@ -2,9 +2,9 @@ package com.talentcoach.id11.id11_android.models
 
 import java.util.*
 
-class LeerlingDeelcompetentie(
+class LeerlingDeelCompetentie(
         val id:Int,
-        val deelcompetentie: Deelcompetentie,
+        val deelCompetentie: DeelCompetentie,
         val behaald: Boolean,
         val datumGeslaagd: Calendar,
-        val beoordelingen: MutableList<BeoordelingDeelcompetentie>)
+        val beoordelingen: MutableList<BeoordelingDeelCompetentie>)

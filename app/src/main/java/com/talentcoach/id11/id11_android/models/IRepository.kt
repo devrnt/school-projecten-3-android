@@ -5,5 +5,5 @@ interface IRepository<T> {
     fun getById(id: Int): T
     fun update(toUpdate: T)
     fun getAll(): List<T>
-    fun getCompetentiesById(id: Int): List<LeerlingHoofdcompetentie>
+    fun getCompetentiesById(id: Int): List<LeerlingHoofdCompetentie>
 }

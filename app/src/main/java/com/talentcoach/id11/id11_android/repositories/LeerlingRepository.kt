@@ -4,7 +4,7 @@ import android.util.Log
 import com.beust.klaxon.Klaxon
 import com.talentcoach.id11.id11_android.models.IRepository
 import com.talentcoach.id11.id11_android.models.Leerling
-import com.talentcoach.id11.id11_android.models.LeerlingHoofdcompetentie
+import com.talentcoach.id11.id11_android.models.LeerlingHoofdCompetentie
 import java.io.Serializable
 import java.net.HttpURLConnection
 import java.net.URL
@@ -37,13 +37,13 @@ class LeerlingRepository: IRepository<Leerling>, Serializable {
         return leerling!!
     }
 
-    override fun getCompetentiesById(id: Int): MutableList<LeerlingHoofdcompetentie> {
-        var hoofdcompetenties: MutableList<LeerlingHoofdcompetentie>?
+    override fun getCompetentiesById(id: Int): MutableList<LeerlingHoofdCompetentie> {
+        var hoofdcompetenties: MutableList<LeerlingHoofdCompetentie>?
 
         try {
             val json = URL(url + id + "/competenties").readText()
 
-            hoofdcompetenties = Klaxon().parse<MutableList<LeerlingHoofdcompetentie>>(json)
+            hoofdcompetenties = Klaxon().parse<MutableList<LeerlingHoofdCompetentie>>(json)
             Log.d(Log.DEBUG.toString(), hoofdcompetenties.toString())
         } catch (ex: java.lang.Exception) {
             throw ex

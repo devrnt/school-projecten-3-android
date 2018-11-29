@@ -10,7 +10,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import com.example.bruno.recyclerviewdemo2.CompTeBehalenAdapter
 import com.talentcoach.id11.id11_android.R
-import com.talentcoach.id11.id11_android.models.LeerlingHoofdcompetentie
+import com.talentcoach.id11.id11_android.models.LeerlingHoofdCompetentie
 import com.talentcoach.id11.id11_android.models.Leerling
 import com.talentcoach.id11.id11_android.models.Richting
 import com.talentcoach.id11.id11_android.repositories.LeerlingRepositoryRetrofit
@@ -26,10 +26,10 @@ import java.util.*
 class TeBehalenFragment: Fragment() {
 
     lateinit var adapter: CompTeBehalenAdapter
-    var teBehalenLeerlingHoofdcompetenties: MutableList<LeerlingHoofdcompetentie> = mutableListOf()
+    var teBehalenLeerlingHoofdcompetenties: MutableList<LeerlingHoofdCompetentie> = mutableListOf()
     lateinit var recycle: RecyclerView
-    var copyListGraad = mutableListOf<LeerlingHoofdcompetentie>()
-    var copyListSwitch = mutableListOf<LeerlingHoofdcompetentie>()
+    var copyListGraad = mutableListOf<LeerlingHoofdCompetentie>()
+    var copyListSwitch = mutableListOf<LeerlingHoofdCompetentie>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_tebehalen, container, false)
@@ -63,9 +63,9 @@ class TeBehalenFragment: Fragment() {
         copyListSwitch = teBehalenLeerlingHoofdcompetenties.toMutableList()
         var copyList = teBehalenLeerlingHoofdcompetenties.toMutableList()
 
-        Collections.sort(copyList, object : Comparator<LeerlingHoofdcompetentie> {
-            override fun compare(o1: LeerlingHoofdcompetentie?, o2: LeerlingHoofdcompetentie?): Int {
-                return o1!!.hoofdcompetentie.omschrijving.compareTo(o2!!.hoofdcompetentie.omschrijving)
+        Collections.sort(copyList, object : Comparator<LeerlingHoofdCompetentie> {
+            override fun compare(o1: LeerlingHoofdCompetentie?, o2: LeerlingHoofdCompetentie?): Int {
+                return o1!!.hoofdCompetentie.omschrijving.compareTo(o2!!.hoofdCompetentie.omschrijving)
             }
         })
         adapter.leerlingHoofdcompetenties.clear()
@@ -75,7 +75,7 @@ class TeBehalenFragment: Fragment() {
     }
 
     fun filterOnGraad(graad: String) {
-        var sortedList: List<LeerlingHoofdcompetentie>
+        var sortedList: List<LeerlingHoofdCompetentie>
 
         if (!copyListGraad.isEmpty()) {
             adapter.leerlingHoofdcompetenties.clear()
@@ -86,7 +86,7 @@ class TeBehalenFragment: Fragment() {
 
         }
 
-        sortedList = teBehalenLeerlingHoofdcompetenties.filter { c -> c.hoofdcompetentie.graad.equals(graad, true) }
+        sortedList = teBehalenLeerlingHoofdcompetenties.filter { c -> c.hoofdCompetentie.graad.equals(graad, true) }
 
         if (!sortedList.isEmpty()) {
             copyListGraad = teBehalenLeerlingHoofdcompetenties.toMutableList()
@@ -119,7 +119,7 @@ class TeBehalenFragment: Fragment() {
 
         callLeerling.enqueue(object : Callback<Leerling> {
             override fun onFailure(call: Call<Leerling>, t: Throwable) {
-                println("WERKT NIET")
+                println("Ophalen van leerling met id 1 in TeBehalenFragment lukt niet")
             }
 
             override fun onResponse(call: Call<Leerling>, response: Response<Leerling>) {
@@ -128,7 +128,7 @@ class TeBehalenFragment: Fragment() {
                     var leerling = response.body()
                     richtingId = leerling?.richting?.id
 
-                    teBehalenLeerlingHoofdcompetenties = leerling!!.hoofdCompetenties.filter { hc -> hc.behaald }.toMutableList()
+                    teBehalenLeerlingHoofdcompetenties = leerling!!.hoofdCompetenties
 
                     //Progressbar doen verdwijnen en lijst weergeven
                     recycle = view!!.findViewById(R.id.recyclerTeBehalen)

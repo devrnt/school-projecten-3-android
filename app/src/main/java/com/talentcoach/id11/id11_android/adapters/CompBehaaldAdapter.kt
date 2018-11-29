@@ -12,10 +12,10 @@ import android.view.ViewGroup
 import android.widget.TextView
 import com.example.bruno.recyclerviewdemo2.CustomViewHolder
 import com.talentcoach.id11.id11_android.R
-import com.talentcoach.id11.id11_android.models.LeerlingHoofdcompetentie
+import com.talentcoach.id11.id11_android.models.LeerlingHoofdCompetentie
 import kotlinx.android.synthetic.main.comp_behaald_item.view.*
 
-class CompBehaaldAdapter(var compList: MutableList<LeerlingHoofdcompetentie>, var context: Context): RecyclerView.Adapter<CustomViewHolder>() {
+class CompBehaaldAdapter(var compList: MutableList<LeerlingHoofdCompetentie>, var context: Context): RecyclerView.Adapter<CustomViewHolder>() {
 
     var opengeklapt:Boolean = false
 
@@ -36,16 +36,16 @@ class CompBehaaldAdapter(var compList: MutableList<LeerlingHoofdcompetentie>, va
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
         val hoofdcompetentie = compList.get(position)
 
-        holder.view.compName2.text = hoofdcompetentie.hoofdcompetentie.omschrijving
+        holder.view.compName2.text = hoofdcompetentie.hoofdCompetentie.omschrijving
         holder.view.checkMark.setImageResource(R.drawable.check)
         holder.view.arrowIcon2.setImageResource(R.drawable.arrow_right_24dp)
         holder.view.behaaldOp.text = hoofdcompetentie.datumBehaald.toString()
-        holder.view.graadTxt2.text = hoofdcompetentie.hoofdcompetentie.graad
+        holder.view.graadTxt2.text = hoofdcompetentie.hoofdCompetentie.graad
 
         if(holder.view.childItems2.childCount == 0){
-            for(deelcompetentie in hoofdcompetentie.leerlingDeelcompetenties){
+            for(deelcompetentie in hoofdcompetentie.leerlingDeelCompetenties){
                 var text: TextView = TextView(context)
-                text.text = "${'\u25CF'} ${deelcompetentie.deelcompetentie.omschrijving}" // ${'\u25CF'} zorgt voor Bullet icon
+                text.text = "${'\u25CF'} ${deelcompetentie.deelCompetentie.omschrijving}" // ${'\u25CF'} zorgt voor Bullet icon
                 text.setPadding(0,0,0,40)
                 holder.view.childItems2.addView(text)
             }

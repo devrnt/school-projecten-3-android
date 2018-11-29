@@ -10,7 +10,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import com.talentcoach.id11.id11_android.R
 import com.talentcoach.id11.id11_android.adapters.CompBehaaldAdapter
-import com.talentcoach.id11.id11_android.models.LeerlingHoofdcompetentie
+import com.talentcoach.id11.id11_android.models.LeerlingHoofdCompetentie
 import com.talentcoach.id11.id11_android.models.Leerling
 import com.talentcoach.id11.id11_android.repositories.LeerlingRepositoryRetrofit
 import kotlinx.android.synthetic.main.fragment_behaald.*
@@ -26,9 +26,9 @@ class BehaaldFragment: Fragment(){
     lateinit var adapter: CompBehaaldAdapter
     lateinit var recycle: RecyclerView
 
-    var lijst: MutableList<LeerlingHoofdcompetentie> = mutableListOf()
-    var copyList = mutableListOf<LeerlingHoofdcompetentie>()
-    var copyListSwitch = mutableListOf<LeerlingHoofdcompetentie>()
+    var lijst: MutableList<LeerlingHoofdCompetentie> = mutableListOf()
+    var copyList = mutableListOf<LeerlingHoofdCompetentie>()
+    var copyListSwitch = mutableListOf<LeerlingHoofdCompetentie>()
 
 
 
@@ -49,9 +49,9 @@ class BehaaldFragment: Fragment(){
         copyListSwitch = lijst.toMutableList()
         var copyList = lijst.toMutableList()
 
-        Collections.sort(copyList, object : java.util.Comparator<LeerlingHoofdcompetentie> {
-            override fun compare(o1: LeerlingHoofdcompetentie?, o2: LeerlingHoofdcompetentie?): Int {
-                return o1!!.hoofdcompetentie.omschrijving.compareTo(o2!!.hoofdcompetentie.omschrijving)
+        Collections.sort(copyList, object : java.util.Comparator<LeerlingHoofdCompetentie> {
+            override fun compare(o1: LeerlingHoofdCompetentie?, o2: LeerlingHoofdCompetentie?): Int {
+                return o1!!.hoofdCompetentie.omschrijving.compareTo(o2!!.hoofdCompetentie.omschrijving)
             }
         })
         adapter.compList.clear()
@@ -75,7 +75,7 @@ class BehaaldFragment: Fragment(){
 
     fun applyFilter(year:String, graad:String){
 
-        var sortedList: List<LeerlingHoofdcompetentie> = listOf()
+        var sortedList: List<LeerlingHoofdCompetentie> = listOf()
 
         if (copyList.isNotEmpty()) {
             adapter.compList.clear()
@@ -85,10 +85,10 @@ class BehaaldFragment: Fragment(){
             copyList = mutableListOf()
         }
 
-        sortedList = lijst.filter { c -> c.datumBehaald.toString().contains(year,true) && c.hoofdcompetentie.graad.equals(graad,true) }
+        sortedList = lijst.filter { c -> c.datumBehaald.toString().contains(year,true) && c.hoofdCompetentie.graad.equals(graad,true) }
 
         if(year.contains("Alle",true) && !graad.contains("Alle",true)){
-            sortedList = lijst.filter { c -> c.hoofdcompetentie.graad.equals(graad, true) }
+            sortedList = lijst.filter { c -> c.hoofdCompetentie.graad.equals(graad, true) }
         }
         if(graad.contains("Alle",true) && !year.contains("Alle",true)){
             sortedList = lijst.filter { c -> c.datumBehaald.toString().contains(year,true) }
@@ -123,7 +123,7 @@ class BehaaldFragment: Fragment(){
 
         callLeerling.enqueue(object : Callback<Leerling> {
             override fun onFailure(call: Call<Leerling>, t: Throwable) {
-                println("WERKT NIET")
+                println("Ophalen van leerling met id 1 in BehaaldFragment werkt niet")
             }
 
             override fun onResponse(call: Call<Leerling>, response: Response<Leerling>) {

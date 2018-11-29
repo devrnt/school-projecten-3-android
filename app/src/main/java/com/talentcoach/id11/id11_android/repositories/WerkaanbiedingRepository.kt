@@ -1,15 +1,12 @@
 package com.talentcoach.id11.id11_android.repositories
 
 import com.beust.klaxon.Klaxon
-import com.talentcoach.id11.id11_android.models.IRepository
-import com.talentcoach.id11.id11_android.models.Leerling
-import com.talentcoach.id11.id11_android.models.LeerlingHoofdcompetentie
-import com.talentcoach.id11.id11_android.models.Werkaanbieding
+import com.talentcoach.id11.id11_android.models.*
 import java.io.Serializable
 import java.net.URL
 
 class WerkaanbiedingRepository: IRepository<Werkaanbieding>, Serializable {
-    override fun getCompetentiesById(id: Int): List<LeerlingHoofdcompetentie> {
+    override fun getCompetentiesById(id: Int): List<LeerlingHoofdCompetentie> {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 

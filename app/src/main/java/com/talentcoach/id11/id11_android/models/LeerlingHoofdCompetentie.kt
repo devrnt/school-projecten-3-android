@@ -4,10 +4,10 @@ import com.google.gson.annotations.SerializedName
 import java.util.*
 import kotlin.collections.ArrayList
 
-class LeerlingHoofdcompetentie(
+class LeerlingHoofdCompetentie(
         val id:Int,
         val behaald: Boolean,
         val datumBehaald: Calendar,
-        val hoofdcompetentie: Hoofdcompetentie,
-        val leerlingDeelcompetenties: MutableList<LeerlingDeelcompetentie>
+        val hoofdCompetentie: HoofdCompetentie,
+        val leerlingDeelCompetenties: MutableList<LeerlingDeelCompetentie>
         )
