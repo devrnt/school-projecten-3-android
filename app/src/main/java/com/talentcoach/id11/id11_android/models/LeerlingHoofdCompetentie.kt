@@ -7,7 +7,7 @@ import kotlin.collections.ArrayList
 class LeerlingHoofdCompetentie(
         val id:Int,
         val behaald: Boolean,
-        val datumBehaald: Calendar,
+        val datumBehaald: Date,
         val hoofdCompetentie: HoofdCompetentie,
-        val leerlingDeelCompetenties: MutableList<LeerlingDeelCompetentie>
+        val deelCompetenties: MutableList<LeerlingDeelCompetentie>
         )

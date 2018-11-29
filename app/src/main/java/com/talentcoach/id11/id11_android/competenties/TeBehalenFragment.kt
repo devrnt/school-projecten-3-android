@@ -13,6 +13,7 @@ import com.talentcoach.id11.id11_android.R
 import com.talentcoach.id11.id11_android.models.LeerlingHoofdCompetentie
 import com.talentcoach.id11.id11_android.models.Leerling
 import com.talentcoach.id11.id11_android.models.Richting
+import com.talentcoach.id11.id11_android.repositories.LeerlingAPI
 import com.talentcoach.id11.id11_android.repositories.LeerlingRepositoryRetrofit
 import com.talentcoach.id11.id11_android.repositories.RichtingRepository
 import kotlinx.android.synthetic.main.fragment_tebehalen.*
@@ -108,16 +109,17 @@ class TeBehalenFragment: Fragment() {
         var richtingId: Int?
 
         //Ophalen van de leerling en richtingId
-        val retrofitLeerling = Retrofit
-                .Builder()
-                .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl(url)
-                .build()
+//        Dit is fout!
+//        val retrofitLeerling = Retrofit
+//                .Builder()
+//                .addConverterFactory(GsonConverterFactory.create())
+//                .baseUrl(url)
+//                .build()
+//
+//        val leerlingRepository = retrofitLeerling.create(LeerlingRepositoryRetrofit::class.java)
+//        val callLeerling = leerlingRepository.getById(1)
 
-        val leerlingRepository = retrofitLeerling.create(LeerlingRepositoryRetrofit::class.java)
-        val callLeerling = leerlingRepository.getById(1)
-
-        callLeerling.enqueue(object : Callback<Leerling> {
+        LeerlingAPI.repository.getById(1).enqueue(object : Callback<Leerling> {
             override fun onFailure(call: Call<Leerling>, t: Throwable) {
                 println("Ophalen van leerling met id 1 in TeBehalenFragment lukt niet")
             }
@@ -126,9 +128,8 @@ class TeBehalenFragment: Fragment() {
 
                 if (response.isSuccessful) {
                     var leerling = response.body()
-                    richtingId = leerling?.richting?.id
 
-                    teBehalenLeerlingHoofdcompetenties = leerling!!.hoofdCompetenties
+                    teBehalenLeerlingHoofdcompetenties = leerling!!.hoofdCompetenties.filter { hc -> hc.behaald.not() }.toMutableList()
 
                     //Progressbar doen verdwijnen en lijst weergeven
                     recycle = view!!.findViewById(R.id.recyclerTeBehalen)

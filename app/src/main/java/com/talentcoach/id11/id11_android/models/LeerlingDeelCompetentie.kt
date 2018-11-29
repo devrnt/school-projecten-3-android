@@ -6,5 +6,5 @@ class LeerlingDeelCompetentie(
         val id:Int,
         val deelCompetentie: DeelCompetentie,
         val behaald: Boolean,
-        val datumGeslaagd: Calendar,
+        val datumGeslaagd: Date,
         val beoordelingen: MutableList<BeoordelingDeelCompetentie>)

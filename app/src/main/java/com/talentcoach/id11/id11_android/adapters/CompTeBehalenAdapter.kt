@@ -47,7 +47,7 @@ class CompTeBehalenAdapter(
         holder.view.graadTxt.text = hoofdcompetentie.hoofdCompetentie.graad
 
         if(holder.view.childItems.childCount == 0){
-            for(deelcompetentie in hoofdcompetentie.leerlingDeelCompetenties){
+            for(deelcompetentie in hoofdcompetentie.deelCompetenties){
                 var text: TextView = TextView(context)
                 text.text = "${'\u25CF'} ${deelcompetentie.deelCompetentie.omschrijving}" // ${'\u25CF'} zorgt voor Bullet icon
                 text.setPadding(0,0,0,40)
