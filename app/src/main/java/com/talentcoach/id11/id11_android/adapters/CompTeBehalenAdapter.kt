@@ -12,39 +12,44 @@ import android.view.ViewGroup
 import android.widget.TextView
 import com.talentcoach.id11.id11_android.R
 import com.talentcoach.id11.id11_android.adapters.CustomViewHolder
-import com.talentcoach.id11.id11_android.models.LeerlingHoofdcompetentie
+import com.talentcoach.id11.id11_android.models.Leerling
+import com.talentcoach.id11.id11_android.models.LeerlingHoofdCompetentie
 import kotlinx.android.synthetic.main.comp_tebehalen_item.view.*
 
 
-class CompTeBehalenAdapter(val compList: MutableList<LeerlingHoofdcompetentie>, var context: Context):RecyclerView.Adapter<CustomViewHolder>(){
+class CompTeBehalenAdapter(
+        val teBehalenLeerlingHoofdcompetenties: MutableList<LeerlingHoofdCompetentie>,
+        var context: Context):RecyclerView.Adapter<CustomViewHolder>(){
 
     var opengeklapt:Boolean = false
-
+    var leerlingHoofdcompetenties: MutableList<LeerlingHoofdCompetentie> = mutableListOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         val cellForRow = layoutInflater.inflate(R.layout.comp_tebehalen_item,parent,false)
+        leerlingHoofdcompetenties.addAll(teBehalenLeerlingHoofdcompetenties)
+
 
         return CustomViewHolder(cellForRow)
     }
 
     override fun getItemCount(): Int {
-        return compList.count()
+        return leerlingHoofdcompetenties.count()
     }
 
     //deze methode wordt voor elke competentie opgeroepen die gebind wordt aan de viewholder
     @RequiresApi(Build.VERSION_CODES.KITKAT)
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
-        val hoofdcompetentie = compList.get(position)
+        val hoofdcompetentie = leerlingHoofdcompetenties.get(position)
 
-        holder.view.compName.text = hoofdcompetentie.hoofdcompetentie.omschrijving
+        holder.view.compName.text = hoofdcompetentie.hoofdCompetentie.omschrijving
         holder.view.arrowIcon.setImageResource(R.drawable.arrow_right_24dp)
-        holder.view.graadTxt.text = hoofdcompetentie.hoofdcompetentie.graad
+        holder.view.graadTxt.text = hoofdcompetentie.hoofdCompetentie.graad
 
         if(holder.view.childItems.childCount == 0){
-            for(deelcompetentie in hoofdcompetentie.leerlingDeelcompetenties){
+            for(deelcompetentie in hoofdcompetentie.deelCompetenties){
                 var text: TextView = TextView(context)
-                text.text = "${'\u25CF'} ${deelcompetentie.deelcompetentie.omschrijving}" // ${'\u25CF'} zorgt voor Bullet icon
+                text.text = "${'\u25CF'} ${deelcompetentie.deelCompetentie.omschrijving}" // ${'\u25CF'} zorgt voor Bullet icon
                 text.setPadding(0,0,0,40)
                 holder.view.childItems.addView(text)
             }

@@ -10,8 +10,9 @@ import android.view.ViewGroup
 import android.widget.Toast
 import com.talentcoach.id11.id11_android.R
 import com.talentcoach.id11.id11_android.adapters.CompBehaaldAdapter
-import com.talentcoach.id11.id11_android.models.LeerlingHoofdcompetentie
+import com.talentcoach.id11.id11_android.models.LeerlingHoofdCompetentie
 import com.talentcoach.id11.id11_android.models.Leerling
+import com.talentcoach.id11.id11_android.repositories.LeerlingAPI
 import com.talentcoach.id11.id11_android.repositories.LeerlingRepositoryRetrofit
 import kotlinx.android.synthetic.main.fragment_behaald.*
 import retrofit2.Call
@@ -26,9 +27,9 @@ class BehaaldFragment: Fragment(){
     lateinit var adapter: CompBehaaldAdapter
     lateinit var recycle: RecyclerView
 
-    var lijst: MutableList<LeerlingHoofdcompetentie> = mutableListOf()
-    var copyList = mutableListOf<LeerlingHoofdcompetentie>()
-    var copyListSwitch = mutableListOf<LeerlingHoofdcompetentie>()
+    var lijst: MutableList<LeerlingHoofdCompetentie> = mutableListOf()
+    var copyList = mutableListOf<LeerlingHoofdCompetentie>()
+    var copyListSwitch = mutableListOf<LeerlingHoofdCompetentie>()
 
 
 
@@ -49,9 +50,9 @@ class BehaaldFragment: Fragment(){
         copyListSwitch = lijst.toMutableList()
         var copyList = lijst.toMutableList()
 
-        Collections.sort(copyList, object : java.util.Comparator<LeerlingHoofdcompetentie> {
-            override fun compare(o1: LeerlingHoofdcompetentie?, o2: LeerlingHoofdcompetentie?): Int {
-                return o1!!.hoofdcompetentie.omschrijving.compareTo(o2!!.hoofdcompetentie.omschrijving)
+        Collections.sort(copyList, object : java.util.Comparator<LeerlingHoofdCompetentie> {
+            override fun compare(o1: LeerlingHoofdCompetentie?, o2: LeerlingHoofdCompetentie?): Int {
+                return o1!!.hoofdCompetentie.omschrijving.compareTo(o2!!.hoofdCompetentie.omschrijving)
             }
         })
         adapter.compList.clear()
@@ -75,7 +76,7 @@ class BehaaldFragment: Fragment(){
 
     fun applyFilter(year:String, graad:String){
 
-        var sortedList: List<LeerlingHoofdcompetentie> = listOf()
+        var sortedList: List<LeerlingHoofdCompetentie> = listOf()
 
         if (copyList.isNotEmpty()) {
             adapter.compList.clear()
@@ -85,10 +86,10 @@ class BehaaldFragment: Fragment(){
             copyList = mutableListOf()
         }
 
-        sortedList = lijst.filter { c -> c.datumBehaald.toString().contains(year,true) && c.hoofdcompetentie.graad.equals(graad,true) }
+        sortedList = lijst.filter { c -> c.datumBehaald.toString().contains(year,true) && c.hoofdCompetentie.graad.equals(graad,true) }
 
         if(year.contains("Alle",true) && !graad.contains("Alle",true)){
-            sortedList = lijst.filter { c -> c.hoofdcompetentie.graad.equals(graad, true) }
+            sortedList = lijst.filter { c -> c.hoofdCompetentie.graad.equals(graad, true) }
         }
         if(graad.contains("Alle",true) && !year.contains("Alle",true)){
             sortedList = lijst.filter { c -> c.datumBehaald.toString().contains(year,true) }
@@ -112,18 +113,19 @@ class BehaaldFragment: Fragment(){
         val url = "http://projecten3studserver11.westeurope.cloudapp.azure.com/api/"
 
         //Ophalen van de leerling en richtingId
-        val retrofitLeerling = Retrofit
-                .Builder()
-                .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl(url)
-                .build()
+//        Dit is fout!
+//        val retrofitLeerling = Retrofit
+//                .Builder()
+//                .addConverterFactory(GsonConverterFactory.create())
+//                .baseUrl(url)
+//                .build()
+//
+//        val leerlingRepository = retrofitLeerling.create(LeerlingRepositoryRetrofit::class.java)
+//        val callLeerling = leerlingRepository.getById(1)
 
-        val leerlingRepository = retrofitLeerling.create(LeerlingRepositoryRetrofit::class.java)
-        val callLeerling = leerlingRepository.getById(1)
-
-        callLeerling.enqueue(object : Callback<Leerling> {
+        LeerlingAPI.repository.getById(1).enqueue(object : Callback<Leerling> {
             override fun onFailure(call: Call<Leerling>, t: Throwable) {
-                println("WERKT NIET")
+                println("Ophalen van leerling met id 1 in BehaaldFragment werkt niet")
             }
 
             override fun onResponse(call: Call<Leerling>, response: Response<Leerling>) {
@@ -131,8 +133,7 @@ class BehaaldFragment: Fragment(){
                 if(response.isSuccessful){
                     var leerling = response.body()
 
-                    lijst = mutableListOf()
-//                    lijst = leerling!!.leerlingHoofdcompetenties
+                    lijst = leerling!!.hoofdCompetenties.filter { hc -> hc.behaald == true }.toMutableList()
                     behaaldTxt2.text = "Behaalde competenties: ${lijst.count()}"
 
                     //Progressbar doen verdwijnen en lijst weergeven
