@@ -128,7 +128,7 @@ class TeBehalenFragment: Fragment() {
                     var leerling = response.body()
                     richtingId = leerling?.richting?.id
 
-                    teBehalenLeerlingHoofdcompetenties = leerling!!.hoofdcompetenties.filter { hc -> hc.behaald }.toMutableList()
+                    teBehalenLeerlingHoofdcompetenties = leerling!!.hoofdCompetenties.filter { hc -> hc.behaald }.toMutableList()
 
                     //Progressbar doen verdwijnen en lijst weergeven
                     recycle = view!!.findViewById(R.id.recyclerTeBehalen)

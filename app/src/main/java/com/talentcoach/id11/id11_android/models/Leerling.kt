@@ -13,4 +13,4 @@ class Leerling(
         val verwijderdeWerkaanbiedingen: MutableList<Werkaanbieding>,
         val naam: String,
         val voornaam: String,
-        val hoofdcompetenties: MutableList<LeerlingHoofdcompetentie>) : Serializable
+        val hoofdCompetenties: MutableList<LeerlingHoofdcompetentie>) : Serializable
