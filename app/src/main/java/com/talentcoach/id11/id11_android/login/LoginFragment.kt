@@ -129,7 +129,9 @@ class LoginFragment : Fragment() {
                     // store the LoginResponse in SharedPreferences
                     val gson = Gson()
                     val jsonGebruiker = gson.toJson(response.body())
-
+                    // leerling object ophalen
+                    val leerlingId = response.body()?.concreteGebruikerId
+                    spEditor.putString(getString(R.string.sp_key_leerling), leerlingId.toString())
                     spEditor.putString(getString(R.string.sp_key_user), jsonGebruiker)
                     spEditor.apply()
 

@@ -1,6 +1,8 @@
 package com.talentcoach.id11.id11_android.competenties
 
+import android.content.SharedPreferences
 import android.os.Bundle
+import android.preference.PreferenceManager
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -123,9 +125,10 @@ class BehaaldFragment: Fragment(){
 //        val leerlingRepository = retrofitLeerling.create(LeerlingRepositoryRetrofit::class.java)
 //        val callLeerling = leerlingRepository.getById(1)
 
-        LeerlingAPI.repository.getById(1).enqueue(object : Callback<Leerling> {
+        val sharedPreferences: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity)
+        LeerlingAPI.repository.getById(sharedPreferences.getString(getString(R.string.sp_key_leerling), "Default").toInt()).enqueue(object : Callback<Leerling> {
             override fun onFailure(call: Call<Leerling>, t: Throwable) {
-                println("Ophalen van leerling met id 1 in BehaaldFragment werkt niet")
+                println("Ophalen van leerling in BehaaldFragment lukt niet")
             }
 
             override fun onResponse(call: Call<Leerling>, response: Response<Leerling>) {

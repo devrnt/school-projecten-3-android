@@ -5,4 +5,7 @@ class LoginResponse(
         val gebruikersnaam: String,
         val voornaam: String,
         val naam: String,
-        val token: String)
+        val token: String,
+        val concreteGebruikerId: Int) {
+
+}
