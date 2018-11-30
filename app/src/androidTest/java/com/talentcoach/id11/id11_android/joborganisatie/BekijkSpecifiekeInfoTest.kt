@@ -21,9 +21,9 @@ import org.junit.runner.RunWith
 @RunWith(AndroidJUnit4::class)
 class BekijkSpecifiekeInfoTest {
     @get:Rule
-    var activityRule: ActivityTestRule<InfoActivity>
-            = ActivityTestRule(InfoActivity::class.java)
-    lateinit var activity: InfoActivity
+    var activityRule: ActivityTestRule<JobNavigationFragment>
+            = ActivityTestRule(JobNavigationFragment::class.java)
+    lateinit var activity: JobNavigationFragment
     lateinit var context: Context
 
     init {

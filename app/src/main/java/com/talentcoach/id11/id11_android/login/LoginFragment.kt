@@ -12,6 +12,7 @@ import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.Toast
 import com.google.gson.Gson
+import com.talentcoach.id11.id11_android.BottomNavigationActivity
 import com.talentcoach.id11.id11_android.HomeActivity
 import com.talentcoach.id11.id11_android.R
 import com.talentcoach.id11.id11_android.models.Gebruiker
@@ -133,7 +134,7 @@ class LoginFragment : Fragment() {
                     spEditor.apply()
 
                     // goto the HomeActivity
-                    val intent = Intent(activity, HomeActivity::class.java)
+                    val intent = Intent(activity, BottomNavigationActivity::class.java)
                     startActivity(intent)
                     activity?.finish()
 

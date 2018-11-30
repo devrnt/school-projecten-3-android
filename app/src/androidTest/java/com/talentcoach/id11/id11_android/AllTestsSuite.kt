@@ -11,7 +11,7 @@ import org.junit.runners.Suite
  */
 @RunWith(Suite::class)
 @Suite.SuiteClasses(
-        InfoActivityTestSuite::class,
+        JobNavigationFragmentTestSuite::class,
         WerkaanbiedingActivityTestSuite::class,
         ProfielActivityTest::class,
         LoginActivityTest::class

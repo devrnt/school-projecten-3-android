@@ -40,10 +40,10 @@
             android:label="Communicatie"
             android:parentActivityName=".HomeActivity" />
         <activity
-            android:name=".competenties.Comp_Tabbed"
+            android:name=".competenties.CompetentiesNavigationFragment"
             android:label="@string/title_activity_comp__tabbed"
-            android:theme="@style/AppTheme.NoActionBar"
-android:parentActivityName=".HomeActivity"/>
+            android:parentActivityName=".HomeActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".HomeActivity"
             android:label="@string/app_name" />
@@ -54,10 +54,14 @@ android:parentActivityName=".HomeActivity"/>
         <activity
             android:name=".profiel.ProfielEditActivity"
             android:label="Profiel wijzigen"
-            android:parentActivityName=".profiel.ProfielActivity" /><activity
-            android:name=".joborganisatie.InfoActivity"
+            android:parentActivityName=".profiel.ProfielActivity" />
+        <activity
+            android:name=".joborganisatie.JobNavigationFragment"
             android:label="Info"
-            android:parentActivityName=".HomeActivity"/>
+            android:parentActivityName=".HomeActivity" />
+        <activity
+            android:name=".BottomNavigationActivity"
+            android:label="@string/title_activity_bottom_navigation"></activity>
     </application>
 
 </manifest>

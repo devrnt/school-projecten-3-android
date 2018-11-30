@@ -7,8 +7,8 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.Button
 import com.talentcoach.id11.id11_android.communicatie.WerkaanbiedingActivity
-import com.talentcoach.id11.id11_android.competenties.Comp_Tabbed
-import com.talentcoach.id11.id11_android.joborganisatie.InfoActivity
+import com.talentcoach.id11.id11_android.competenties.CompetentiesNavigationFragment
+import com.talentcoach.id11.id11_android.joborganisatie.JobNavigationFragment
 import com.talentcoach.id11.id11_android.profiel.ProfielActivity
 import kotlinx.android.synthetic.main.activity_home.*
 
@@ -22,7 +22,7 @@ class HomeActivity : AppCompatActivity() {
         // madeby Jonas
         // dit is tijdelijk
         jobBtn.setOnClickListener {
-            val intent = Intent(this, InfoActivity::class.java)
+            val intent = Intent(this, JobNavigationFragment::class.java)
             startActivity(intent)
         }
 
@@ -34,7 +34,7 @@ class HomeActivity : AppCompatActivity() {
         var talentBtn: Button = findViewById(R.id.talentBtn)
 
         talentBtn.setOnClickListener {
-            val intent = Intent(this, Comp_Tabbed::class.java)
+            val intent = Intent(this, CompetentiesNavigationFragment::class.java)
             startActivity(intent)
         }
 

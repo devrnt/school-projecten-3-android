@@ -8,13 +8,14 @@ import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
 import android.os.Bundle
+import android.support.v4.view.ViewPager
 import android.view.*
 import android.widget.*
 import com.talentcoach.id11.id11_android.R
 
-import kotlinx.android.synthetic.main.activity_comp__tabbed.*
+import kotlinx.android.synthetic.main.fragment_competenties_navigation.*
 
-class Comp_Tabbed : AppCompatActivity() {
+class CompetentiesNavigationFragment : Fragment() {
 
     /**
      * The [android.support.v4.view.PagerAdapter] that will provide
@@ -34,30 +35,34 @@ class Comp_Tabbed : AppCompatActivity() {
 
 
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_comp__tabbed)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
+                              savedInstanceState: Bundle?): View? {
+        val view: View = inflater.inflate(R.layout.fragment_competenties_navigation, container, false)
 
-        setSupportActionBar(toolbar)
-        getSupportActionBar()!!.setDisplayHomeAsUpEnabled(true)
+//        (activity as AppCompatActivity).setSupportActionBar(toolbar)
+//        (activity as AppCompatActivity).supportActionBar!!.setDisplayHomeAsUpEnabled(true)
 
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
-        mSectionsPagerAdapter = SectionsPagerAdapter(supportFragmentManager)
+        mSectionsPagerAdapter = SectionsPagerAdapter(fragmentManager as FragmentManager)
 
         // Set up the ViewPager with the sections adapter.
+        val container = view.findViewById(R.id.container) as ViewPager
         container.adapter = mSectionsPagerAdapter
 
         container.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(tabs))
+
+        val tabs = view.findViewById(R.id.tabs) as TabLayout
         tabs.addOnTabSelectedListener(TabLayout.ViewPagerOnTabSelectedListener(container))
 
+        return view
     }
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        menuInflater.inflate(R.menu.menu_comp__tabbed, menu)
-        return true
-    }
+//    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+//        // Inflate the menu; this adds items to the action bar if it is present.
+//        menuInflater.inflate(R.menu.menu_comp__tabbed, menu)
+//        return true
+//    }
 
         //Handles action bar item clicks
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -82,7 +87,7 @@ class Comp_Tabbed : AppCompatActivity() {
         var jaarSpinner:Spinner
         var graadSpinner:Spinner
 
-        myDialog = Dialog(this)
+        myDialog = Dialog(activity)
         myDialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         myDialog.setContentView(R.layout.dialog_filter)
         sorteerToggle = myDialog.findViewById(R.id.naamToggle) as Switch
@@ -123,7 +128,7 @@ class Comp_Tabbed : AppCompatActivity() {
         //Spinner = dropdown list om te filteren op jaartal
         jaarSpinner = myDialog.findViewById(R.id.jaarSpinner) as Spinner
         val jaarOptions = arrayOf("Alle","2015","2016","2017","2018")
-        jaarSpinner.adapter = ArrayAdapter<String>(this,android.R.layout.simple_dropdown_item_1line,jaarOptions)
+        jaarSpinner.adapter = ArrayAdapter<String>(activity,android.R.layout.simple_dropdown_item_1line,jaarOptions)
         jaarSpinner.setSelection(yearSelected)
 
         jaarSpinner.onItemSelectedListener=object:AdapterView.OnItemSelectedListener{
@@ -132,7 +137,7 @@ class Comp_Tabbed : AppCompatActivity() {
             }
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                this@Comp_Tabbed.yearSelected = position
+                this@CompetentiesNavigationFragment.yearSelected = position
             }
 
         }
@@ -140,7 +145,7 @@ class Comp_Tabbed : AppCompatActivity() {
         //Spinner = dropdown list om te filteren op graad
         graadSpinner = myDialog.findViewById(R.id.graadSpinner) as Spinner
         val graadOptions = arrayOf("Alle","1e graad","2e graad","3e graad")
-        graadSpinner.adapter = ArrayAdapter<String>(this,android.R.layout.simple_dropdown_item_1line,graadOptions)
+        graadSpinner.adapter = ArrayAdapter<String>(activity,android.R.layout.simple_dropdown_item_1line,graadOptions)
         graadSpinner.setSelection(graadSelected)
 
         graadSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
@@ -150,7 +155,7 @@ class Comp_Tabbed : AppCompatActivity() {
             }
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                this@Comp_Tabbed.graadSelected = position
+                this@CompetentiesNavigationFragment.graadSelected = position
             }
 
         }
@@ -158,10 +163,10 @@ class Comp_Tabbed : AppCompatActivity() {
         //bevestig Button om filter in te stellen
         var toepassenBtn = myDialog.findViewById<Button>(R.id.toepassenBtn)
         toepassenBtn.setOnClickListener(){
-            var fragmentBehaald = supportFragmentManager.findFragmentByTag(tagSecondTab) as BehaaldFragment
+            var fragmentBehaald = fragmentManager!!.findFragmentByTag(tagSecondTab) as BehaaldFragment
             fragmentBehaald.applyFilter(jaarSpinner.selectedItem.toString(), graadSpinner.selectedItem.toString())
 
-            var fragmentTeBehalen = supportFragmentManager.findFragmentByTag(tagFirstTab) as TeBehalenFragment
+            var fragmentTeBehalen = fragmentManager!!.findFragmentByTag(tagFirstTab) as TeBehalenFragment
             fragmentTeBehalen.filterOnGraad(graadSpinner.selectedItem.toString())
 
             myDialog.cancel()
@@ -174,11 +179,11 @@ class Comp_Tabbed : AppCompatActivity() {
     //Met behulp van de fragmentmanager haal ik in deze functies de fragments op
     // en kan ik functies uit de fragemnts oproepen
     private fun getFragmentTeBehalen():Fragment{
-        return supportFragmentManager.findFragmentByTag(tagFirstTab) as TeBehalenFragment
+        return fragmentManager!!.findFragmentByTag(tagFirstTab) as TeBehalenFragment
     }
 
     private fun getFragmentBehaald():Fragment{
-        return supportFragmentManager.findFragmentByTag(tagSecondTab) as BehaaldFragment
+        return fragmentManager!!.findFragmentByTag(tagSecondTab) as BehaaldFragment
     }
 
     /**
@@ -233,5 +238,16 @@ class Comp_Tabbed : AppCompatActivity() {
             return createdFragment
         }
 
+    }
+
+    companion object {
+        /**
+         * Use this factory method to create a new instance of
+         * this fragment using the provided parameters.
+         *
+         * @return A new instance of fragment Tab1Fragment.
+         */
+        @JvmStatic
+        fun newInstance() = CompetentiesNavigationFragment()
     }
 }

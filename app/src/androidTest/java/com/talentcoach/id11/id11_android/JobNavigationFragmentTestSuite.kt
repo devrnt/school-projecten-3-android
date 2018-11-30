@@ -7,11 +7,11 @@ import org.junit.runners.Suite
 
 
 /**
- * Runs all test cases concerning InfoActivity
+ * Runs all test cases concerning JobNavigationFragment
  */
 @RunWith(Suite::class)
 @Suite.SuiteClasses(
         BekijkAlgemeneInfoTest::class,
         BekijkSpecifiekeInfoTest::class
 )
-class InfoActivityTestSuite
+class JobNavigationFragmentTestSuite

@@ -13,8 +13,6 @@ import com.talentcoach.id11.id11_android.data.DummyDbContext
 import com.talentcoach.id11.id11_android.data.DummySpecifiekeInfoRepository
 import com.talentcoach.id11.id11_android.data.DummyWerkgeverRepository
 import com.talentcoach.id11.id11_android.managers.DataManager
-import com.talentcoach.id11.id11_android.repositories.AlgemeneInfoRepository
-import kotlinx.android.synthetic.main.activity_info.*
 import org.junit.After
 import org.junit.Assert.assertTrue
 import org.junit.Before
@@ -25,9 +23,9 @@ import org.junit.runner.RunWith
 @RunWith(AndroidJUnit4::class)
 class BekijkAlgemeneInfoTest {
     @get:Rule
-    var activityRule: ActivityTestRule<InfoActivity>
-            = ActivityTestRule(InfoActivity::class.java)
-    lateinit var activity: InfoActivity
+    var activityRule: ActivityTestRule<JobNavigationFragment>
+            = ActivityTestRule(JobNavigationFragment::class.java)
+    lateinit var activity: JobNavigationFragment
     lateinit var context: Context
 
     init {

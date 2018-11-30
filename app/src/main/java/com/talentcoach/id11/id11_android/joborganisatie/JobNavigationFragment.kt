@@ -1,15 +1,19 @@
 package com.talentcoach.id11.id11_android.joborganisatie
 
 import android.os.Bundle
+import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
+import android.widget.ProgressBar
 import android.widget.Toast
 import com.talentcoach.id11.id11_android.R
 import com.talentcoach.id11.id11_android.managers.DataManager
 import com.talentcoach.id11.id11_android.models.Werkgever
 import com.talentcoach.id11.id11_android.repositories.AlgemeneInfoRepository
-import kotlinx.android.synthetic.main.activity_info.*
+import kotlinx.android.synthetic.main.fragment_job_navigation.*
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 
@@ -18,7 +22,7 @@ import org.jetbrains.anko.uiThread
  * @property algemeneInfoFragment InfoFragment with AlgemeneInfo in its ExpandableListView
  * @property algemeneInfoFragment InfoFragment with SpecifiekeInfo in its ExpandableListView
  */
-class InfoActivity : AppCompatActivity() {
+class JobNavigationFragment : Fragment() {
     // id should be supplied by the parent activity
     private var WERKGEVER_ID = 1
     lateinit var algemeneInfoFragment: InfoFragment
@@ -29,10 +33,11 @@ class InfoActivity : AppCompatActivity() {
     private lateinit var werkgever : Werkgever
 
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_info)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
+                              savedInstanceState: Bundle?): View? {
+        val view: View = inflater.inflate(R.layout.fragment_job_navigation, container, false)
 
+        val infoProgBar = view.findViewById(R.id.infoProgBar) as ProgressBar
         infoProgBar.visibility = View.VISIBLE
         doAsync {
             werkgever = DataManager.getWerkgeverById(WERKGEVER_ID)
@@ -49,7 +54,7 @@ class InfoActivity : AppCompatActivity() {
                 algemeneInfoFragment = InfoFragment.newInstance(algHeader, algBody)
                 specifiekeInfoFragment = InfoFragment.newInstance(specHeader, specBody)
 
-                supportFragmentManager.beginTransaction()
+                fragmentManager!!.beginTransaction()
                         .add(R.id.infoFragmentFrame, algemeneInfoFragment)
                         .add(R.id.infoFragmentFrame, specifiekeInfoFragment)
                         .hide(specifiekeInfoFragment)
@@ -58,13 +63,14 @@ class InfoActivity : AppCompatActivity() {
             }
         }
 
+        return view
     }
 
     private fun addListeners() {
         algInfoBtn.setOnClickListener {
-            algInfoBtn.setBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimaryDark))
-            specInfoBtn.setBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimary))
-            supportFragmentManager.beginTransaction()
+            algInfoBtn.setBackgroundColor(ContextCompat.getColor(activity!!.applicationContext, R.color.colorPrimaryDark))
+            specInfoBtn.setBackgroundColor(ContextCompat.getColor(activity!!.applicationContext, R.color.colorPrimary))
+            fragmentManager!!.beginTransaction()
                     .hide(specifiekeInfoFragment)
                     .show(algemeneInfoFragment)
                     .commit()
@@ -72,15 +78,26 @@ class InfoActivity : AppCompatActivity() {
 
         specInfoBtn.setOnClickListener {
             if (WERKGEVER_ID > -1){ // check if there is an id supplied by parent activity
-                algInfoBtn.setBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimary))
-                specInfoBtn.setBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimaryDark))
-                supportFragmentManager.beginTransaction()
+                algInfoBtn.setBackgroundColor(ContextCompat.getColor(activity!!.applicationContext, R.color.colorPrimary))
+                specInfoBtn.setBackgroundColor(ContextCompat.getColor(activity!!.applicationContext, R.color.colorPrimaryDark))
+                fragmentManager!!.beginTransaction()
                         .hide(algemeneInfoFragment)
                         .show(specifiekeInfoFragment)
                         .commit()
             } else {
-                Toast.makeText(this, "Je hebt momenteel geen werkgever om specifieke info over te bekijken", Toast.LENGTH_SHORT).show()
+                Toast.makeText(activity, "Je hebt momenteel geen werkgever om specifieke info over te bekijken", Toast.LENGTH_SHORT).show()
             }
         }
+    }
+
+    companion object {
+        /**
+         * Use this factory method to create a new instance of
+         * this fragment using the provided parameters.
+         *
+         * @return A new instance of fragment Tab1Fragment.
+         */
+        @JvmStatic
+        fun newInstance() = JobNavigationFragment()
     }
 }
