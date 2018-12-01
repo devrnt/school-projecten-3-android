@@ -17,7 +17,7 @@ import kotlinx.android.synthetic.main.fragment_werkaanbieding.*
  * @property noWerkaanbiedingFound true if there is a werkaanbieding to be shown, otherwise false
  */
 class WerkaanbiedingFragment : Fragment() {
-    var iClickListener: IClickListener? = null // will be set to WerkaanbiedingActivity
+    var iClickListener: IClickListener? = null // will be set to WerkaanbiedingNavigationFragment
 
 
     var werkaanbieding: Werkaanbieding? = null

@@ -10,7 +10,7 @@
     <string name="close">Sluit</string>
 
 
-    <!-- Strings related to WerkaanbiedingActivity -->
+    <!-- Strings related to WerkaanbiedingNavigationFragment -->
     <string name="wa_title">Werkaanbiedingen</string>
     <string name="wa_werkgever">%s</string>
     <string name="wa_beschrijving">%s</string>

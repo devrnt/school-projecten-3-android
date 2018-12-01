@@ -4,9 +4,10 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.preference.PreferenceManager
+import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
-import android.view.Menu
-import android.view.MenuItem
+import android.view.*
+import android.widget.Button
 import android.widget.Toast
 import com.google.gson.Gson
 import com.talentcoach.id11.id11_android.R
@@ -24,7 +25,7 @@ import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.*
 
-class ProfielActivity : AppCompatActivity() {
+class ProfielActivity : Fragment() {
     private lateinit var sharedPreferences: SharedPreferences
     private lateinit var spEditor: SharedPreferences.Editor
 
@@ -33,37 +34,37 @@ class ProfielActivity : AppCompatActivity() {
 
     private var leerlingId: Int? = null
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.edit_menu, menu)
-        return true
-    }
+//    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+//        menuInflater.inflate(R.menu.edit_menu, menu)
+//        return true
+//    }
 
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        when (item?.itemId) {
-            R.id.edit_btn -> {
-                val intent = Intent(this, ProfielEditActivity::class.java)
-
-                val gson = Gson()
-                val llnJson = gson.toJson(leerling)
-                intent.putExtra(getString(R.string.sp_key_leerling), llnJson)
-
-                startActivity(intent)
-            }
-        }
-        return super.onOptionsItemSelected(item)
-    }
+//    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+//        when (item?.itemId) {
+//            R.id.edit_btn -> {
+//                val intent = Intent(this, ProfielEditActivity::class.java)
+//
+//                val gson = Gson()
+//                val llnJson = gson.toJson(leerling)
+//                intent.putExtra(getString(R.string.sp_key_leerling), llnJson)
+//
+//                startActivity(intent)
+//            }
+//        }
+//        return super.onOptionsItemSelected(item)
+//    }
 
     // when activity_profiel_edit is closed, update the data
-    override fun onResume() {
-        super.onResume()
-        getLeerling()
-    }
+//    override fun onResume() {
+//        super.onResume()
+//        getLeerling()
+//    }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_profiel)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
+                              savedInstanceState: Bundle?): View? {
+        val view: View = inflater.inflate(R.layout.activity_profiel, container, false)
 
-        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity)
         spEditor = sharedPreferences.edit()
 
         val gson = Gson()
@@ -74,6 +75,7 @@ class ProfielActivity : AppCompatActivity() {
 
         getLeerling()
 
+        var logout_btn = view.findViewById(R.id.logout_btn) as Button
         logout_btn.setOnClickListener {
             // remove the saved user password and user credentials
             spEditor.putString(getString(R.string.sp_key_password), "")
@@ -81,12 +83,13 @@ class ProfielActivity : AppCompatActivity() {
             spEditor.putString(getString(R.string.sp_key_user), "")
             spEditor.apply()
 
-            val intent = Intent(this, LoginActivity::class.java)
+            val intent = Intent(activity, LoginActivity::class.java)
             startActivity(intent)
             // finish all parent activities
-            finishAffinity()
+            activity!!.finish()
         }
 
+        return view
     }
 
     private fun getLeerling() {
@@ -105,15 +108,15 @@ class ProfielActivity : AppCompatActivity() {
                     else ->
                         // TODO("These cases will only be needed in development, not in production")
                         when (response.code()) {
-                            404 -> Toast.makeText(applicationContext, "Leerling niet gevonden", Toast.LENGTH_LONG).show()
-                            401 -> Toast.makeText(applicationContext, "Je hebt niet de nodige rechten", Toast.LENGTH_LONG).show()
+                            404 -> Toast.makeText(activity, "Leerling niet gevonden", Toast.LENGTH_LONG).show()
+                            401 -> Toast.makeText(activity, "Je hebt niet de nodige rechten", Toast.LENGTH_LONG).show()
                         }
                 }
             }
 
             // backend can't be reached
             override fun onFailure(call: Call<Leerling>, t: Throwable) {
-                Toast.makeText(applicationContext, getString(R.string.something_went_wrong_login), Toast.LENGTH_LONG).show()
+                Toast.makeText(activity, getString(R.string.something_went_wrong_login), Toast.LENGTH_LONG).show()
             }
         })
 
@@ -139,5 +142,16 @@ class ProfielActivity : AppCompatActivity() {
             leerling.interesses.isNotEmpty() -> interestsTxt.text = leerling.interesses.capitalize().replace(" ", ", ")
             else -> interestsTxt.text = getString(R.string.no_interests)
         }
+    }
+
+    companion object {
+        /**
+         * Use this factory method to create a new instance of
+         * this fragment using the provided parameters.
+         *
+         * @return A new instance of fragment Tab1Fragment.
+         */
+        @JvmStatic
+        fun newInstance() = ProfielActivity()
     }
 }

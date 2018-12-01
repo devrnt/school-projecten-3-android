@@ -12,7 +12,7 @@ import org.junit.runners.Suite
 @RunWith(Suite::class)
 @Suite.SuiteClasses(
         JobNavigationFragmentTestSuite::class,
-        WerkaanbiedingActivityTestSuite::class,
+        WerkaanbiedingNavigationFragmentTestSuite::class,
         ProfielActivityTest::class,
         LoginActivityTest::class
 )

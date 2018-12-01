@@ -6,7 +6,7 @@ import org.junit.runners.Suite
 
 
 /**
- * Runs all test cases concerning WerkaanbiedingActivity
+ * Runs all test cases concerning WerkaanbiedingNavigationFragment
  */
 @RunWith(Suite::class)
 @Suite.SuiteClasses(
@@ -16,4 +16,4 @@ import org.junit.runners.Suite
         BewaardeWerkaanbiedingDetailTest::class,
         BewaardeWerkaanbiedingVerwijderenTest::class
 )
-class WerkaanbiedingActivityTestSuite
+class WerkaanbiedingNavigationFragmentTestSuite

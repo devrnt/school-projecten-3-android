@@ -15,7 +15,7 @@ import kotlinx.android.synthetic.main.fragment_werkaanbieding_buttons.*
  * @property onlyRemove if true, then there will only be a remove button shown
  */
 class WerkaanbiedingButtonsFragment : Fragment() {
-    var iClickListener: IClickListener? = null // will be set to WerkaanbiedingActivity
+    var iClickListener: IClickListener? = null // will be set to WerkaanbiedingNavigationFragment
     var onlyRemove = false
         set(value) {
             field = value

@@ -15,7 +15,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"
+        android:theme="@style/AppTheme.NoActionBar"
         tools:ignore="GoogleAppIndexingWarning">
         <activity
             android:name=".login.LoginActivity"
@@ -27,23 +27,23 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <!--<activity-->
+            <!--android:name=".joborganisatie.AlgemeneInfoActivity"-->
+            <!--android:label="@string/aic_title"-->
+            <!--android:parentActivityName=".HomeActivity" />-->
         <activity
-            android:name=".joborganisatie.AlgemeneInfoActivity"
-            android:label="@string/aic_title"
-            android:parentActivityName=".HomeActivity" />
-        <activity
-            android:name=".communicatie.WerkaanbiedingActivity"
+            android:name=".communicatie.WerkaanbiedingNavigationFragment"
             android:label="@string/werkaanbieding_title"
             android:parentActivityName=".communicatie.CommunicatieActivity" />
         <activity
             android:name=".communicatie.CommunicatieActivity"
             android:label="Communicatie"
             android:parentActivityName=".HomeActivity" />
-        <activity
-            android:name=".competenties.CompetentiesNavigationFragment"
-            android:label="@string/title_activity_comp__tabbed"
-            android:parentActivityName=".HomeActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+        <!--<activity-->
+            <!--android:name=".competenties.CompetentiesNavigationFragment"-->
+            <!--android:label="@string/title_activity_comp__tabbed"-->
+            <!--android:parentActivityName=".HomeActivity"-->
+            <!--android:theme="@style/AppTheme.NoActionBar" />-->
         <activity
             android:name=".HomeActivity"
             android:label="@string/app_name" />
@@ -55,10 +55,10 @@
             android:name=".profiel.ProfielEditActivity"
             android:label="Profiel wijzigen"
             android:parentActivityName=".profiel.ProfielActivity" />
-        <activity
-            android:name=".joborganisatie.JobNavigationFragment"
-            android:label="Info"
-            android:parentActivityName=".HomeActivity" />
+        <!--<activity-->
+            <!--android:name=".joborganisatie.JobNavigationFragment"-->
+            <!--android:label="Info"-->
+            <!--android:parentActivityName=".HomeActivity" />-->
         <activity
             android:name=".BottomNavigationActivity"
             android:label="@string/title_activity_bottom_navigation"></activity>

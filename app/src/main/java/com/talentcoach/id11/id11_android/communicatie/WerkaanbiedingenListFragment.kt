@@ -23,7 +23,7 @@ import com.talentcoach.id11.id11_android.models.Werkaanbieding
  */
 class WerkaanbiedingenListFragment : Fragment() {
     var werkaanbiedingenList: MutableList<Werkaanbieding> = mutableListOf()
-    var iClickListener: IClickListener? = null // will be set to WerkaanbiedingActivity
+    var iClickListener: IClickListener? = null // will be set to WerkaanbiedingNavigationFragment
     var adapter: WerkaanbiedingenListAdapter? = null
     var werkaanbiedingenRecView: RecyclerView? = null
 

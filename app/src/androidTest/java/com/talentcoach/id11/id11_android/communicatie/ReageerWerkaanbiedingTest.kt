@@ -27,9 +27,9 @@ import org.junit.runner.RunWith
 @RunWith(AndroidJUnit4::class)
 class ReageerWerkaanbiedingTest {
     @get:Rule
-    var activityRule: ActivityTestRule<WerkaanbiedingActivity>
-            = ActivityTestRule(WerkaanbiedingActivity::class.java)
-    lateinit var activity: WerkaanbiedingActivity
+    var activityRule: ActivityTestRule<WerkaanbiedingNavigationFragment>
+            = ActivityTestRule(WerkaanbiedingNavigationFragment::class.java)
+    lateinit var activity: WerkaanbiedingNavigationFragment
     lateinit var werkaanbiedingFragment: WerkaanbiedingFragment
     lateinit var werkaanbiedingenListFragment: WerkaanbiedingenListFragment
     lateinit var werkaanbiedingButtonsFragment: WerkaanbiedingButtonsFragment

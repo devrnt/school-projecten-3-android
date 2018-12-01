@@ -1,14 +1,16 @@
 package com.talentcoach.id11.id11_android.communicatie
 
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
+import android.support.v4.app.Fragment
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
 import com.talentcoach.id11.id11_android.R
 import com.talentcoach.id11.id11_android.managers.DataManager
 import com.talentcoach.id11.id11_android.models.Leerling
 import com.talentcoach.id11.id11_android.models.Richting
-import kotlinx.android.synthetic.main.activity_werkaanbieding.*
+import kotlinx.android.synthetic.main.fragment_werkaanbieding_navigation.*
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 
@@ -20,7 +22,7 @@ import org.jetbrains.anko.uiThread
  * @property werkaanbiedingFragment Fragment that shows a Werkaanbieding (or default text if there is none to show)
  * @property werkaanbiedingButtonsFragment Fragment that shows a noLike and like button so the user can react to a werkaanbieding
  */
-class WerkaanbiedingActivity : AppCompatActivity(), IClickListener {
+class WerkaanbiedingNavigationFragment : Fragment(), IClickListener {
     var leerling = Leerling(1, Richting(1, "", mutableListOf()), 0, "1993-07-05T00:00:00", "leerling@school.be", "teamwork kapper",
             mutableListOf(), mutableListOf(), "Stroobants", "Bruno", mutableListOf())
         private set
@@ -33,9 +35,9 @@ class WerkaanbiedingActivity : AppCompatActivity(), IClickListener {
     val werkaanbiedingButtonsFragment = WerkaanbiedingButtonsFragment()
 
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_werkaanbieding)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
+                              savedInstanceState: Bundle?): View? {
+        val view: View = inflater.inflate(R.layout.fragment_werkaanbieding_navigation, container, false)
 
         doAsync {
             if (leerling.id < 0) // check for a 'logged in' Leerling
@@ -43,9 +45,9 @@ class WerkaanbiedingActivity : AppCompatActivity(), IClickListener {
 
             uiThread {
                 // set fragment's IClickListener to this activity so it can listen to their button clicks
-                werkaanbiedingFragment.iClickListener = this@WerkaanbiedingActivity
-                werkaanbiedingenListFragment.iClickListener = this@WerkaanbiedingActivity
-                werkaanbiedingButtonsFragment.iClickListener = this@WerkaanbiedingActivity
+                werkaanbiedingFragment.iClickListener = this@WerkaanbiedingNavigationFragment
+                werkaanbiedingenListFragment.iClickListener = this@WerkaanbiedingNavigationFragment
+                werkaanbiedingButtonsFragment.iClickListener = this@WerkaanbiedingNavigationFragment
 
                 // set the items within the RecyclerView's adapter to the leerling's Bewaarde Werkaanbiedingen
                 werkaanbiedingenListFragment.werkaanbiedingenList = leerling.bewaardeWerkaanbiedingen
@@ -53,7 +55,7 @@ class WerkaanbiedingActivity : AppCompatActivity(), IClickListener {
 
                 // add fragments to activity
                 // onCreateView of each fragment gets called
-                supportFragmentManager.beginTransaction()
+                fragmentManager!!.beginTransaction()
                         .add(R.id.topFragmentFrame, werkaanbiedingFragment)
                         .hide(werkaanbiedingFragment)
                         .add(R.id.topFragmentFrame, werkaanbiedingenListFragment)
@@ -69,7 +71,7 @@ class WerkaanbiedingActivity : AppCompatActivity(), IClickListener {
                 toggleFragmentBtn.setOnClickListener {
                     if (toggleFragmentBtn.text == getString(R.string.mijn_werkaanb_button)) {
                         if (leerling.bewaardeWerkaanbiedingen.isEmpty()) {
-                            val toast = Toast.makeText(this@WerkaanbiedingActivity, getString(R.string.geen_bew_werkaanb), Toast.LENGTH_LONG)
+                            val toast = Toast.makeText(activity, getString(R.string.geen_bew_werkaanb), Toast.LENGTH_LONG)
                             toast.show()
                         } else
                             showBewaardeWerkaanbiedingen()
@@ -79,11 +81,13 @@ class WerkaanbiedingActivity : AppCompatActivity(), IClickListener {
                 }
             }
         }
+
+        return view
     }
 
     private fun showWerkaanbieding(showButtonsFragment: Boolean = true) {
         toggleFragmentBtn.text = getString(R.string.mijn_werkaanb_button)
-        val fragmentManager = supportFragmentManager.beginTransaction()
+        val fragmentManager = fragmentManager!!.beginTransaction()
                 .hide(werkaanbiedingenListFragment)
                 .show(werkaanbiedingFragment)
         if (showButtonsFragment)
@@ -96,7 +100,7 @@ class WerkaanbiedingActivity : AppCompatActivity(), IClickListener {
     private fun showBewaardeWerkaanbiedingen() {
         werkaanbiedingenListFragment.werkaanbiedingenList = leerling.bewaardeWerkaanbiedingen
         toggleFragmentBtn.text = getString(R.string.bekijk_werkaanb_btn)
-        supportFragmentManager.beginTransaction()
+        fragmentManager!!.beginTransaction()
                 .hide(werkaanbiedingFragment)
                 .hide(werkaanbiedingButtonsFragment)
                 .show(werkaanbiedingenListFragment)
@@ -115,7 +119,7 @@ class WerkaanbiedingActivity : AppCompatActivity(), IClickListener {
         // huidigeWerkaanbieding will never be null because buttons are hidden otherwise
         leerling.bewaardeWerkaanbiedingen.add(werkaanbiedingFragment.werkaanbieding!!)
         werkaanbiedingFragment.werkaanbieding = null
-        val toaster = Toast.makeText(this, getString(R.string.werkaanbieding_bewaard), Toast.LENGTH_SHORT)
+        val toaster = Toast.makeText(activity, getString(R.string.werkaanbieding_bewaard), Toast.LENGTH_SHORT)
         toaster.show()
         getAndShowWerkaanbieding()
     }
@@ -167,5 +171,15 @@ class WerkaanbiedingActivity : AppCompatActivity(), IClickListener {
                 mutableListOf(), mutableListOf(), "Stroobants", "Bruno", mutableListOf())
     }
 
+    companion object {
+        /**
+         * Use this factory method to create a new instance of
+         * this fragment using the provided parameters.
+         *
+         * @return A new instance of fragment Tab1Fragment.
+         */
+        @JvmStatic
+        fun newInstance() = WerkaanbiedingNavigationFragment()
+    }
 
 }

@@ -6,7 +6,7 @@ import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Button
-import com.talentcoach.id11.id11_android.communicatie.WerkaanbiedingActivity
+import com.talentcoach.id11.id11_android.communicatie.WerkaanbiedingNavigationFragment
 import com.talentcoach.id11.id11_android.competenties.CompetentiesNavigationFragment
 import com.talentcoach.id11.id11_android.joborganisatie.JobNavigationFragment
 import com.talentcoach.id11.id11_android.profiel.ProfielActivity
@@ -27,7 +27,7 @@ class HomeActivity : AppCompatActivity() {
         }
 
         communicatieBtn.setOnClickListener {
-            val intent = Intent(this, WerkaanbiedingActivity::class.java)
+            val intent = Intent(this, WerkaanbiedingNavigationFragment::class.java)
             startActivity(intent)
         }
 

@@ -39,7 +39,7 @@ class CommunicatieActivity : AppCompatActivity() {
     fun addListeners() {
         // add temp listeners
         btnWerkaanbieding.setOnClickListener {
-            val intent = Intent(this, WerkaanbiedingActivity::class.java)
+            val intent = Intent(this, WerkaanbiedingNavigationFragment::class.java)
             startActivity(intent)
         }
     }

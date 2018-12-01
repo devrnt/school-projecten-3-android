@@ -2,9 +2,6 @@ package com.talentcoach.id11.id11_android.communicatie
 
 import android.content.Context
 import android.support.test.InstrumentationRegistry
-import android.support.test.espresso.Espresso.onView
-import android.support.test.espresso.action.ViewActions.click
-import android.support.test.espresso.matcher.ViewMatchers.withId
 import android.support.test.rule.ActivityTestRule
 import android.support.test.runner.AndroidJUnit4
 import com.talentcoach.id11.id11_android.R
@@ -12,7 +9,7 @@ import com.talentcoach.id11.id11_android.data.DummyDbContext
 import com.talentcoach.id11.id11_android.data.DummyLeerlingRepository
 import com.talentcoach.id11.id11_android.data.DummyWerkaanbiedingRepository
 import com.talentcoach.id11.id11_android.managers.DataManager
-import kotlinx.android.synthetic.main.activity_werkaanbieding.*
+import kotlinx.android.synthetic.main.fragment_werkaanbieding_navigation.*
 import kotlinx.android.synthetic.main.fragment_werkaanbieding.*
 import org.junit.Assert
 import org.junit.Assert.assertEquals
@@ -28,9 +25,9 @@ import org.junit.runner.RunWith
 @RunWith(AndroidJUnit4::class)
 class BekijkWerkaanbiedingTest {
     @get:Rule
-    var activityRule: ActivityTestRule<WerkaanbiedingActivity>
-            = ActivityTestRule(WerkaanbiedingActivity::class.java)
-    lateinit var activity: WerkaanbiedingActivity
+    var activityRule: ActivityTestRule<WerkaanbiedingNavigationFragment>
+            = ActivityTestRule(WerkaanbiedingNavigationFragment::class.java)
+    lateinit var activity: WerkaanbiedingNavigationFragment
     lateinit var werkaanbiedingFragment: WerkaanbiedingFragment
     lateinit var werkaanbiedingButtonsFragment: WerkaanbiedingButtonsFragment
     lateinit var context: Context
