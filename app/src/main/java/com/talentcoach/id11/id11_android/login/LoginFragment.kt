@@ -16,12 +16,15 @@ import com.talentcoach.id11.id11_android.BottomNavigationActivity
 import com.talentcoach.id11.id11_android.HomeActivity
 import com.talentcoach.id11.id11_android.R
 import com.talentcoach.id11.id11_android.models.Gebruiker
+import com.talentcoach.id11.id11_android.models.Leerling
 import com.talentcoach.id11.id11_android.repositories.GebruikersAPI
+import com.talentcoach.id11.id11_android.repositories.LeerlingAPI
 import com.talentcoach.id11.id11_android.repositories.responses.LoginResponse
 import kotlinx.android.synthetic.main.fragment_login.view.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import kotlin.math.absoluteValue
 
 /**
  * Fragment that shows an input for username and password and a login button
@@ -118,13 +121,14 @@ class LoginFragment : Fragment() {
         call.enqueue(object : Callback<LoginResponse> {
             override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
                 if (response.isSuccessful) {
+
                     // store gebruiker and wachtwoord in SharedPreferences
                     spEditor.putString(getString(R.string.sp_key_username), gebruiksernaamStr)
                     spEditor.apply()
                     spEditor.putString(getString(R.string.sp_key_password), wachtwoordStr)
                     spEditor.apply()
 
-                    Toast.makeText(context, "${response.body()?.voornaam} ${getString(R.string.succesfull_login)}", Toast.LENGTH_LONG).show()
+                    //Toast.makeText(context, "${response.body()?.voornaam} ${getString(R.string.succesfull_login)}", Toast.LENGTH_LONG).show()
 
                     // store the LoginResponse in SharedPreferences
                     val gson = Gson()
@@ -134,6 +138,29 @@ class LoginFragment : Fragment() {
                     spEditor.putString(getString(R.string.sp_key_leerling), leerlingId.toString())
                     spEditor.putString(getString(R.string.sp_key_user), jsonGebruiker)
                     spEditor.apply()
+
+                    //get leerling object
+
+                    val call2 = LeerlingAPI.repository.getById(leerlingId!!)
+                    call2.enqueue(object : Callback<Leerling> {
+                        override fun onResponse(call: Call<Leerling>, response: Response<Leerling>) {
+                            if (response.isSuccessful) {
+
+                                Toast.makeText(context, "${response.body()?.voornaam} ${getString(R.string.succesfull_login)}", Toast.LENGTH_LONG).show()
+
+                            } else {
+                                Toast.makeText(context, getString(R.string.wrong_login_credentials), Toast.LENGTH_LONG).show()
+                            }
+                        }
+
+                        // backend can't be reached
+                        override fun onFailure(call: Call<Leerling>, t: Throwable) {
+                            println(call)
+                            println(t.message)
+                            Toast.makeText(context, getString(R.string.something_went_wrong_login), Toast.LENGTH_LONG).show()
+                        }
+                    })
+
 
                     // goto the HomeActivity
                     val intent = Intent(activity, BottomNavigationActivity::class.java)
