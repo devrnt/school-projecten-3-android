@@ -5,6 +5,7 @@ import android.support.design.widget.BottomNavigationView
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import com.talentcoach.id11.id11_android.communicatie.WerkaanbiedingNavigationFragment
+import com.talentcoach.id11.id11_android.communicatie.WerkaanbiedingTabNavigatieFragment
 import com.talentcoach.id11.id11_android.competenties.CompetentiesNavigationFragment
 import com.talentcoach.id11.id11_android.joborganisatie.JobNavigationFragment
 import com.talentcoach.id11.id11_android.profiel.ProfielActivity
@@ -25,7 +26,7 @@ class BottomNavigationActivity : AppCompatActivity() {
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_aanbiedingen -> {
-                val fragment = WerkaanbiedingNavigationFragment.newInstance()
+                val fragment = WerkaanbiedingTabNavigatieFragment.newInstance()
                 openFragment(fragment)
                 return@OnNavigationItemSelectedListener true
             }
@@ -47,8 +48,8 @@ class BottomNavigationActivity : AppCompatActivity() {
 
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
 
-        val fragment = CompetentiesNavigationFragment.newInstance()
-        openFragment(fragment)
+//        val fragment = CompetentiesNavigationFragment.newInstance()
+//        openFragment(fragment)
     }
 
     private fun openFragment(fragment: Fragment) {

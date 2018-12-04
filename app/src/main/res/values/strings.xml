@@ -96,4 +96,14 @@
     <string name="title_coach">Coach</string>
     <string name="title_profiel">Profiel</string>
 
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="dummy_company_name">Accurat</string>
+    <string name="dummy_opdracht_name">Opdracht</string>
+    <!--<string name="dummy_opdracht_text">Dit is een hele lange en niet erg representatieve dummy text voor een opdracht van deze Job. Het is extra lang zodat we ervoor kunnen zorgen dat de opmaak mooi blijft bij het hebben van een lange beschrijving. Dit is een hele lange en niet erg representatieve dummy text voor een opdracht van deze Job. Het is extra lang zodat we ervoor kunnen zorgen dat de opmaak mooi blijft bij het hebben van een lange beschrijving. Dit is een hele lange en niet erg representatieve dummy text voor een opdracht van deze Job. Het is extra lang zodat we ervoor kunnen zorgen dat de opmaak mooi blijft bij het hebben van een lange beschrijving. Dit is een hele lange en niet erg representatieve dummy text voor een opdracht van deze Job. Het is extra lang zodat we ervoor kunnen zorgen dat de opmaak mooi blijft bij het hebben van een lange beschrijving.</string>-->
+    <string name="dummy_opdracht_text">Dit is een hele lange en niet erg representatieve dummy text voor een opdracht van deze Job. Het is extra lang zodat we ervoor kunnen zorgen dat de opmaak mooi blijft bij het hebben van een lange beschrijving.</string>
+    <string name="dummy_address_name">Adres</string>
+    <string name="dummy_address_text">Voskenslaan 270 9000 Gent</string>
+    <string name="dummy_tags_name">Tags</string>
+
 </resources>
