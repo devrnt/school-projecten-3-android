@@ -1,4 +1,4 @@
-package com.example.bruno.recyclerviewdemo2
+package com.talentcoach.id11.id11_android.adapters
 
 import android.content.Context
 import android.os.Build
@@ -14,11 +14,12 @@ import com.talentcoach.id11.id11_android.R
 import com.talentcoach.id11.id11_android.adapters.CustomViewHolder
 import com.talentcoach.id11.id11_android.models.Leerling
 import com.talentcoach.id11.id11_android.models.LeerlingHoofdCompetentie
-import kotlinx.android.synthetic.main.comp_tebehalen_item.view.*
+import kotlinx.android.synthetic.main.hoofdcompetentie_list_item.view.*
 
 
-class CompTeBehalenAdapter(
+class CompetentiesAdapter(
         val teBehalenLeerlingHoofdcompetenties: MutableList<LeerlingHoofdCompetentie>,
+        val behaaldeHoofdcompetentieLijst: MutableList<LeerlingHoofdCompetentie>,
         var context: Context):RecyclerView.Adapter<CustomViewHolder>(){
 
     var opengeklapt:Boolean = false
@@ -26,25 +27,25 @@ class CompTeBehalenAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
-        val cellForRow = layoutInflater.inflate(R.layout.comp_tebehalen_item,parent,false)
-        leerlingHoofdcompetenties.addAll(teBehalenLeerlingHoofdcompetenties)
-
+        val cellForRow = layoutInflater.inflate(R.layout.hoofdcompetentie_list_item,parent,false)
+        leerlingHoofdcompetenties.addAll(0, teBehalenLeerlingHoofdcompetenties)
+        leerlingHoofdcompetenties.addAll(itemCount-1, behaaldeHoofdcompetentieLijst)
 
         return CustomViewHolder(cellForRow)
     }
 
     override fun getItemCount(): Int {
-        return leerlingHoofdcompetenties.count()
+        return teBehalenLeerlingHoofdcompetenties.count()
     }
 
     //deze methode wordt voor elke competentie opgeroepen die gebind wordt aan de viewholder
     @RequiresApi(Build.VERSION_CODES.KITKAT)
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
-        val hoofdcompetentie = leerlingHoofdcompetenties.get(position)
+        val hoofdcompetentie: LeerlingHoofdCompetentie = teBehalenLeerlingHoofdcompetenties.get(position)
 
-        holder.view.compName.text = hoofdcompetentie.hoofdCompetentie.omschrijving
+        holder.view.hoofdcompetentieOmschrijving.text = hoofdcompetentie.hoofdCompetentie.omschrijving
         holder.view.arrowIcon.setImageResource(R.drawable.arrow_right_24dp)
-        holder.view.graadTxt.text = hoofdcompetentie.hoofdCompetentie.graad
+        holder.view.hoopfdcompetentieGraad.text = hoofdcompetentie.hoofdCompetentie.graad
 
         if(holder.view.childItems.childCount == 0){
             for(deelcompetentie in hoofdcompetentie.deelCompetenties){
@@ -56,7 +57,7 @@ class CompTeBehalenAdapter(
 
         }
 
-        holder.view.itemCard.setOnClickListener{
+        holder.view.hoofdcompetentieCard.setOnClickListener{
 
 
             val transDelay:AutoTransition = AutoTransition()
@@ -64,7 +65,7 @@ class CompTeBehalenAdapter(
 
             if(!opengeklapt){
                 holder.view.arrowIcon.setImageResource(R.drawable.arrow_down_24dp)
-                TransitionManager.beginDelayedTransition(holder.view.itemCard,transDelay)
+                TransitionManager.beginDelayedTransition(holder.view.hoofdcompetentieCard,transDelay)
                 holder.view.childItems.visibility = View.VISIBLE
                 opengeklapt = true
             }
