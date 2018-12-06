@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.*
 import android.widget.*
 import com.talentcoach.id11.id11_android.R
+import kotlinx.android.synthetic.main.fragment_competenties_navigation.*
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 
@@ -34,8 +35,8 @@ class CompetentiesNavigationFragment : Fragment() {
         doAsync {
             uiThread {
                 fragmentManager!!.beginTransaction()
-                    .add(R.id.topFragmentFrame, competentieListFragment)
-                    .hide(competentieListFragment)
+                    .add(R.id.fragmentFrameCompetenties, competentieListFragment)
+                    .show(competentieListFragment)
                     .commit()
 
                 getAndShowHoofdcompetenties()

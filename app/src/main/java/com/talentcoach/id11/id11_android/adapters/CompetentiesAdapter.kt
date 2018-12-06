@@ -29,13 +29,13 @@ class CompetentiesAdapter(
         val layoutInflater = LayoutInflater.from(parent.context)
         val cellForRow = layoutInflater.inflate(R.layout.hoofdcompetentie_list_item,parent,false)
         leerlingHoofdcompetenties.addAll(0, teBehalenLeerlingHoofdcompetenties)
-        leerlingHoofdcompetenties.addAll(itemCount-1, behaaldeHoofdcompetentieLijst)
+        leerlingHoofdcompetenties.addAll(leerlingHoofdcompetenties.size, behaaldeHoofdcompetentieLijst)
 
         return CustomViewHolder(cellForRow)
     }
 
     override fun getItemCount(): Int {
-        return teBehalenLeerlingHoofdcompetenties.count()
+        return teBehalenLeerlingHoofdcompetenties.size
     }
 
     //deze methode wordt voor elke competentie opgeroepen die gebind wordt aan de viewholder
@@ -45,6 +45,7 @@ class CompetentiesAdapter(
 
         holder.view.hoofdcompetentieOmschrijving.text = hoofdcompetentie.hoofdCompetentie.omschrijving
         holder.view.arrowIcon.setImageResource(R.drawable.arrow_right_24dp)
+        holder.view.hoopfdcompetentieBehaaldOp.text = hoofdcompetentie.datumBehaald.toString()
         holder.view.hoopfdcompetentieGraad.text = hoofdcompetentie.hoofdCompetentie.graad
 
         if(holder.view.childItems.childCount == 0){
