@@ -1,6 +1,7 @@
 package com.talentcoach.id11.id11_android.adapters
 
 import android.content.Context
+import android.graphics.Color
 import android.os.Build
 import android.support.annotation.RequiresApi
 import android.support.v7.widget.RecyclerView
@@ -18,34 +19,37 @@ import kotlinx.android.synthetic.main.hoofdcompetentie_list_item.view.*
 
 
 class CompetentiesAdapter(
-        val teBehalenLeerlingHoofdcompetenties: MutableList<LeerlingHoofdCompetentie>,
-        val behaaldeHoofdcompetentieLijst: MutableList<LeerlingHoofdCompetentie>,
+        val leerlingHoofdcompetenties: MutableList<LeerlingHoofdCompetentie>,
         var context: Context):RecyclerView.Adapter<CustomViewHolder>(){
 
     var opengeklapt:Boolean = false
-    var leerlingHoofdcompetenties: MutableList<LeerlingHoofdCompetentie> = mutableListOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         val cellForRow = layoutInflater.inflate(R.layout.hoofdcompetentie_list_item,parent,false)
-        leerlingHoofdcompetenties.addAll(0, teBehalenLeerlingHoofdcompetenties)
-        leerlingHoofdcompetenties.addAll(leerlingHoofdcompetenties.size, behaaldeHoofdcompetentieLijst)
+        //leerlingHoofdcompetenties.addAll(0, teBehalenLeerlingHoofdcompetenties)
+        //leerlingHoofdcompetenties.addAll(leerlingHoofdcompetenties.size, behaaldeHoofdcompetentieLijst)
 
         return CustomViewHolder(cellForRow)
     }
 
     override fun getItemCount(): Int {
-        return teBehalenLeerlingHoofdcompetenties.size
+        return leerlingHoofdcompetenties.size
     }
 
     //deze methode wordt voor elke competentie opgeroepen die gebind wordt aan de viewholder
     @RequiresApi(Build.VERSION_CODES.KITKAT)
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
-        val hoofdcompetentie: LeerlingHoofdCompetentie = teBehalenLeerlingHoofdcompetenties.get(position)
+        val hoofdcompetentie: LeerlingHoofdCompetentie = leerlingHoofdcompetenties.get(position)
 
         holder.view.hoofdcompetentieOmschrijving.text = hoofdcompetentie.hoofdCompetentie.omschrijving
         holder.view.arrowIcon.setImageResource(R.drawable.arrow_right_24dp)
         holder.view.hoopfdcompetentieBehaaldOp.text = hoofdcompetentie.datumBehaald.toString()
+        holder.view.hoopfdcompetentieBehaaldOp.visibility = View.GONE
+        if (hoofdcompetentie.behaald) {
+            holder.view.hoofdcompetentieCard.setCardBackgroundColor(Color.parseColor("#00C853"))
+            holder.view.hoopfdcompetentieBehaaldOp.visibility = View.VISIBLE
+        }
         holder.view.hoopfdcompetentieGraad.text = hoofdcompetentie.hoofdCompetentie.graad
 
         if(holder.view.childItems.childCount == 0){

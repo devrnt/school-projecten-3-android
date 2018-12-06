@@ -140,7 +140,7 @@ class CompetentieListFragment : Fragment() {
                     aantalBehaaldeHoofdcompetenties.visibility = View.VISIBLE
                     behaaldProgress.visibility = View.GONE
 
-                    competentiesAdapter = CompetentiesAdapter(teBehalenHoofdcompetentieLijst, behaaldeHoofdCompetentieLijst, activity!!.applicationContext)
+                    competentiesAdapter = CompetentiesAdapter(hoofdcompetentieLijst, activity!!.applicationContext)
                     recycle.adapter = competentiesAdapter
                 } else {
                     Toast.makeText(context, "Hier ging iets fout", Toast.LENGTH_LONG).show()
