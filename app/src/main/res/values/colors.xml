@@ -5,9 +5,14 @@
     <color name="colorAccent">#FF4081</color>
     <color name="colorGreen">#00C853</color>
     <color name="colorRed">#D50000</color>
+    <color name="colorWhite">#fff</color>
     <color name="colorError">#FBC02D</color>
     <color name="colorGrey">#ececec</color>
     <color name="cardTitle">#de000000</color>
     <color name="cardText">#99000000</color>
     <color name="divider">#1e000000</color>
+
+    <color name="bottomGradient">#ad4f93</color>
+    <color name="topGradient">#6e5ba2</color>
+
 </resources>

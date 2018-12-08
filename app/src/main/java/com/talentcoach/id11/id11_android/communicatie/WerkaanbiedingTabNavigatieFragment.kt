@@ -35,6 +35,7 @@ class WerkaanbiedingTabNavigatieFragment : Fragment() {
         viewPager.adapter = fragmentAdapter
         tabs.setupWithViewPager(viewPager)
 
+        viewPager.currentItem = 1
         return view
     }
 

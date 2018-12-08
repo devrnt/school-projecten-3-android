@@ -32,11 +32,11 @@ import org.junit.runner.RunWith
 
 // there should already be user logged-in to launch these tests
 @RunWith(AndroidJUnit4::class)
-class ProfielActivityTest {
+class ProfielFragmentTest {
     @get:Rule
-    var activityRule: ActivityTestRule<ProfielActivity> = ActivityTestRule(ProfielActivity::class.java, true, false)
+    var fragmentRule: ActivityTestRule<ProfielFragment> = ActivityTestRule(ProfielFragment::class.java, true, false)
 
-    lateinit var activity: ProfielActivity
+    lateinit var fragment: ProfielFragment
     lateinit var context: Context
     private lateinit var preferencesEditor: SharedPreferences.Editor
     private lateinit var gebruiker: Gebruiker
@@ -52,8 +52,8 @@ class ProfielActivityTest {
 
         writeGebruikerToSharedPreferences()
 
-        activity = activityRule.launchActivity(Intent())
-        activity.leerling = leerling
+        fragment = fragmentRule.launchActivity(Intent())
+        fragment.leerling = leerling
 
         Intents.init()
     }
@@ -82,7 +82,7 @@ class ProfielActivityTest {
         onView(withId(R.id.logout_btn)).perform(scrollTo(), click())
 
         intended(hasComponent(ComponentName(getTargetContext(), LoginActivity::class.java)))
-        assertTrue(activity.isFinishing)
+        assertTrue(fragment.isFinishing)
     }
 
 }

@@ -9,7 +9,7 @@ import android.widget.Button
 import com.talentcoach.id11.id11_android.communicatie.WerkaanbiedingNavigationFragment
 import com.talentcoach.id11.id11_android.competenties.CompetentiesNavigationFragment
 import com.talentcoach.id11.id11_android.joborganisatie.JobNavigationFragment
-import com.talentcoach.id11.id11_android.profiel.ProfielActivity
+import com.talentcoach.id11.id11_android.profiel.ProfielFragment
 import kotlinx.android.synthetic.main.activity_home.*
 
 class HomeActivity : AppCompatActivity() {
@@ -51,7 +51,7 @@ class HomeActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when (item?.itemId) {
             R.id.profile_btn -> {
-                val intent = Intent(applicationContext, ProfielActivity::class.java)
+                val intent = Intent(applicationContext, ProfielFragment::class.java)
                 startActivity(intent)
             }
         }

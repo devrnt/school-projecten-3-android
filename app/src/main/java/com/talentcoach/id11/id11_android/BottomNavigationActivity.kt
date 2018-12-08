@@ -4,11 +4,10 @@ import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
-import com.talentcoach.id11.id11_android.communicatie.WerkaanbiedingNavigationFragment
 import com.talentcoach.id11.id11_android.communicatie.WerkaanbiedingTabNavigatieFragment
 import com.talentcoach.id11.id11_android.competenties.CompetentiesNavigationFragment
 import com.talentcoach.id11.id11_android.joborganisatie.JobNavigationFragment
-import com.talentcoach.id11.id11_android.profiel.ProfielActivity
+import com.talentcoach.id11.id11_android.profiel.ProfielFragment
 import kotlinx.android.synthetic.main.activity_bottom_navigation.*
 
 class BottomNavigationActivity : AppCompatActivity() {
@@ -34,7 +33,7 @@ class BottomNavigationActivity : AppCompatActivity() {
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_profiel -> {
-                val fragment = ProfielActivity.newInstance()
+                val fragment = ProfielFragment.newInstance()
                 openFragment(fragment)
                 return@OnNavigationItemSelectedListener true
             }

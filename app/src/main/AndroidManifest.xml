@@ -20,7 +20,7 @@
         <activity
             android:name=".login.LoginActivity"
             android:label="@string/app_name"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -48,20 +48,20 @@
             <!--android:name=".HomeActivity"-->
             <!--android:label="@string/app_name" />-->
         <!--<activity-->
-            <!--android:name=".profiel.ProfielActivity"-->
+            <!--android:name=".profiel.ProfielFragment"-->
             <!--android:label="Profiel"-->
             <!--android:parentActivityName=".HomeActivity" />-->
         <!--<activity-->
             <!--android:name=".profiel.ProfielEditActivity"-->
             <!--android:label="Profiel wijzigen"-->
-            <!--android:parentActivityName=".profiel.ProfielActivity" />-->
+            <!--android:parentActivityName=".profiel.ProfielFragment" />-->
         <!--<activity-->
             <!--android:name=".joborganisatie.JobNavigationFragment"-->
             <!--android:label="Info"-->
             <!--android:parentActivityName=".HomeActivity" />-->
         <activity
             android:name=".BottomNavigationActivity"
-            android:label="@string/title_activity_bottom_navigation"></activity>
+            android:label="@string/title_activity_bottom_navigation" />
     </application>
 
 </manifest>

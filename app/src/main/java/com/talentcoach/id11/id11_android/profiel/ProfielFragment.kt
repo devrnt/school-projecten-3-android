@@ -5,7 +5,6 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.support.v4.app.Fragment
-import android.support.v7.app.AppCompatActivity
 import android.view.*
 import android.widget.Button
 import android.widget.Toast
@@ -16,16 +15,13 @@ import com.talentcoach.id11.id11_android.models.Gebruiker
 import com.talentcoach.id11.id11_android.models.Geslacht
 import com.talentcoach.id11.id11_android.models.Leerling
 import com.talentcoach.id11.id11_android.repositories.LeerlingAPI
-import kotlinx.android.synthetic.main.activity_profiel.*
+import kotlinx.android.synthetic.main.fragment_profiel.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.text.SimpleDateFormat
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
-import java.util.*
 
-class ProfielActivity : Fragment() {
+class ProfielFragment : Fragment() {
     private lateinit var sharedPreferences: SharedPreferences
     private lateinit var spEditor: SharedPreferences.Editor
 
@@ -62,7 +58,7 @@ class ProfielActivity : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        val view: View = inflater.inflate(R.layout.activity_profiel, container, false)
+        val view: View = inflater.inflate(R.layout.fragment_profiel, container, false)
 
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity)
         spEditor = sharedPreferences.edit()
@@ -152,6 +148,6 @@ class ProfielActivity : Fragment() {
          * @return A new instance of fragment Tab1Fragment.
          */
         @JvmStatic
-        fun newInstance() = ProfielActivity()
+        fun newInstance() = ProfielFragment()
     }
 }
