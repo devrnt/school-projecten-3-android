@@ -24,6 +24,10 @@ import org.jetbrains.anko.uiThread
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import android.R.id.button2
+import android.R.id.button1
+import android.widget.TextView
+
 
 /**
  * A simple [Fragment] subclass.
@@ -48,9 +52,14 @@ class AanbiedingenFragment : Fragment() {
         aanbiedingsInfo.visibility = View.GONE
         var progressSpinner = view.findViewById(R.id.progressSpinner) as ProgressBar
         progressSpinner.visibility = View.VISIBLE
+        var geenAanbiedingenText = view.findViewById(R.id.geenAanbiedingenText) as TextView
+        geenAanbiedingenText.visibility = View.GONE
+
         var dislikeBtn = view.findViewById(R.id.dislikeBtn) as MaterialButton
+        dislikeBtn.setOnClickListener(onClickListener)
         dislikeBtn.isEnabled = false
         var likeBtn = view.findViewById(R.id.likeBtn) as MaterialButton
+        likeBtn.setOnClickListener(onClickListener)
         likeBtn.isEnabled = false
 
         doAsync {
@@ -93,6 +102,11 @@ class AanbiedingenFragment : Fragment() {
     }
 
     private fun getWerkaanbieding() {
+        aanbiedingsInfo.visibility = View.GONE
+        progressSpinner.visibility = View.VISIBLE
+        dislikeBtn.isEnabled = false
+        likeBtn.isEnabled = false
+
         doAsync {
             var temp = DataManager.getWerkaanbiedingForLeerling(leerling)
             uiThread {
@@ -109,6 +123,7 @@ class AanbiedingenFragment : Fragment() {
     private fun showAanbieding() {
         progressSpinner.visibility = View.GONE
         aanbiedingsInfo.visibility = View.VISIBLE
+        geenAanbiedingenText.visibility = View.GONE
         dislikeBtn.isEnabled = true
         likeBtn.isEnabled = true
 
@@ -121,18 +136,22 @@ class AanbiedingenFragment : Fragment() {
     }
 
     private fun showGeenAanbieding() {
-        aanbiedingsInfo.visibility = View.GONE
-
+        progressSpinner.visibility = View.GONE
+        geenAanbiedingenText.visibility = View.VISIBLE
     }
 
-//    override fun likeClicked() {
-//        // huidigeWerkaanbieding will never be null because buttons are hidden otherwise
-//        leerling.bewaardeWerkaanbiedingen.add(werkaanbiedingFragment.werkaanbieding!!)
-//        werkaanbiedingFragment.werkaanbieding = null
-//        val toaster = Toast.makeText(activity, getString(R.string.werkaanbieding_bewaard), Toast.LENGTH_SHORT)
-//        toaster.show()
-//        getAndShowWerkaanbieding()
-//    }
+    private val onClickListener = View.OnClickListener { v ->
+        when (v.id) {
+            R.id.dislikeBtn -> {
+                leerling.verwijderdeWerkaanbiedingen.add(werkaanbieding)
+                getWerkaanbieding()
+            }
+            R.id.likeBtn -> {
+                leerling.bewaardeWerkaanbiedingen.add(werkaanbieding)
+                getWerkaanbieding()
+            }
+        }
+    }
 
     companion object {
         /**

@@ -15,6 +15,12 @@
         <!--<item name="android:windowFullscreen">true</item>-->
     </style>
 
+    <style name="AppTheme.Fullscreen" parent="Theme.MaterialComponents.Light.DarkActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowFullscreen">true</item>
+    </style>
+
     <!--<style name="AppTheme.NoActionBar">-->
         <!--<item name="windowActionBar">false</item>-->
         <!--<item name="windowNoTitle">true</item>-->
@@ -48,6 +54,15 @@
     <style name="OutlinedButton" parent="Widget.MaterialComponents.Button.TextButton">
         <item name="strokeColor">@color/colorAccent</item>
         <item name="strokeWidth">2dp</item>
+    </style>
+
+    <style name="CustomChipChoice" parent="@style/Widget.MaterialComponents.Chip.Choice">
+        <item name="chipBackgroundColor">@color/bg_chip_state_list</item>
+        <item name="android:textColor">@color/text_color_chip_state_list</item>
+    </style>
+
+    <style name="whiteTextSelected" parent="Base.TextAppearance.AppCompat">
+        <item name="android:textColor">@color/text_color_chip_state_list</item>
     </style>
 
 </resources>

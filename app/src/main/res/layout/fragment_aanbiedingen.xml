@@ -69,8 +69,8 @@
                         app:icon="@drawable/ic_heart_outline_24dp"
                         android:drawableTint="#ffffff"
                         app:iconGravity="textStart"
-                        android:gravity="center">
-                    </android.support.design.button.MaterialButton>
+                        android:gravity="center"
+                        android:onClick="clickLike" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -92,6 +92,17 @@
                         android:indeterminate="true"
                         android:max="1"
                         android:layout_gravity="center"/>
+
+                    <TextView
+                        android:id="@+id/geenAanbiedingenText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:padding="20dp"
+                        android:text="@string/geenAanbiedingen"
+                        android:fontFamily="@font/roboto_light"
+                        android:textSize="20dp"
+                        android:textAlignment="center"/>
 
 
                     <LinearLayout
@@ -166,16 +177,16 @@
 
                             <android.support.design.chip.Chip
                                 android:id="@+id/chip_example"
-                                style="@style/Widget.MaterialComponents.Chip.Choice"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:clickable="false"
                                 android:text="Teamwork" />
 
                             <android.support.design.chip.Chip
                                 android:id="@+id/chip_example2"
-                                style="@style/Widget.MaterialComponents.Chip.Choice"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:clickable="false"
                                 android:text="Leergierigheid" />
                         </android.support.design.chip.ChipGroup>
                     </LinearLayout>

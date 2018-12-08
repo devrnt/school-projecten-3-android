@@ -105,5 +105,7 @@
     <string name="dummy_address_name">Adres</string>
     <string name="dummy_address_text">Voskenslaan 270 9000 Gent</string>
     <string name="dummy_tags_name">Tags</string>
+    <string name="geenAanbiedingen">Het ziet ernaar uit dat je werkaanbiedingen op zijn! Probeer het op een later tijdstip opnieuw of voeg nieuwe interesses toe in het interesses scherm</string>
+    <string name="selecteer_jouw_interesses">Jouw interesses</string>
 
 </resources>
