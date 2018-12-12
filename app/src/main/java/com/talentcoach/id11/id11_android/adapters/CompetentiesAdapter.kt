@@ -19,7 +19,7 @@ import kotlinx.android.synthetic.main.hoofdcompetentie_list_item.view.*
 
 
 class CompetentiesAdapter(
-        val leerlingHoofdcompetenties: MutableList<LeerlingHoofdCompetentie>,
+        var leerlingHoofdcompetenties: MutableList<LeerlingHoofdCompetentie>,
         var context: Context):RecyclerView.Adapter<CustomViewHolder>(){
 
     var opengeklapt:Boolean = false

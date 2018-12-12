@@ -75,7 +75,7 @@ class CompetentieListFragment : Fragment() {
     }
 
 
-    fun applyFilter(year:String, graad:String){
+    fun applyFilter(behaald:Boolean, graad:String){
 
         var sortedList: List<LeerlingHoofdCompetentie> = listOf()
 
@@ -87,22 +87,27 @@ class CompetentieListFragment : Fragment() {
             copyList = mutableListOf()
         }
 
-        sortedList = hoofdcompetentieLijst.filter { c -> c.datumBehaald.toString().contains(year,true) && c.hoofdCompetentie.graad.equals(graad,true) }
+        sortedList = hoofdcompetentieLijst.filter { c -> c.behaald == behaald && c.hoofdCompetentie.graad.equals(graad,true) }
 
-        if(year.contains("Alle",true) && !graad.contains("Alle",true)){
-            sortedList = hoofdcompetentieLijst.filter { c -> c.hoofdCompetentie.graad.equals(graad, true) }
+        if (graad.contains("Alle", true)) {
+            sortedList = hoofdcompetentieLijst.filter { hc -> hc.behaald == behaald }
         }
-        if(graad.contains("Alle",true) && !year.contains("Alle",true)){
-            sortedList = hoofdcompetentieLijst.filter { c -> c.datumBehaald.toString().contains(year,true) }
-        }
+//        if(behaald && !graad.contains("Alle",true)){
+//            sortedList = hoofdcompetentieLijst.filter { c -> c.behaald == behaald}
+//        }
+//        if(graad.contains("Alle",true) && !behaald){
+//            sortedList = hoofdcompetentieLijst.filter { c -> c.behaald }
+//        }
 
         if(sortedList.isNotEmpty()){
             copyList = hoofdcompetentieLijst.toMutableList()
-            competentiesAdapter.leerlingHoofdcompetenties.clear()
+            competentiesAdapter.leerlingHoofdcompetenties = mutableListOf()
             for(item in sortedList){
                 competentiesAdapter.leerlingHoofdcompetenties.add(competentiesAdapter.leerlingHoofdcompetenties.size, item)
             }
         }
+        else
+            competentiesAdapter.leerlingHoofdcompetenties = mutableListOf()
 
 
         competentiesAdapter.notifyDataSetChanged()
@@ -123,21 +128,10 @@ class CompetentieListFragment : Fragment() {
                 if (response.isSuccessful) {
                     var leerling = response.body()
 
-                    behaaldeHoofdCompetentieLijst = leerling!!.hoofdCompetenties.filter { hc -> hc.behaald == true}.toMutableList()
-                    if (behaaldeHoofdCompetentieLijst.isEmpty()) {
-                        aantalBehaaldeHoofdcompetenties.text = "Er zijn nog geen competenties behaald!"
-                    }
-                    else {
-                        aantalBehaaldeHoofdcompetenties.text = "Behaalde competenties: ${behaaldeHoofdCompetentieLijst.size}"
-                    }
-                    teBehalenHoofdcompetentieLijst = leerling!!.hoofdCompetenties.filter { hc -> hc.behaald.not() }.toMutableList()
-
-                    hoofdcompetentieLijst.addAll(0, teBehalenHoofdcompetentieLijst)
-                    hoofdcompetentieLijst.addAll(hoofdcompetentieLijst.size, behaaldeHoofdCompetentieLijst)
+                    hoofdcompetentieLijst = leerling!!.hoofdCompetenties
 
                     //Progressbar doen verdwijnen en lijst weergeven
                     recycle.visibility = View.VISIBLE
-                    aantalBehaaldeHoofdcompetenties.visibility = View.VISIBLE
                     behaaldProgress.visibility = View.GONE
 
                     competentiesAdapter = CompetentiesAdapter(hoofdcompetentieLijst, activity!!.applicationContext)
