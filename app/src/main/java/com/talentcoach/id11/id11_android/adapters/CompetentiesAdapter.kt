@@ -5,6 +5,7 @@ import android.content.Context
 import android.graphics.Color
 import android.os.Build
 import android.support.annotation.RequiresApi
+import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.transition.AutoTransition
 import android.transition.TransitionManager
@@ -32,7 +33,6 @@ class CompetentiesAdapter(
 
     lateinit var beoordelingsDialog: Dialog
     var opengeklapt:Boolean = false
-    lateinit var deelcompetentieChildItems: Sequence<View>
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
@@ -86,8 +86,6 @@ class CompetentiesAdapter(
                 opengeklapt = false
             }
         }
-
-        //holder.view.childItems.setOnClickListener { showDialogWindow(holder.view)}
     }
 
     private fun showDialogWindow(view: View, deelcomp: LeerlingDeelCompetentie) {
@@ -97,6 +95,10 @@ class CompetentiesAdapter(
         beoordelingsDialog.setContentView(R.layout.dialog_deelcompetentie_beoordelingen)
 
         beoordelingsDialog.findViewById<TextView>(R.id.tv_deelcompetentie_omschrijving).text= deelcomp.deelCompetentie.omschrijving
+
+        var recycle = beoordelingsDialog.findViewById(R.id.recyclerHoofdcompetentie) as RecyclerView
+        recycle.layoutManager = LinearLayoutManager(view.context)
+        recycle.adapter = DeelcompetentieAdapter(deelcomp.beoordelingen, view.context)
 
         beoordelingsDialog.show()
     }
