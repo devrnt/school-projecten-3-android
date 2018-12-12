@@ -15,15 +15,15 @@
             android:id="@+id/graadSpinner"
             android:layout_width="131dp"
             android:layout_height="36dp"
-            android:layout_alignTop="@+id/textView"
+            android:layout_alignTop="@+id/tv_sorteer_behaald_toggle"
             android:layout_alignParentEnd="true"
             android:layout_marginTop="39dp"
             android:layout_marginEnd="6dp"
             tools:textAlignment="textEnd" />
 
         <TextView
-            android:id="@+id/textView5"
-            android:layout_width="74dp"
+            android:id="@+id/title_Filter_Dialog"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
@@ -34,9 +34,9 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/textView4"
-            android:layout_width="146dp"
-            android:layout_height="36dp"
+            android:id="@+id/tv_sorteer_naam_toggle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_alignParentBottom="true"
             android:layout_marginStart="8dp"
@@ -65,7 +65,7 @@
             android:id="@+id/cancelBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignStart="@+id/textView4"
+            android:layout_alignStart="@+id/tv_sorteer_naam_toggle"
             android:layout_alignParentBottom="true"
             android:layout_marginStart="63dp"
             android:layout_marginBottom="6dp"
@@ -81,32 +81,37 @@
             android:layout_marginBottom="7dp"
             android:text="Toepassen" />
 
-        <Spinner
-            android:id="@+id/jaarSpinner"
-            android:layout_width="131dp"
-            android:layout_height="35dp"
-            android:layout_alignTop="@+id/textView"
+        <Switch
+            android:id="@+id/behaald_toggle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
-            android:layout_marginTop="-5dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="0dp"
+            android:layout_marginLeft="62dp"
             android:layout_marginEnd="6dp"
-            tools:textAlignment="textEnd" />
+            android:layout_marginRight="170dp"
+            android:layout_marginBottom="112dp"
+            android:gravity="center_vertical"
+            android:textAlignment="center"
+            tools:checked="false" />
 
         <TextView
-            android:id="@+id/textView"
-            android:layout_width="135dp"
-            android:layout_height="40dp"
-            android:layout_alignStart="@+id/textView4"
+            android:id="@+id/tv_sorteer_behaald_toggle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/tv_sorteer_naam_toggle"
             android:layout_alignParentBottom="true"
             android:layout_marginStart="0dp"
             android:layout_marginBottom="112dp"
-            android:text="Filteren op jaar:"
+            android:text="Sorteer op behaald"
             android:textAlignment="textStart"
             android:textSize="16sp" />
 
         <TextView
-            android:id="@+id/textView6"
-            android:layout_width="134dp"
-            android:layout_height="36dp"
+            android:id="@+id/tv_filter_graad"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_alignParentBottom="true"
             android:layout_marginStart="8dp"
