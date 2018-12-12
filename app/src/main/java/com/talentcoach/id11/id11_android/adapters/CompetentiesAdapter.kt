@@ -96,7 +96,7 @@ class CompetentiesAdapter(
 
         beoordelingsDialog.findViewById<TextView>(R.id.tv_deelcompetentie_omschrijving).text= deelcomp.deelCompetentie.omschrijving
 
-        var recycle = beoordelingsDialog.findViewById(R.id.recyclerHoofdcompetentie) as RecyclerView
+        var recycle = beoordelingsDialog.findViewById(R.id.recyclerBeoordelingenDeelcompetentie) as RecyclerView
         recycle.layoutManager = LinearLayoutManager(view.context)
         recycle.adapter = DeelcompetentieAdapter(deelcomp.beoordelingen, view.context)
 

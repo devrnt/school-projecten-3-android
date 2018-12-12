@@ -34,7 +34,7 @@ class DeelcompetentieAdapter(
         val beoordeling: BeoordelingDeelCompetentie = beoordelingen.get(position)
 
         holder.view.testBeoordelingDeelcompetentie.text = beoordeling.test
-        holder.view.datumBeoordeling.text = beoordeling.datum.toString()
+        holder.view.datumBeoordeling.text = beoordeling.datum.toString().substring(0, 10)
         holder.view.score.text = BeoordelingScore.values().get(beoordeling.score).toString()
     }
 }
