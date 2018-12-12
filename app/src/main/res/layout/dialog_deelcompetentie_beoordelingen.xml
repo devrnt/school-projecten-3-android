@@ -4,38 +4,52 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/dialog_deelcompetentie_beoordelingen"
     android:layout_width="match_parent"
-    android:layout_height="250dp"
+    android:layout_height="wrap_content"
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/textBeoordelingen"
+        android:id="@+id/tv_title_dialog_deelcompetentie_beoordelingen"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_marginStart="8dp"
+        android:layout_marginTop="5dp"
         android:layout_marginEnd="8dp"
         android:text="@string/title_dialog_deelcompetentie_beoordelingen"
         android:textAlignment="center"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textDeelcompetentieOmschrijving"
+        android:id="@+id/tv_deelcompetentie_omschrijving"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:gravity="center_horizontal"
-        android:text="@string/omschrijvingDeelcompetentie"
         android:textAlignment="center"
-        android:textSize="20sp"
+        android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textBeoordelingen" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_title_dialog_deelcompetentie_beoordelingen" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerBeoordelingenDeelcompetentie"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:scrollbars="vertical"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_deelcompetentie_omschrijving" />
 
 
 </android.support.constraint.ConstraintLayout>

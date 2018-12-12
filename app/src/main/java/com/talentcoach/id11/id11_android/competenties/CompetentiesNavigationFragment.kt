@@ -32,7 +32,6 @@ class CompetentiesNavigationFragment : Fragment() {
     lateinit var myDialog:Dialog
     var namesSortedState:Boolean = false
     var behaaldSortedState: Boolean = false
-    var yearSelected:Int = 0
     var graadSelected:Int = 0
     var hoofdcompetentieLijst: MutableList<LeerlingHoofdCompetentie> = mutableListOf()
     var behaaldeHoofdCompetentieLijst: MutableList<LeerlingHoofdCompetentie> = mutableListOf()
@@ -46,7 +45,7 @@ class CompetentiesNavigationFragment : Fragment() {
 
         view.findViewById<ImageButton>(R.id.filterbutton).setOnClickListener {
             // when clicked remove the corresponding item and notify adapter of change
-            ShowDialogWindow(yearSelected, graadSelected)
+            ShowDialogWindow(graadSelected)
         }
 
         doAsync {
@@ -66,7 +65,7 @@ class CompetentiesNavigationFragment : Fragment() {
     }
 
     //Toont Dialog venster waar gebruiker competenties kan sorteren/filteren
-    private fun ShowDialogWindow(yearSelected:Int, graadSelected:Int) {
+    private fun ShowDialogWindow(graadSelected:Int) {
 
         var sorteerOpNaamToggle:Switch
         var sorteerOpBehaaldToggle: Switch
@@ -106,10 +105,11 @@ class CompetentiesNavigationFragment : Fragment() {
         }
 
         sorteerOpBehaaldToggle.setOnCheckedChangeListener { sorteerOpBehaaldToggle, isChecked ->
-            if (isChecked)
+            if (isChecked) {
                 behaaldSortedState = true
-            else
+            } else {
                 behaaldSortedState = false
+            }
         }
 
         //Cancel Button om dialog venster te sluiten
@@ -118,25 +118,8 @@ class CompetentiesNavigationFragment : Fragment() {
          myDialog.cancel()
         }
 
-//        //Spinner = dropdown list om te filteren op jaartal
-//        jaarSpinner = myDialog.findViewById(R.id.jaarSpinner) as Spinner
-//        val jaarOptions = hoofdcompetentieLijst.map { hc -> hc.hoofdCompetentie. }
-//        jaarSpinner.adapter = ArrayAdapter<String>(activity,android.R.layout.simple_dropdown_item_1line,jaarOptions)
-//        jaarSpinner.setSelection(yearSelected)
-//
-//        jaarSpinner.onItemSelectedListener=object:AdapterView.OnItemSelectedListener{
-//            override fun onNothingSelected(parent: AdapterView<*>?) {
-//                println("Nothing selected...")
-//            }
-//
-//            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-//                this@CompetentiesNavigationFragment.yearSelected = position
-//            }
-//
-//        }
-
         //Spinner = dropdown list om te filteren op graad
-        graadSpinner = myDialog.findViewById(R.id.graadSpinner) as Spinner
+        graadSpinner = myDialog.findViewById<Spinner>(R.id.graadSpinner)
         val graadOptions: MutableList<String> = hoofdcompetentieLijst.map { hc -> hc.hoofdCompetentie.graad.toString() }.distinct().toMutableList()
         graadOptions.add(0, "Alle")
         graadSpinner.adapter = ArrayAdapter<String>(activity,android.R.layout.simple_dropdown_item_1line,graadOptions)
@@ -180,8 +163,9 @@ class CompetentiesNavigationFragment : Fragment() {
         //Ophalen van de leerling en zijn competenties
         val sharedPreferences: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity)
         LeerlingAPI.repository.getById(sharedPreferences.getString(getString(R.string.sp_key_leerling), "Default").toInt()).enqueue(object : Callback<Leerling> {
+        //LeerlingAPI.repository.getById(2).enqueue(object : Callback<Leerling> {
             override fun onFailure(call: Call<Leerling>, t: Throwable) {
-                println("Ophalen van leerling in CompetentieListFragment lukt niet")
+                println("Ophalen van leerling in CompetentieNavigationFragment lukt niet")
             }
 
             override fun onResponse(call: Call<Leerling>, response: Response<Leerling>) {
