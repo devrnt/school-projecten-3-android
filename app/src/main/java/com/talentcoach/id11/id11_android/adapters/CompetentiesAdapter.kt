@@ -1,5 +1,6 @@
 package com.talentcoach.id11.id11_android.adapters
 
+import android.app.Dialog
 import android.content.Context
 import android.graphics.Color
 import android.os.Build
@@ -10,25 +11,32 @@ import android.transition.TransitionManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.Window
+import android.widget.Button
 import android.widget.TextView
 import com.talentcoach.id11.id11_android.R
 import com.talentcoach.id11.id11_android.adapters.CustomViewHolder
+import com.talentcoach.id11.id11_android.models.DeelCompetentie
 import com.talentcoach.id11.id11_android.models.Leerling
+import com.talentcoach.id11.id11_android.models.LeerlingDeelCompetentie
 import com.talentcoach.id11.id11_android.models.LeerlingHoofdCompetentie
 import kotlinx.android.synthetic.main.hoofdcompetentie_list_item.view.*
+import kotlinx.android.synthetic.main.list_child.view.*
+import org.jetbrains.anko.childrenSequence
+import org.jetbrains.anko.find
 
 
 class CompetentiesAdapter(
-        var leerlingHoofdcompetenties: MutableList<LeerlingHoofdCompetentie>,
-        var context: Context):RecyclerView.Adapter<CustomViewHolder>(){
+    var leerlingHoofdcompetenties: MutableList<LeerlingHoofdCompetentie>,
+    var context: Context):RecyclerView.Adapter<CustomViewHolder>(){
 
+    lateinit var beoordelingsDialog: Dialog
     var opengeklapt:Boolean = false
+    lateinit var deelcompetentieChildItems: Sequence<View>
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         val cellForRow = layoutInflater.inflate(R.layout.hoofdcompetentie_list_item,parent,false)
-        //leerlingHoofdcompetenties.addAll(0, teBehalenLeerlingHoofdcompetenties)
-        //leerlingHoofdcompetenties.addAll(leerlingHoofdcompetenties.size, behaaldeHoofdcompetentieLijst)
 
         return CustomViewHolder(cellForRow)
     }
@@ -57,14 +65,12 @@ class CompetentiesAdapter(
                 var text: TextView = TextView(context)
                 text.text = "${'\u25CF'} ${deelcompetentie.deelCompetentie.omschrijving}" // ${'\u25CF'} zorgt voor Bullet icon
                 text.setPadding(0,0,0,40)
+                text.setOnClickListener { showDialogWindow(holder.view, deelcompetentie) }
                 holder.view.childItems.addView(text)
             }
-
         }
 
         holder.view.hoofdcompetentieCard.setOnClickListener{
-
-
             val transDelay:AutoTransition = AutoTransition()
             transDelay.setDuration(250)
 
@@ -81,8 +87,19 @@ class CompetentiesAdapter(
             }
         }
 
+        //holder.view.childItems.setOnClickListener { showDialogWindow(holder.view)}
     }
 
+    private fun showDialogWindow(view: View, deelcomp: LeerlingDeelCompetentie) {
+
+        beoordelingsDialog = Dialog(view.context)
+        beoordelingsDialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        beoordelingsDialog.setContentView(R.layout.dialog_deelcompetentie_beoordelingen)
+
+        beoordelingsDialog.findViewById<TextView>(R.id.tv_deelcompetentie_omschrijving).text= deelcomp.deelCompetentie.omschrijving
+
+        beoordelingsDialog.show()
+    }
 }
 
 class CustomViewHolder(val view:View):RecyclerView.ViewHolder(view){

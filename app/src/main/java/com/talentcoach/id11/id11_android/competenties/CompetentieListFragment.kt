@@ -30,8 +30,6 @@ class CompetentieListFragment : Fragment() {
     lateinit var recycle: RecyclerView
 
     var hoofdcompetentieLijst: MutableList<LeerlingHoofdCompetentie> = mutableListOf()
-    var behaaldeHoofdCompetentieLijst: MutableList<LeerlingHoofdCompetentie> = mutableListOf()
-    var teBehalenHoofdcompetentieLijst: MutableList<LeerlingHoofdCompetentie> = mutableListOf()
     var copyList = mutableListOf<LeerlingHoofdCompetentie>()
     var copyListSwitch = mutableListOf<LeerlingHoofdCompetentie>()
 
@@ -92,12 +90,6 @@ class CompetentieListFragment : Fragment() {
         if (graad.contains("Alle", true)) {
             sortedList = hoofdcompetentieLijst.filter { hc -> hc.behaald == behaald }
         }
-//        if(behaald && !graad.contains("Alle",true)){
-//            sortedList = hoofdcompetentieLijst.filter { c -> c.behaald == behaald}
-//        }
-//        if(graad.contains("Alle",true) && !behaald){
-//            sortedList = hoofdcompetentieLijst.filter { c -> c.behaald }
-//        }
 
         if(sortedList.isNotEmpty()){
             copyList = hoofdcompetentieLijst.toMutableList()
