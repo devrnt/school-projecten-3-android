@@ -1,4 +1,4 @@
-package com.talentcoach.id11.id11_android.communicatie
+package com.talentcoach.id11.id11_android.werkaanbiedingen
 
 
 import android.os.Bundle
@@ -10,7 +10,6 @@ import android.view.View
 import android.view.ViewGroup
 
 import com.talentcoach.id11.id11_android.R
-import kotlinx.android.synthetic.main.fragment_interesses.*
 
 /**
  * A simple [Fragment] subclass.

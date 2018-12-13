@@ -1,4 +1,4 @@
-package com.talentcoach.id11.id11_android.communicatie
+package com.talentcoach.id11.id11_android.werkaanbiedingen
 
 
 import android.os.Bundle
@@ -14,18 +14,16 @@ import android.widget.Toast
 import com.talentcoach.id11.id11_android.R
 import com.talentcoach.id11.id11_android.managers.DataManager
 import com.talentcoach.id11.id11_android.models.Leerling
-import com.talentcoach.id11.id11_android.models.Richting
 import com.talentcoach.id11.id11_android.models.Werkaanbieding
 import com.talentcoach.id11.id11_android.repositories.LeerlingAPI
 import kotlinx.android.synthetic.main.fragment_aanbiedingen.*
-import kotlinx.android.synthetic.main.fragment_werkaanbieding.*
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import android.R.id.button2
-import android.R.id.button1
+import android.content.SharedPreferences
+import android.preference.PreferenceManager
 import android.widget.TextView
 
 
@@ -48,23 +46,24 @@ class AanbiedingenFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         val view: View =  inflater.inflate(R.layout.fragment_aanbiedingen, container, false)
-        var aanbiedingsInfo = view.findViewById(R.id.aanbiedingsInfo) as LinearLayout
+        val aanbiedingsInfo = view.findViewById(R.id.aanbiedingsInfo) as LinearLayout
         aanbiedingsInfo.visibility = View.GONE
-        var progressSpinner = view.findViewById(R.id.progressSpinner) as ProgressBar
+        val progressSpinner = view.findViewById(R.id.progressSpinner) as ProgressBar
         progressSpinner.visibility = View.VISIBLE
-        var geenAanbiedingenText = view.findViewById(R.id.geenAanbiedingenText) as TextView
+        val geenAanbiedingenText = view.findViewById(R.id.geenAanbiedingenText) as TextView
         geenAanbiedingenText.visibility = View.GONE
 
-        var dislikeBtn = view.findViewById(R.id.dislikeBtn) as MaterialButton
+        val dislikeBtn = view.findViewById(R.id.dislikeBtn) as MaterialButton
         dislikeBtn.setOnClickListener(onClickListener)
         dislikeBtn.isEnabled = false
-        var likeBtn = view.findViewById(R.id.likeBtn) as MaterialButton
+        val likeBtn = view.findViewById(R.id.likeBtn) as MaterialButton
         likeBtn.setOnClickListener(onClickListener)
         likeBtn.isEnabled = false
 
         doAsync {
-            // TODO("Get leerlingId van de ingelogde leerling")
-            leerlingId = 1
+            val sharedPreferences: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity)
+            leerlingId = sharedPreferences.getString(getString(R.string.sp_key_leerling), "Default").toInt()
+            // HIER NIET VOLLEDIGE LEERLING OPHALEN MAAR ENKEL DE RELEVANTSTE WERKAANBIEDING => API CALL OCEAN
             getLeerling()
         }
 
@@ -98,7 +97,6 @@ class AanbiedingenFragment : Fragment() {
                 Toast.makeText(activity, getString(R.string.something_went_wrong_login), Toast.LENGTH_LONG).show()
             }
         })
-
     }
 
     private fun getWerkaanbieding() {
