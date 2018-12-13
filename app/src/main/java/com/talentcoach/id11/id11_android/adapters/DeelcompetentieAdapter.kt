@@ -11,11 +11,14 @@ import com.talentcoach.id11.id11_android.R
 import com.talentcoach.id11.id11_android.models.BeoordelingDeelCompetentie
 import com.talentcoach.id11.id11_android.models.BeoordelingScore
 import kotlinx.android.synthetic.main.beoordeling_deelcompetentie_card.view.*
+import java.text.SimpleDateFormat
 
 
 class DeelcompetentieAdapter(
         var beoordelingen: MutableList<BeoordelingDeelCompetentie>,
         var context: Context):RecyclerView.Adapter<BeoordelingViewHolder>(){
+
+    val dateFormatter: SimpleDateFormat = SimpleDateFormat("dd/MM/yyyy")
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BeoordelingViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
@@ -34,7 +37,7 @@ class DeelcompetentieAdapter(
         val beoordeling: BeoordelingDeelCompetentie = beoordelingen.get(position)
 
         holder.view.testBeoordelingDeelcompetentie.text = beoordeling.test
-        holder.view.datumBeoordeling.text = beoordeling.datum.toString().substring(0, 10)
+        holder.view.datumBeoordeling.text = dateFormatter.format(beoordeling.datum)
         holder.view.score.text = BeoordelingScore.values().get(beoordeling.score).toString()
     }
 }

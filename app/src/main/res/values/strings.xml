@@ -1,6 +1,19 @@
 <resources>
     <string name="app_name">Talent Coach</string>
 
+    <!-- API calls -->
+    <string name="BASE_URL_API">http://projecten3studserver11.westeurope.cloudapp.azure.com/api/</string>
+    <string name="login_login_response">com.talentcoach.id11.id11_android.login.loginResponse</string>
+    <string name="login_username">com.talentcoach.id11.id11_android.login.username</string>
+    <string name="login_password">com.talentcoach.id11.id11_android.login.password</string>
+
+    <!-- Strings related to API calls -->
+    <string name="leerling_niet_gevonden">Leerling niet gevonden</string>
+    <string name="geen_rechten">Je hebt niet de nodige rechten</string>
+
+    <!-- String related to Shared Preference -->
+    <string name="sp_key_leerling">leerling</string>
+
     <!-- Strings related to AlgemeneInfoActivity -->
     <string name="aic_title">Algemene Info</string>
     <string name="action_werkspreuk">Werkspreuk bekijken</string>
@@ -68,10 +81,6 @@
     <string name="succesfull_login">Succesvol ingelogd</string>
     <string name="wrong_login_credentials">Gebruikersnaam of wachtwoord is niet juist</string>
     <string name="something_went_wrong_login">Er ging iets fout…</string>
-    <!-- Keys for share preferences used in Login -->
-    <string name="sp_key_username">com.talentcoach.id11.id11_android.login.username</string>
-    <string name="sp_key_password">com.talentcoach.id11.id11_android.login.password</string>
-    <string name="sp_key_user">com.talentcoach.id11.id11_android.login.loginResponse</string>
 
     <!-- Strings related to Profiel -->
     <string name="logout_button">Afmelden</string>
@@ -82,11 +91,6 @@
     <string name="aanbiedingen_txt">Aanbiedingen</string>
     <string name="foute_suggesties_enkel">%s is geen geldige interesse</string>
     <string name="foute_suggesties_meervoud">%s zijn geen geldige interesses</string>
-
-    <string name="sp_key_leerling">leerling</string>
-
-    <!-- Strings related to Backend -->
-    <string name="BASE_URL_API">http://projecten3studserver11.westeurope.cloudapp.azure.com/api/</string>
 
     <!-- Navigation related-->
     <string name="title_activity_bottom_navigation">BottomNavigationActivity</string>

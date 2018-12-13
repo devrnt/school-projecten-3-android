@@ -111,7 +111,6 @@ class CompetentieListFragment : Fragment() {
         //Ophalen van de leerling en zijn competenties
         val sharedPreferences: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity)
         LeerlingAPI.repository.getById(sharedPreferences.getString(getString(R.string.sp_key_leerling), "Default").toInt()).enqueue(object : Callback<Leerling> {
-        //LeerlingAPI.repository.getById(2).enqueue(object : Callback<Leerling> {
             override fun onFailure(call: Call<Leerling>, t: Throwable) {
                 println("Ophalen van leerling in CompetentieListFragment lukt niet")
             }

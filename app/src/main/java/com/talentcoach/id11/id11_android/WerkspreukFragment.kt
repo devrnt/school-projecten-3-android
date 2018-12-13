@@ -87,7 +87,7 @@ class WerkspreukFragment : Fragment() {
     private fun getUserFirstname(): String {
         // get the logged in user
         val gson = Gson()
-        val jsonGebruiker = sharedPreferences.getString(getString(R.string.sp_key_user), "Geen ingelogde gebruiker")
+        val jsonGebruiker = sharedPreferences.getString(getString(R.string.login_login_response), "Geen ingelogde gebruiker")
         val user = gson.fromJson(jsonGebruiker, LoginResponse::class.java)
 
         return user.voornaam

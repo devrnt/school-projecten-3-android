@@ -97,8 +97,8 @@ class LoginFragment : Fragment() {
     }
 
     private fun readSharedPreferences() {
-        val gebruikersnaam = sharedPreferences.getString(getString(R.string.sp_key_username), "")
-        val wachtwoord = sharedPreferences.getString(getString(R.string.sp_key_password), "")
+        val gebruikersnaam = sharedPreferences.getString(getString(R.string.login_username), "")
+        val wachtwoord = sharedPreferences.getString(getString(R.string.login_password), "")
 
         // set the input with the username and password that was red from the sharedPreferences
         gebruikersnaamInput.setText(gebruikersnaam)
@@ -123,9 +123,9 @@ class LoginFragment : Fragment() {
                 if (response.isSuccessful) {
 
                     // store gebruiker and wachtwoord in SharedPreferences
-                    spEditor.putString(getString(R.string.sp_key_username), gebruiksernaamStr)
+                    spEditor.putString(getString(R.string.login_username), gebruiksernaamStr)
                     spEditor.apply()
-                    spEditor.putString(getString(R.string.sp_key_password), wachtwoordStr)
+                    spEditor.putString(getString(R.string.login_password), wachtwoordStr)
                     spEditor.apply()
 
                     //Toast.makeText(context, "${response.body()?.voornaam} ${getString(R.string.succesfull_login)}", Toast.LENGTH_LONG).show()
@@ -136,7 +136,7 @@ class LoginFragment : Fragment() {
                     // leerling object ophalen
                     val leerlingId = response.body()?.concreteGebruikerId
                     spEditor.putString(getString(R.string.sp_key_leerling), leerlingId.toString())
-                    spEditor.putString(getString(R.string.sp_key_user), jsonGebruiker)
+                    spEditor.putString(getString(R.string.login_login_response), jsonGebruiker)
                     spEditor.apply()
 
                     //get leerling object

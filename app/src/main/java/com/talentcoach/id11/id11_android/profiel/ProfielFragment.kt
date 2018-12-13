@@ -20,6 +20,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.text.SimpleDateFormat
+import java.util.*
 
 class ProfielFragment : Fragment() {
     private lateinit var sharedPreferences: SharedPreferences
@@ -27,8 +28,6 @@ class ProfielFragment : Fragment() {
 
     lateinit var gebruiker: Gebruiker
     lateinit var leerling: Leerling
-
-    private var leerlingId: Int? = null
 
 //    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
 //        menuInflater.inflate(R.menu.edit_menu, menu)
@@ -64,19 +63,16 @@ class ProfielFragment : Fragment() {
         spEditor = sharedPreferences.edit()
 
         val gson = Gson()
-        gebruiker = gson.fromJson(sharedPreferences.getString(getString(R.string.sp_key_user), "Default"), Gebruiker::class.java)
-
-        // TODO("Read the leerlingId from the shared preferences, the id will probably be in the gebruiker")
-        leerlingId = 1
+        gebruiker = gson.fromJson(sharedPreferences.getString(getString(R.string.login_login_response), "Default"), Gebruiker::class.java)
 
         getLeerling()
 
         var logout_btn = view.findViewById(R.id.logout_btn) as Button
         logout_btn.setOnClickListener {
             // remove the saved user password and user credentials
-            spEditor.putString(getString(R.string.sp_key_password), "")
+            spEditor.putString(getString(R.string.login_password), "")
             spEditor.apply()
-            spEditor.putString(getString(R.string.sp_key_user), "")
+            spEditor.putString(getString(R.string.login_login_response), "")
             spEditor.apply()
 
             val intent = Intent(activity, LoginActivity::class.java)
@@ -89,12 +85,7 @@ class ProfielFragment : Fragment() {
     }
 
     private fun getLeerling() {
-
-        val call = LeerlingAPI.repository.getById(leerlingId!!)
-
-        call.enqueue(object : Callback<Leerling> {
-            // Got response from the server
-            // check response.IsSuccesfull to check for any codes (UnAuthorized...)
+        LeerlingAPI.repository.getById(sharedPreferences.getString(getString(R.string.sp_key_leerling), "Default").toInt()).enqueue(object : Callback<Leerling> {
             override fun onResponse(call: Call<Leerling>, response: Response<Leerling>) {
                 when {
                     response.isSuccessful -> {
@@ -104,8 +95,8 @@ class ProfielFragment : Fragment() {
                     else ->
                         // TODO("These cases will only be needed in development, not in production")
                         when (response.code()) {
-                            404 -> Toast.makeText(activity, "Leerling niet gevonden", Toast.LENGTH_LONG).show()
-                            401 -> Toast.makeText(activity, "Je hebt niet de nodige rechten", Toast.LENGTH_LONG).show()
+                            404 -> Toast.makeText(activity, getString(R.string.leerling_niet_gevonden), Toast.LENGTH_LONG).show()
+                            401 -> Toast.makeText(activity, getString(R.string.geen_rechten), Toast.LENGTH_LONG).show()
                         }
                 }
             }
@@ -123,15 +114,14 @@ class ProfielFragment : Fragment() {
 
         // header details
         // TODO("Will we add the property klas in the backend?")
-        klas_text.text = "3HUc"
         interessesCardTxt.text = leerling.interesses.split(" ").count().toString()
         aantalWerkaanbiedingenTxt.text = leerling.bewaardeWerkaanbiedingen.count().toString()
 
         // details
         userfullNameTxt.text = gebruiker.gebruikersnaam.capitalize()
-        firstAndLastnameTxt.text = gebruiker.volledigeNaam
+        firstAndLastnameTxt.text = "${leerling.voornaam} ${leerling.naam}"
         emailadressTxt.text = leerling.email
-        geboorteDatumTxt.text = leerling.geboorteDatum
+        geboorteDatumTxt.text = leerling.geboorteDatum.substring(0,10)
         richtingTxt.text = leerling.richting.naam.capitalize()
         genderTxt.text = Geslacht.valueOf(leerling.geslacht).toString().capitalize()
         when {

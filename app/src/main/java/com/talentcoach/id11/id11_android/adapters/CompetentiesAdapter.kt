@@ -13,19 +13,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
-import android.widget.Button
 import android.widget.TextView
 import com.talentcoach.id11.id11_android.R
-import com.talentcoach.id11.id11_android.adapters.CustomViewHolder
-import com.talentcoach.id11.id11_android.models.DeelCompetentie
-import com.talentcoach.id11.id11_android.models.Leerling
 import com.talentcoach.id11.id11_android.models.LeerlingDeelCompetentie
 import com.talentcoach.id11.id11_android.models.LeerlingHoofdCompetentie
 import kotlinx.android.synthetic.main.hoofdcompetentie_list_item.view.*
-import kotlinx.android.synthetic.main.list_child.view.*
-import org.jetbrains.anko.childrenSequence
-import org.jetbrains.anko.find
-
+import java.text.SimpleDateFormat
 
 class CompetentiesAdapter(
     var leerlingHoofdcompetenties: MutableList<LeerlingHoofdCompetentie>,
@@ -33,6 +26,7 @@ class CompetentiesAdapter(
 
     lateinit var beoordelingsDialog: Dialog
     var opengeklapt:Boolean = false
+    val dateFormatter: SimpleDateFormat = SimpleDateFormat("dd/MM/yyyy")
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
@@ -52,10 +46,10 @@ class CompetentiesAdapter(
 
         holder.view.hoofdcompetentieOmschrijving.text = hoofdcompetentie.hoofdCompetentie.omschrijving
         holder.view.arrowIcon.setImageResource(R.drawable.arrow_right_24dp)
-        holder.view.hoopfdcompetentieBehaaldOp.text = hoofdcompetentie.datumBehaald.toString()
         holder.view.hoopfdcompetentieBehaaldOp.visibility = View.GONE
         if (hoofdcompetentie.behaald) {
             holder.view.hoofdcompetentieCard.setCardBackgroundColor(Color.parseColor("#00C853"))
+            holder.view.hoopfdcompetentieBehaaldOp.text = "Behaald op: ${dateFormatter.format(hoofdcompetentie.datumBehaald)}"
             holder.view.hoopfdcompetentieBehaaldOp.visibility = View.VISIBLE
         }
         holder.view.hoopfdcompetentieGraad.text = hoofdcompetentie.hoofdCompetentie.graad
@@ -96,9 +90,13 @@ class CompetentiesAdapter(
 
         beoordelingsDialog.findViewById<TextView>(R.id.tv_deelcompetentie_omschrijving).text= deelcomp.deelCompetentie.omschrijving
 
-        var recycle = beoordelingsDialog.findViewById(R.id.recyclerBeoordelingenDeelcompetentie) as RecyclerView
-        recycle.layoutManager = LinearLayoutManager(view.context)
-        recycle.adapter = DeelcompetentieAdapter(deelcomp.beoordelingen, view.context)
+        if (deelcomp.beoordelingen.isEmpty()) {
+            beoordelingsDialog.findViewById<TextView>(R.id.tv_boolean_beoordelingen).text = "heeft geen beoordelingen."
+        } else {
+            var recycle = beoordelingsDialog.findViewById(R.id.recyclerBeoordelingenDeelcompetentie) as RecyclerView
+            recycle.layoutManager = LinearLayoutManager(view.context)
+            recycle.adapter = DeelcompetentieAdapter(deelcomp.beoordelingen, view.context)
+        }
 
         beoordelingsDialog.show()
     }
