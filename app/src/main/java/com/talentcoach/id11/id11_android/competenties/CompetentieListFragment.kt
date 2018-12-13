@@ -23,7 +23,16 @@ import retrofit2.Callback
 import retrofit2.Response
 import java.util.*
 
-
+/**
+ * This class gets the list of [LeerlingHoofdCompetentie] from the [Leerling] and shows them via RecyclerView.
+ *
+ * @property competentiesAdapter gets the details from each [LeerlingHoofdCompetentie] and shows them in the CardView
+ * @property recycle handles the RecycleView in the layout file
+ * @property hoofdcompetentieLijst stores the [LeerlingHoofdCompetentie] from a Leerling
+ * @property copyList stores the same [hoofdcompetentieLijst] to apply the filter for a sorted list of [LeerlingHoofdCompetentie]
+ * @property copyListSwitch stores the same [hoofdcompetentieLijst] for an unsorted list of [LeerlingHoofdCompetentie]
+ * @constructor Creates a new CompetentieListFragment
+ */
 class CompetentieListFragment : Fragment() {
 
     lateinit var competentiesAdapter: CompetentiesAdapter
@@ -33,6 +42,9 @@ class CompetentieListFragment : Fragment() {
     var copyList = mutableListOf<LeerlingHoofdCompetentie>()
     var copyListSwitch = mutableListOf<LeerlingHoofdCompetentie>()
 
+    /**
+     * The layout gets inflated and the recycle is made
+     */
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         var view = inflater.inflate(R.layout.fragment_competentie_list, container, false)
 
@@ -44,6 +56,9 @@ class CompetentieListFragment : Fragment() {
     }
 
 
+    /**
+     * Gets the results of the sortingfilter from [CompetentiesNavigationFragment] and gives the sorted list to the [CompetentiesAdapter] and lets him know things have changed
+     */
     fun showSortedListView(){
 
         copyListSwitch = hoofdcompetentieLijst.toMutableList()
@@ -63,6 +78,9 @@ class CompetentieListFragment : Fragment() {
 
     }
 
+    /**
+     * Gets the results of the sortingfilter from [CompetentiesNavigationFragment] and gives the unSorted list to the [CompetentiesAdapter] and lets him know things have changed
+     */
     fun showUnsortedListView(){
         competentiesAdapter.leerlingHoofdcompetenties.clear()
         for(item in copyListSwitch){
@@ -73,6 +91,12 @@ class CompetentieListFragment : Fragment() {
     }
 
 
+    /**
+     * Gets the results of the filter from [CompetentiesNavigationFragment] and gives the filtered list to the [CompetentiesAdapter] and lets him know things have changed
+     *
+     * @param Boolean to see if the user wants to see the behaalde competenties or not
+     * @param String to know which graad of hoofdcompetenties the user wants to see
+     */
     fun applyFilter(behaald:Boolean, graad:String){
 
         var sortedList: List<LeerlingHoofdCompetentie> = listOf()
@@ -106,7 +130,11 @@ class CompetentieListFragment : Fragment() {
 
     }
 
-
+    /**
+     * The [Leerling] and his list of [LeerlingHoofdCompetentie] get fetched
+     *
+     * @property sharedPreferences get the id from the [Gebruiker] to fetch the [Leerling]
+     */
     private fun getAndShowCompetentiesLeerling() {
         //Ophalen van de leerling en zijn competenties
         val sharedPreferences: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity)
