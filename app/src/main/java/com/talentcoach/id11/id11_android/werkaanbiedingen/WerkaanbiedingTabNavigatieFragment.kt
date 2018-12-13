@@ -1,4 +1,4 @@
-package com.talentcoach.id11.id11_android.communicatie
+package com.talentcoach.id11.id11_android.werkaanbiedingen
 
 
 import android.os.Bundle
@@ -66,7 +66,7 @@ class WerkaanbiedingTabNavigatieFragment : Fragment() {
                     AanbiedingenFragment()
                 }
                 else -> {
-                    return InteressesFragment()
+                    return BewaardeAanbiedingenFragment()
                 }
             }
         }

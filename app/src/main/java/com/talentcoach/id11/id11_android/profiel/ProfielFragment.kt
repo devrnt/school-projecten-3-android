@@ -66,8 +66,8 @@ class ProfielFragment : Fragment() {
         val gson = Gson()
         gebruiker = gson.fromJson(sharedPreferences.getString(getString(R.string.sp_key_user), "Default"), Gebruiker::class.java)
 
-        // TODO("Read the leerlingId from the shared preferences, the id will probably be in the gebruiker")
-        leerlingId = 1
+        val sharedPreferences: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity)
+        leerlingId = sharedPreferences.getString(getString(R.string.sp_key_leerling), "Default").toInt()
 
         getLeerling()
 
