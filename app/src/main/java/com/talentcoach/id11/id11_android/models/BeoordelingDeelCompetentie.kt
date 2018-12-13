@@ -4,6 +4,6 @@ import java.util.*
 
 class BeoordelingDeelCompetentie(
         val id: Int,
-        val score: BeoordelingScore,
+        val score: Int,
         val test: String,
-        val datum: Calendar)
+        val datum: Date)

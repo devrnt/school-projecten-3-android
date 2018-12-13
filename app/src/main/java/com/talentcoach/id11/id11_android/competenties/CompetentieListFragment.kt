@@ -1,5 +1,6 @@
 package com.talentcoach.id11.id11_android.competenties
 
+
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.preference.PreferenceManager
@@ -11,37 +12,33 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import com.talentcoach.id11.id11_android.R
-import com.talentcoach.id11.id11_android.adapters.CompBehaaldAdapter
+import com.talentcoach.id11.id11_android.adapters.CompetentiesAdapter
 import com.talentcoach.id11.id11_android.models.LeerlingHoofdCompetentie
 import com.talentcoach.id11.id11_android.models.Leerling
 import com.talentcoach.id11.id11_android.repositories.LeerlingAPI
 import com.talentcoach.id11.id11_android.repositories.LeerlingRepositoryRetrofit
-import kotlinx.android.synthetic.main.fragment_behaald.*
+import kotlinx.android.synthetic.main.fragment_competentie_list.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 import java.util.*
 
-class BehaaldFragment: Fragment(){
 
-    lateinit var adapter: CompBehaaldAdapter
+class CompetentieListFragment : Fragment() {
+
+    lateinit var competentiesAdapter: CompetentiesAdapter
     lateinit var recycle: RecyclerView
 
-    var lijst: MutableList<LeerlingHoofdCompetentie> = mutableListOf()
+    var hoofdcompetentieLijst: MutableList<LeerlingHoofdCompetentie> = mutableListOf()
     var copyList = mutableListOf<LeerlingHoofdCompetentie>()
     var copyListSwitch = mutableListOf<LeerlingHoofdCompetentie>()
 
-
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        var view = inflater.inflate(R.layout.fragment_behaald, container, false)
+        var view = inflater.inflate(R.layout.fragment_competentie_list, container, false)
 
         getAndShowCompetentiesLeerling()
-        recycle = view.findViewById(R.id.recyclerBehaald)
+        recycle = view.findViewById(R.id.recyclerHoofdcompetentie) as RecyclerView
         recycle.layoutManager = LinearLayoutManager(container?.context)
-
 
         return view
     }
@@ -49,107 +46,90 @@ class BehaaldFragment: Fragment(){
 
     fun showSortedListView(){
 
-        copyListSwitch = lijst.toMutableList()
-        var copyList = lijst.toMutableList()
+        copyListSwitch = hoofdcompetentieLijst.toMutableList()
+        var copyList = hoofdcompetentieLijst.toMutableList()
 
         Collections.sort(copyList, object : java.util.Comparator<LeerlingHoofdCompetentie> {
             override fun compare(o1: LeerlingHoofdCompetentie?, o2: LeerlingHoofdCompetentie?): Int {
                 return o1!!.hoofdCompetentie.omschrijving.compareTo(o2!!.hoofdCompetentie.omschrijving)
             }
         })
-        adapter.compList.clear()
+        competentiesAdapter.leerlingHoofdcompetenties.clear()
         for(item in copyList){
-            adapter.compList.add(adapter.compList.count(), item)
+            competentiesAdapter.leerlingHoofdcompetenties.add(competentiesAdapter.leerlingHoofdcompetenties.size , item)
         }
 
-        adapter.notifyDataSetChanged()
+        competentiesAdapter.notifyDataSetChanged()
 
     }
 
     fun showUnsortedListView(){
-        adapter.compList.clear()
+        competentiesAdapter.leerlingHoofdcompetenties.clear()
         for(item in copyListSwitch){
-            adapter.compList.add(adapter.compList.count(), item)
+            competentiesAdapter.leerlingHoofdcompetenties.add(competentiesAdapter.leerlingHoofdcompetenties.size , item)
         }
 
-        adapter.notifyDataSetChanged()
+        competentiesAdapter.notifyDataSetChanged()
     }
 
 
-    fun applyFilter(year:String, graad:String){
+    fun applyFilter(behaald:Boolean, graad:String){
 
         var sortedList: List<LeerlingHoofdCompetentie> = listOf()
 
         if (copyList.isNotEmpty()) {
-            adapter.compList.clear()
+            competentiesAdapter.leerlingHoofdcompetenties.clear()
             for (item in copyList) {
-                adapter.compList.add(adapter.compList.count(), item)
+                competentiesAdapter.leerlingHoofdcompetenties.add(competentiesAdapter.leerlingHoofdcompetenties.size , item)
             }
             copyList = mutableListOf()
         }
 
-        sortedList = lijst.filter { c -> c.datumBehaald.toString().contains(year,true) && c.hoofdCompetentie.graad.equals(graad,true) }
+        sortedList = hoofdcompetentieLijst.filter { c -> c.behaald == behaald && c.hoofdCompetentie.graad.equals(graad,true) }
 
-        if(year.contains("Alle",true) && !graad.contains("Alle",true)){
-            sortedList = lijst.filter { c -> c.hoofdCompetentie.graad.equals(graad, true) }
-        }
-        if(graad.contains("Alle",true) && !year.contains("Alle",true)){
-            sortedList = lijst.filter { c -> c.datumBehaald.toString().contains(year,true) }
+        if (graad.contains("Alle", true)) {
+            sortedList = hoofdcompetentieLijst.filter { hc -> hc.behaald == behaald }
         }
 
         if(sortedList.isNotEmpty()){
-            copyList = lijst.toMutableList()
-            adapter.compList.clear()
+            copyList = hoofdcompetentieLijst.toMutableList()
+            competentiesAdapter.leerlingHoofdcompetenties = mutableListOf()
             for(item in sortedList){
-                adapter.compList.add(adapter.compList.count(), item)
+                competentiesAdapter.leerlingHoofdcompetenties.add(competentiesAdapter.leerlingHoofdcompetenties.size, item)
             }
         }
+        else
+            competentiesAdapter.leerlingHoofdcompetenties = mutableListOf()
 
 
-        adapter.notifyDataSetChanged()
+        competentiesAdapter.notifyDataSetChanged()
 
     }
 
 
-    private fun getAndShowCompetentiesLeerling(){
-        val url = "http://projecten3studserver11.westeurope.cloudapp.azure.com/api/"
-
-        //Ophalen van de leerling en richtingId
-//        Dit is fout!
-//        val retrofitLeerling = Retrofit
-//                .Builder()
-//                .addConverterFactory(GsonConverterFactory.create())
-//                .baseUrl(url)
-//                .build()
-//
-//        val leerlingRepository = retrofitLeerling.create(LeerlingRepositoryRetrofit::class.java)
-//        val callLeerling = leerlingRepository.getById(1)
-
+    private fun getAndShowCompetentiesLeerling() {
+        //Ophalen van de leerling en zijn competenties
         val sharedPreferences: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity)
         LeerlingAPI.repository.getById(sharedPreferences.getString(getString(R.string.sp_key_leerling), "Default").toInt()).enqueue(object : Callback<Leerling> {
+        //LeerlingAPI.repository.getById(2).enqueue(object : Callback<Leerling> {
             override fun onFailure(call: Call<Leerling>, t: Throwable) {
-                println("Ophalen van leerling in BehaaldFragment lukt niet")
+                println("Ophalen van leerling in CompetentieListFragment lukt niet")
             }
 
             override fun onResponse(call: Call<Leerling>, response: Response<Leerling>) {
 
-                if(response.isSuccessful){
+                if (response.isSuccessful) {
                     var leerling = response.body()
 
-                    lijst = leerling!!.hoofdCompetenties.filter { hc -> hc.behaald == true }.toMutableList()
-                    behaaldTxt2.text = "Behaalde competenties: ${lijst.count()}"
+                    hoofdcompetentieLijst = leerling!!.hoofdCompetenties
 
                     //Progressbar doen verdwijnen en lijst weergeven
-
-                    recycle = view!!.findViewById(R.id.recyclerBehaald)
                     recycle.visibility = View.VISIBLE
-                    behaaldTxt2.visibility = View.VISIBLE
                     behaaldProgress.visibility = View.GONE
 
-                    adapter = CompBehaaldAdapter(lijst,activity!!.applicationContext)
-                    recycle.adapter = adapter
-                }
-                else {
+                    competentiesAdapter = CompetentiesAdapter(hoofdcompetentieLijst, activity!!.applicationContext)
+                    recycle.adapter = competentiesAdapter
+                } else {
                     Toast.makeText(context, "Hier ging iets fout", Toast.LENGTH_LONG).show()
                 }
 
@@ -157,5 +137,6 @@ class BehaaldFragment: Fragment(){
 
         })
     }
+
 
 }
