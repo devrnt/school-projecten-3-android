@@ -120,7 +120,7 @@ class CompetentiesNavigationFragment : Fragment() {
 
         //Spinner = dropdown list om te filteren op graad
         graadSpinner = myDialog.findViewById<Spinner>(R.id.graadSpinner)
-        val graadOptions: MutableList<String> = hoofdcompetentieLijst.map { hc -> hc.hoofdCompetentie.graad.toString() }.distinct().toMutableList()
+        val graadOptions: MutableList<String> = hoofdcompetentieLijst.map { hc -> hc.hoofdCompetentie.graad }.distinct().sorted().toMutableList()
         graadOptions.add(0, "Alle")
         graadSpinner.adapter = ArrayAdapter<String>(activity,android.R.layout.simple_dropdown_item_1line,graadOptions)
         graadSpinner.setSelection(graadSelected)
@@ -128,7 +128,7 @@ class CompetentiesNavigationFragment : Fragment() {
         graadSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
-                println("Nothing selected...")
+                println(activity!!.getString(R.string.niets_geselecteerd))
             }
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
@@ -165,7 +165,7 @@ class CompetentiesNavigationFragment : Fragment() {
         LeerlingAPI.repository.getById(sharedPreferences.getString(getString(R.string.sp_key_leerling), "Default").toInt()).enqueue(object : Callback<Leerling> {
         //LeerlingAPI.repository.getById(2).enqueue(object : Callback<Leerling> {
             override fun onFailure(call: Call<Leerling>, t: Throwable) {
-                println("Ophalen van leerling in CompetentieNavigationFragment lukt niet")
+            Toast.makeText(context, activity!!.getString(R.string.something_went_wrong_login), Toast.LENGTH_LONG).show()
             }
 
             override fun onResponse(call: Call<Leerling>, response: Response<Leerling>) {
@@ -179,9 +179,9 @@ class CompetentiesNavigationFragment : Fragment() {
                     hoofdcompetentieLijst.addAll(0, teBehalenHoofdcompetentieLijst)
                     hoofdcompetentieLijst.addAll(hoofdcompetentieLijst.size, behaaldeHoofdCompetentieLijst)
 
-                    view!!.findViewById<TextView>(R.id.aantalBehaaldeHoofdcompetenties).text = "${behaaldeHoofdCompetentieLijst.size}/${hoofdcompetentieLijst.size} behaald"
+                    view!!.findViewById<TextView>(R.id.aantalBehaaldeHoofdcompetenties).text = "${behaaldeHoofdCompetentieLijst.size}/${hoofdcompetentieLijst.size} ${activity!!.getString(R.string.behaald)}"
                 } else {
-                    Toast.makeText(context, "Hier ging iets fout", Toast.LENGTH_LONG).show()
+                    Toast.makeText(context, activity!!.getString(R.string.something_went_wrong_login), Toast.LENGTH_LONG).show()
                 }
             }
 

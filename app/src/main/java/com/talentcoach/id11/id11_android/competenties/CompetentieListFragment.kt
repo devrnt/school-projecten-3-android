@@ -112,7 +112,7 @@ class CompetentieListFragment : Fragment() {
         val sharedPreferences: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity)
         LeerlingAPI.repository.getById(sharedPreferences.getString(getString(R.string.sp_key_leerling), "Default").toInt()).enqueue(object : Callback<Leerling> {
             override fun onFailure(call: Call<Leerling>, t: Throwable) {
-                println("Ophalen van leerling in CompetentieListFragment lukt niet")
+                Toast.makeText(context, activity!!.getString(R.string.something_went_wrong_login), Toast.LENGTH_LONG).show()
             }
 
             override fun onResponse(call: Call<Leerling>, response: Response<Leerling>) {
@@ -129,7 +129,7 @@ class CompetentieListFragment : Fragment() {
                     competentiesAdapter = CompetentiesAdapter(hoofdcompetentieLijst, activity!!.applicationContext)
                     recycle.adapter = competentiesAdapter
                 } else {
-                    Toast.makeText(context, "Hier ging iets fout", Toast.LENGTH_LONG).show()
+                    Toast.makeText(context, activity!!.getString(R.string.something_went_wrong_login), Toast.LENGTH_LONG).show()
                 }
 
             }

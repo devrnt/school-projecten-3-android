@@ -1,5 +1,7 @@
 package com.talentcoach.id11.id11_android.adapters
 
+import android.annotation.SuppressLint
+import android.annotation.TargetApi
 import android.app.Dialog
 import android.content.Context
 import android.graphics.Color
@@ -49,7 +51,7 @@ class CompetentiesAdapter(
         holder.view.hoopfdcompetentieBehaaldOp.visibility = View.GONE
         if (hoofdcompetentie.behaald) {
             holder.view.hoofdcompetentieCard.setCardBackgroundColor(Color.parseColor("#00C853"))
-            holder.view.hoopfdcompetentieBehaaldOp.text = "Behaald op: ${dateFormatter.format(hoofdcompetentie.datumBehaald)}"
+            holder.view.hoopfdcompetentieBehaaldOp.text = "${context.getString(R.string.behaald_op)}: ${dateFormatter.format(hoofdcompetentie.datumBehaald)}"
             holder.view.hoopfdcompetentieBehaaldOp.visibility = View.VISIBLE
         }
         holder.view.hoopfdcompetentieGraad.text = hoofdcompetentie.hoofdCompetentie.graad
@@ -91,7 +93,7 @@ class CompetentiesAdapter(
         beoordelingsDialog.findViewById<TextView>(R.id.tv_deelcompetentie_omschrijving).text= deelcomp.deelCompetentie.omschrijving
 
         if (deelcomp.beoordelingen.isEmpty()) {
-            beoordelingsDialog.findViewById<TextView>(R.id.tv_boolean_beoordelingen).text = "heeft geen beoordelingen."
+            beoordelingsDialog.findViewById<TextView>(R.id.tv_boolean_beoordelingen).text = context.getString(R.string.geen_beoordelingen)
         } else {
             var recycle = beoordelingsDialog.findViewById(R.id.recyclerBeoordelingenDeelcompetentie) as RecyclerView
             recycle.layoutManager = LinearLayoutManager(view.context)

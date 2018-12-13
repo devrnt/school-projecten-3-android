@@ -85,7 +85,7 @@ class JobNavigationFragment : Fragment() {
                         .show(specifiekeInfoFragment)
                         .commit()
             } else {
-                Toast.makeText(activity, "Je hebt momenteel geen werkgever om specifieke info over te bekijken", Toast.LENGTH_SHORT).show()
+                Toast.makeText(activity, activity!!.getString(R.string.geen_werkgever_voor_specifieke_info), Toast.LENGTH_SHORT).show()
             }
         }
     }
