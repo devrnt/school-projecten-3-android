@@ -33,4 +33,17 @@ class WerkaanbiedingRepository: IRepository<Werkaanbieding>, Serializable {
         return werkaanbiedingen
     }
 
+    override fun getAlleTags(): List<String> {
+        val alleTags : List<String>?
+
+        try {
+            val result = URL(url + "tags").readText()
+            alleTags = Klaxon().parseArray(result)!!
+        } catch (e: Exception) {
+            throw e
+        }
+
+        return alleTags
+    }
+
 }

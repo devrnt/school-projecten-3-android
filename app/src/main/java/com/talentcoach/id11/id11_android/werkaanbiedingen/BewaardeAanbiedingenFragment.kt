@@ -12,9 +12,6 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
-import android.widget.TextView
-import android.widget.Toast
 import com.talentcoach.id11.id11_android.R
 import com.talentcoach.id11.id11_android.models.Leerling
 import com.talentcoach.id11.id11_android.models.Werkaanbieding
@@ -27,7 +24,9 @@ import android.support.v4.view.ViewCompat.setActivated
 import android.support.v7.widget.CardView
 import android.text.TextUtils
 import android.transition.TransitionManager
+import android.widget.*
 import com.talentcoach.id11.id11_android.models.Werkgever
+import kotlinx.android.synthetic.main.fragment_aanbiedingen.*
 
 
 class BewaardeAanbiedingenFragment: Fragment() {
@@ -38,17 +37,20 @@ class BewaardeAanbiedingenFragment: Fragment() {
 
     var werkaanbiedingenList: MutableList<Werkaanbieding> = mutableListOf()
     var adapter: WerkaanbiedingenAdapter? = null
-    var view: RecyclerView? = null
+    var recyclerView: RecyclerView? = null
+
+    lateinit var progressSpinner: ProgressBar
+    lateinit var geenBewaardeAanbiedingenText: TextView
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflates the RecyclerView with specified layout file
-        view = inflater.inflate(R.layout.fragment_bewaarde_aanbiedingen, container, false) as RecyclerView
+        val view = inflater.inflate(R.layout.fragment_bewaarde_aanbiedingen, container, false) as FrameLayout
+        recyclerView = view.findViewById(R.id.werkaanbiedingenRecView) as RecyclerView
 
-        // TO TEST LAYOUT
-//        val w1 = Werkaanbieding(10, Werkgever(20, "NaamWG"),"Omschrijving")
-//        val w2 = Werkaanbieding(11, Werkgever(21, "NaamWG2"),"Omschrijving2")
-//        val w3 = Werkaanbieding(12, Werkgever(22, "NaamWG3"),"Omschrijving3")
-//        werkaanbiedingenList.addAll(listOf(w1, w2, w3))
+        progressSpinner = view.findViewById(R.id.progressSpinnerBA) as ProgressBar
+        progressSpinner.visibility = View.VISIBLE
+        geenBewaardeAanbiedingenText = view.findViewById(R.id.geenBewaardeAanbiedingenText) as TextView
+        geenBewaardeAanbiedingenText.visibility = View.GONE
 
         doAsync {
             val sharedPreferences: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity)
@@ -72,9 +74,15 @@ class BewaardeAanbiedingenFragment: Fragment() {
                     response.isSuccessful -> {
                         leerling = response.body()!!
                         werkaanbiedingenList = leerling.bewaardeWerkaanbiedingen
-                        val adapter = BewaardeAanbiedingenFragment.WerkaanbiedingenAdapter(werkaanbiedingenList)
-                        view?.adapter = adapter
-                        view?.layoutManager = LinearLayoutManager(activity) // items get displayed in a vertical list
+//                        progressSpinner.visibility = View.GONE
+                        progressSpinner.visibility = View.GONE
+                        if (werkaanbiedingenList.size > 0) {
+                            val adapter = BewaardeAanbiedingenFragment.WerkaanbiedingenAdapter(werkaanbiedingenList)
+                            recyclerView?.adapter = adapter
+                            recyclerView?.layoutManager = LinearLayoutManager(activity) // items get displayed in a vertical list
+                        } else {
+                            geenBewaardeAanbiedingenText.visibility = View.VISIBLE
+                        }
                     }
                     else ->
                         // TODO("These cases will only be needed in development, not in production")

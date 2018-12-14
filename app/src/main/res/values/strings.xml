@@ -70,6 +70,7 @@
     <string name="error_username">Gebruikersnaam mag niet leeg zijn</string>
     <string name="error_password">Wachtwoord moet minstens 8 letters bevatten</string>
     <string name="succesfull_login">Succesvol ingelogd</string>
+    <string name="welkom">Welkom</string>
     <string name="wrong_login_credentials">Gebruikersnaam of wachtwoord is niet juist</string>
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password (optional)</string>
@@ -83,6 +84,7 @@
         completions."
     </string>
     <string name="logo_description">Logo van de applicatie</string>
+    <string name="werkspreuk_1">\"Je weet nooit wat je kan,\ntot je het probeert\"</string>
 
     <!-- Strings related to Profiel -->
     <string name="logout_button">Afmelden</string>
@@ -106,7 +108,6 @@
     <string name="appbar_scrolling_view_behavior" translatable="false">android.support.design.widget.AppBarLayout$ScrollingViewBehavior</string>
 
 
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="dummy_company_name">Accurat</string>
     <string name="dummy_opdracht_name">Opdracht</string>
@@ -117,5 +118,6 @@
     <string name="dummy_tags_name">Tags</string>
     <string name="geenAanbiedingen">Het ziet ernaar uit dat je werkaanbiedingen op zijn! Probeer het op een later tijdstip opnieuw of voeg nieuwe interesses toe in het interesses scherm</string>
     <string name="selecteer_jouw_interesses">Jouw interesses</string>
+    <string name="geenBewaardeAanbiedingen">Je hebt momenteel nog geen werkaanbiedingen bewaard. Tijd om daar verandering in te brengen!</string>
 
 </resources>

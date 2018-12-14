@@ -15,8 +15,8 @@
         app:cardCornerRadius="8dp"
         app:cardElevation="8dp">
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:orientation="vertical">
             <TextView
                 android:layout_width="wrap_content"
@@ -31,8 +31,19 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
-                android:layout_marginBottom="20dp" />
+                android:layout_marginBottom="20dp"
+                />
         </LinearLayout>
+
+        <ProgressBar
+            android:id="@+id/progressSpinnerInteresses"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:indeterminate="true"
+            android:max="1"
+            android:layout_gravity="center" />
 
     </android.support.design.card.MaterialCardView>
 

@@ -10,6 +10,9 @@ import java.net.HttpURLConnection
 import java.net.URL
 
 class LeerlingRepository: IRepository<Leerling>, Serializable {
+    override fun getAlleTags(): List<String> {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
 
     val url = "http://projecten3studserver11.westeurope.cloudapp.azure.com/api/leerlingen/"
 

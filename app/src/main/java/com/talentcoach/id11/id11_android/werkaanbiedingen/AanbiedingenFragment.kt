@@ -7,9 +7,6 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
-import android.widget.ProgressBar
-import android.widget.Toast
 
 import com.talentcoach.id11.id11_android.R
 import com.talentcoach.id11.id11_android.managers.DataManager
@@ -24,7 +21,10 @@ import retrofit2.Callback
 import retrofit2.Response
 import android.content.SharedPreferences
 import android.preference.PreferenceManager
-import android.widget.TextView
+import android.support.design.chip.Chip
+import android.support.design.chip.ChipDrawable
+import android.support.design.chip.ChipGroup
+import android.widget.*
 
 
 /**
@@ -39,6 +39,15 @@ class AanbiedingenFragment : Fragment() {
     lateinit var leerling: Leerling
     lateinit var werkaanbieding: Werkaanbieding
 
+    lateinit var progressSpinner: ProgressBar
+    lateinit var aanbiedingsInfo: LinearLayout
+    lateinit var geenAanbiedingenText: TextView
+    lateinit var dislikeBtn: MaterialButton
+    lateinit var likeBtn: MaterialButton
+    lateinit var werkgeverNaam: TextView
+    lateinit var opdrachtBeschrijving: TextView
+    lateinit var werkgeverAddress: TextView
+    lateinit var chipGroupAanbieding: ChipGroup
 
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
@@ -46,17 +55,22 @@ class AanbiedingenFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         val view: View =  inflater.inflate(R.layout.fragment_aanbiedingen, container, false)
-        val aanbiedingsInfo = view.findViewById(R.id.aanbiedingsInfo) as LinearLayout
+        aanbiedingsInfo = view.findViewById(R.id.aanbiedingsInfo) as LinearLayout
         aanbiedingsInfo.visibility = View.GONE
-        val progressSpinner = view.findViewById(R.id.progressSpinner) as ProgressBar
+        progressSpinner = view.findViewById(R.id.progressSpinner) as ProgressBar
         progressSpinner.visibility = View.VISIBLE
-        val geenAanbiedingenText = view.findViewById(R.id.geenAanbiedingenText) as TextView
+        geenAanbiedingenText = view.findViewById(R.id.geenAanbiedingenText) as TextView
         geenAanbiedingenText.visibility = View.GONE
 
-        val dislikeBtn = view.findViewById(R.id.dislikeBtn) as MaterialButton
+        werkgeverNaam = view.findViewById(R.id.werkgeverNaam)
+        opdrachtBeschrijving = view.findViewById(R.id.opdrachtBeschrijving)
+        werkgeverAddress = view.findViewById(R.id.werkgeverAddress)
+        chipGroupAanbieding = view.findViewById(R.id.chipGroupAanbieding)
+
+        dislikeBtn = view.findViewById(R.id.dislikeBtn) as MaterialButton
         dislikeBtn.setOnClickListener(onClickListener)
         dislikeBtn.isEnabled = false
-        val likeBtn = view.findViewById(R.id.likeBtn) as MaterialButton
+        likeBtn = view.findViewById(R.id.likeBtn) as MaterialButton
         likeBtn.setOnClickListener(onClickListener)
         likeBtn.isEnabled = false
 
@@ -129,7 +143,19 @@ class AanbiedingenFragment : Fragment() {
         opdrachtBeschrijving.text = werkaanbieding.omschrijving
         werkgeverAddress.text = werkaanbieding.werkgever.werkplaats
 
-        // TODO("Tags bijhouden in werkaanbieding in backend en hier tonen")
+        chipGroupAanbieding.removeAllViews()
+        werkaanbieding.tags.forEach {
+            var c = Chip(context)
+            c.text = it
+            c.isClickable = false
+            c.setChipBackgroundColorResource(R.color.bg_chip_state_list)
+            c.setTextAppearance(R.style.whiteTextSelected)
+            c.isCheckable = true
+            if (leerling.interesses.contains(it)) {
+                c.isChecked = true
+            }
+            chipGroupAanbieding.addView(c)
+        }
     }
 
     private fun showGeenAanbieding() {

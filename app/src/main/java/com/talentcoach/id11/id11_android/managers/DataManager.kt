@@ -51,4 +51,10 @@ object DataManager : Serializable {
     fun update(leerling: Leerling) {
         leerlingRepository.update(leerling)
     }
+
+    fun getAllTags(): List<String> {
+        var i = 1
+        var j = i + 2
+        return werkaanbiedingRepository.getAlleTags()
+    }
 }

@@ -146,7 +146,7 @@ class LoginFragment : Fragment() {
                         override fun onResponse(call: Call<Leerling>, response: Response<Leerling>) {
                             if (response.isSuccessful) {
 
-                                Toast.makeText(context, "${response.body()?.voornaam} ${getString(R.string.succesfull_login)}", Toast.LENGTH_LONG).show()
+                                Toast.makeText(context, "${getString(R.string.welkom)} ${response.body()?.voornaam}!", Toast.LENGTH_LONG).show()
 
                             } else {
                                 Toast.makeText(context, getString(R.string.wrong_login_credentials), Toast.LENGTH_LONG).show()

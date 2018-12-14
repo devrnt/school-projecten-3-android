@@ -7,6 +7,10 @@ import com.talentcoach.id11.id11_android.models.LeerlingHoofdCompetentie
 import java.net.URL
 
 class AlgemeneInfoRepository : IRepository<AlgemeneInfo> {
+    override fun getAlleTags(): List<String> {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
     override fun getCompetentiesById(id: Int): List<LeerlingHoofdCompetentie> {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
