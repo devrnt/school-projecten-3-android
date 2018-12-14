@@ -78,7 +78,7 @@ class WerkaanbiedingTabNavigatieFragment : Fragment() {
         override fun getPageTitle (position: Int ): CharSequence {
             return when (position) {
                 0 -> "Interesses"
-                1 -> "Aanbiedingen"
+                1 -> "Aanbieding"
                 else -> {
                     return  "Goedgekeurd"
                 }

@@ -1,8 +1,11 @@
 package com.talentcoach.id11.id11_android.werkaanbiedingen
 
 import android.content.SharedPreferences
+import android.os.Build
 import android.os.Bundle
 import android.preference.PreferenceManager
+import android.support.constraint.ConstraintLayout
+import android.support.design.card.MaterialCardView
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -20,6 +23,12 @@ import org.jetbrains.anko.doAsync
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import android.support.v4.view.ViewCompat.setActivated
+import android.support.v7.widget.CardView
+import android.text.TextUtils
+import android.transition.TransitionManager
+import com.talentcoach.id11.id11_android.models.Werkgever
+
 
 class BewaardeAanbiedingenFragment: Fragment() {
 
@@ -28,15 +37,18 @@ class BewaardeAanbiedingenFragment: Fragment() {
     lateinit var leerling: Leerling
 
     var werkaanbiedingenList: MutableList<Werkaanbieding> = mutableListOf()
+    var adapter: WerkaanbiedingenAdapter? = null
+    var view: RecyclerView? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflates the RecyclerView with specified layout file
-        val view = inflater.inflate(R.layout.fragment_bewaarde_aanbiedingen, container, false) as RecyclerView
-        val adapter = BewaardeAanbiedingenFragment.WerkaanbiedingenAdapter(werkaanbiedingenList)
+        view = inflater.inflate(R.layout.fragment_bewaarde_aanbiedingen, container, false) as RecyclerView
 
-        // sets adapter and layoutmanager
-        view.adapter = adapter
-        view.layoutManager = LinearLayoutManager(activity) // items get displayed in a vertical list
+        // TO TEST LAYOUT
+//        val w1 = Werkaanbieding(10, Werkgever(20, "NaamWG"),"Omschrijving")
+//        val w2 = Werkaanbieding(11, Werkgever(21, "NaamWG2"),"Omschrijving2")
+//        val w3 = Werkaanbieding(12, Werkgever(22, "NaamWG3"),"Omschrijving3")
+//        werkaanbiedingenList.addAll(listOf(w1, w2, w3))
 
         doAsync {
             val sharedPreferences: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity)
@@ -60,6 +72,9 @@ class BewaardeAanbiedingenFragment: Fragment() {
                     response.isSuccessful -> {
                         leerling = response.body()!!
                         werkaanbiedingenList = leerling.bewaardeWerkaanbiedingen
+                        val adapter = BewaardeAanbiedingenFragment.WerkaanbiedingenAdapter(werkaanbiedingenList)
+                        view?.adapter = adapter
+                        view?.layoutManager = LinearLayoutManager(activity) // items get displayed in a vertical list
                     }
                     else ->
                         // TODO("These cases will only be needed in development, not in production")
@@ -82,23 +97,49 @@ class BewaardeAanbiedingenFragment: Fragment() {
             val werkaanbiedingen: MutableList<Werkaanbieding>
     ) : RecyclerView.Adapter<WerkaanbiedingenAdapter.AanbiedingenViewHolder>() {
 
+        private var mExpandedPosition = -1
+
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AanbiedingenViewHolder {
             // gets the ViewHolder, in this case a ConstraintLayout
-            val view = LayoutInflater.from(parent.context).inflate(R.layout.fragment_bewaarde_aanbieding_card, parent, false) as LinearLayout
+            val view = LayoutInflater.from(parent.context).inflate(R.layout.fragment_bewaarde_aanbieding_card, parent, false) as ConstraintLayout
             return AanbiedingenViewHolder(view)
         }
 
         override fun onBindViewHolder(holder: AanbiedingenViewHolder, pos: Int) {
             val werkaanbieding = werkaanbiedingen[pos]
-            val textView = holder.linearLayout.findViewById<TextView>(R.id.info_text)
-            textView.text = werkaanbieding.werkgever.naam
+
+            val werkgeverNaamOnCard = holder.constraintLayout.findViewById<TextView>(R.id.werkgeverNaamOnCard)
+            werkgeverNaamOnCard.text = werkaanbieding.werkgever.naam
+            val opdrachtBeschrijvingOnCard = holder.constraintLayout.findViewById<TextView>(R.id.opdrachtBeschrijvingOnCard)
+            opdrachtBeschrijvingOnCard.text = werkaanbieding.omschrijving
+            val adresOnCard = holder.constraintLayout.findViewById<TextView>(R.id.adresOnCard)
+            adresOnCard.text = werkaanbieding.werkgever.werkplaats
+
+            val isExpanded = pos == mExpandedPosition
+
+            val details = holder.constraintLayout.findViewById<LinearLayout>(R.id.details)
+            val beschrijvingHeader = holder.constraintLayout.findViewById<TextView>(R.id.opdrachtHeaderOnCard)
+            val beschrijving = holder.constraintLayout.findViewById<TextView>(R.id.opdrachtBeschrijvingOnCard)
+
+            details.visibility = if (isExpanded) View.VISIBLE else View.GONE
+            beschrijvingHeader.visibility = if (isExpanded) View.VISIBLE else View.GONE
+            beschrijving.maxLines = if (isExpanded) Integer.MAX_VALUE else 2
+            beschrijving.ellipsize = if (isExpanded) null else TextUtils.TruncateAt.END
+
+
+            holder.itemView.isActivated = isExpanded
+            holder.itemView.setOnClickListener {
+                mExpandedPosition = if (isExpanded) -1 else pos
+//                TransitionManager.beginDelayedTransition(recyclerView)
+                notifyDataSetChanged()
+            }
         }
 
         override fun getItemCount(): Int {
             return werkaanbiedingen.size
         }
 
-        class AanbiedingenViewHolder(val linearLayout: LinearLayout) : RecyclerView.ViewHolder(linearLayout)
+        class AanbiedingenViewHolder(val constraintLayout: ConstraintLayout) : RecyclerView.ViewHolder(constraintLayout)
     }
 
 }

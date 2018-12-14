@@ -101,7 +101,7 @@
                         android:padding="20dp"
                         android:text="@string/geenAanbiedingen"
                         android:fontFamily="@font/roboto_light"
-                        android:textSize="20dp"
+                        android:textSize="20sp"
                         android:textAlignment="center"/>
 
 
@@ -149,13 +149,13 @@
                             android:text="@string/dummy_address_name" />
 
                         <TextView
+                            android:id="@+id/werkgeverAddress"
                             style="@style/Base.TextAppearance.AppCompat.Body1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:paddingLeft="16dp"
                             android:paddingTop="12dp"
                             android:paddingRight="16dp"
-                            android:text="@string/dummy_address_text"
                             android:textColor="@color/cardText" />
 
                         <TextView

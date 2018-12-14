@@ -127,8 +127,7 @@ class AanbiedingenFragment : Fragment() {
 
         werkgeverNaam.text = werkaanbieding.werkgever.naam
         opdrachtBeschrijving.text = werkaanbieding.omschrijving
-
-        // TODO("Adres bijhouden in werkgever in backend en hier tonen")
+        werkgeverAddress.text = werkaanbieding.werkgever.werkplaats
 
         // TODO("Tags bijhouden in werkaanbieding in backend en hier tonen")
     }
