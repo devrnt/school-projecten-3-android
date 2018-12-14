@@ -47,8 +47,8 @@ class BottomNavigationActivity : AppCompatActivity() {
 
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
 
-//        val fragment = CompetentiesNavigationFragment.newInstance()
-//        openFragment(fragment)
+        val fragment = CompetentiesNavigationFragment.newInstance()
+        openFragment(fragment)
     }
 
     private fun openFragment(fragment: Fragment) {

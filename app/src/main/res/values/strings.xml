@@ -2,10 +2,10 @@
     <string name="app_name">Talent Coach</string>
 
     <!-- API calls -->
-    <string name="BASE_URL_API">http://projecten3studserver11.westeurope.cloudapp.azure.com/api/</string>
-    <string name="login_login_response">com.talentcoach.id11.id11_android.login.loginResponse</string>
-    <string name="login_username">com.talentcoach.id11.id11_android.login.username</string>
-    <string name="login_password">com.talentcoach.id11.id11_android.login.password</string>
+    <string name="BASE_URL_API" translatable="false">http://projecten3studserver11.westeurope.cloudapp.azure.com/api/</string>
+    <string name="login_login_response" translatable="false">com.talentcoach.id11.id11_android.login.loginResponse</string>
+    <string name="login_username" translatable="false">com.talentcoach.id11.id11_android.login.username</string>
+    <string name="login_password" translatable="false">com.talentcoach.id11.id11_android.login.password</string>
 
     <!-- Strings related to API calls -->
     <string name="leerling_niet_gevonden">Leerling niet gevonden</string>
@@ -29,8 +29,8 @@
 
     <!-- Strings related to Werkaanbiedingen -->
     <string name="wa_title">Werkaanbiedingen</string>
-    <string name="wa_werkgever">%s</string>
-    <string name="wa_beschrijving">%s</string>
+    <string name="wa_werkgever" translatable="false">%s</string>
+    <string name="wa_beschrijving" translatable="false">%s</string>
     <string name="bekijk_werkaanb_btn">Bekijk werkaanbiedingen</string>
     <string name="werkaanbieding_bewaard">Werkaanbieding bewaard</string>
     <string name="remove_wa">Remove werkaanbieding</string>
@@ -101,6 +101,9 @@
     <string name="title_aanbiedingen">Aanbiedingen</string>
     <string name="title_coach">Coach</string>
     <string name="title_profiel">Profiel</string>
+
+    <!-- View related values -->
+    <string name="appbar_scrolling_view_behavior" translatable="false">android.support.design.widget.AppBarLayout$ScrollingViewBehavior</string>
 
 
     <!-- TODO: Remove or change this placeholder text -->
