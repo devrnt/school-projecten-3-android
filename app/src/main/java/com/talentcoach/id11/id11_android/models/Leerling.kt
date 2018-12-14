@@ -8,7 +8,7 @@ class Leerling(
         val geslacht: Int,
         val geboorteDatum: String,
         var email: String,
-        var interesses: String,
+        var interesses: List<String>,
         val bewaardeWerkaanbiedingen: MutableList<Werkaanbieding>,
         val verwijderdeWerkaanbiedingen: MutableList<Werkaanbieding>,
         val naam: String,

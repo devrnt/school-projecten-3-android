@@ -114,7 +114,7 @@ class ProfielFragment : Fragment() {
 
         // header details
         // TODO("Will we add the property klas in the backend?")
-        interessesCardTxt.text = leerling.interesses.split(" ").count().toString()
+        interessesCardTxt.text = leerling.interesses.count().toString()
         aantalWerkaanbiedingenTxt.text = leerling.bewaardeWerkaanbiedingen.count().toString()
 
         // details
@@ -125,7 +125,8 @@ class ProfielFragment : Fragment() {
         richtingTxt.text = leerling.richting.naam.capitalize()
         genderTxt.text = Geslacht.valueOf(leerling.geslacht).toString().capitalize()
         when {
-            leerling.interesses.isNotEmpty() -> interestsTxt.text = leerling.interesses.capitalize().replace(" ", ", ")
+
+            leerling.interesses.isNotEmpty() -> interestsTxt.text = leerling.interesses.joinToString(", ")
             else -> interestsTxt.text = getString(R.string.no_interests)
         }
     }

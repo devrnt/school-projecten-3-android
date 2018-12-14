@@ -32,7 +32,8 @@ object DataManager : Serializable {
         return werkaanbiedingRepository.getAll().firstOrNull { wa ->
             !leerling.bewaardeWerkaanbiedingen.any { bw -> bw.id == wa.id } // werkaanbieding mag niet al in bewaarde zitten
                     && !leerling.verwijderdeWerkaanbiedingen.any { vw -> vw.id == wa.id } // werkaanbieding mag niet al in verwijderde zitten
-                    && wa.tags.split(" ").intersect(leerling.interesses.split(" ")).any() }
+//                    && wa.tags.split(" ").intersect(leerling.interesses.split(" ")).any()
+}
         // minstens 1 tag moet voorkomen in de interesses van de leerling
     }
 

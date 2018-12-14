@@ -19,7 +19,7 @@ import retrofit2.Response
 
 class ProfielEditActivity : AppCompatActivity() {
 
-    var llnInteresses: String? = null
+    var llnInteresses: List<String>? = null
 
     // these suggestions will be displayed when the user is typing
     lateinit var interessesSuggestions: List<String>
@@ -50,7 +50,7 @@ class ProfielEditActivity : AppCompatActivity() {
 
         llnInteresses = leerling.interesses
         if (llnInteresses == null) {
-            llnInteresses = ""
+            llnInteresses = listOf()
         }
 
         // get all the interesses (this will prob be fetched from all the users)
@@ -59,12 +59,12 @@ class ProfielEditActivity : AppCompatActivity() {
         val adapter = ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, interessesSuggestions)
 
         // llnInteresses are split on spaces
-        when {
-            llnInteresses?.isNotEmpty()!! -> {
-                val arrayInteresses = llnInteresses!!.split(" ")
-                nacho_text_view.setText(arrayInteresses)
-            }
-        }
+//        when {
+//            llnInteresses?.isNotEmpty()!! -> {
+//                val arrayInteresses = llnInteresses!!.split(" ")
+//                nacho_text_view.setText(arrayInteresses)
+//            }
+//        }
 
         // nacho setup
         nacho_text_view.setAdapter(adapter)
@@ -80,7 +80,7 @@ class ProfielEditActivity : AppCompatActivity() {
         val interessesToCheck = allChips.map { chip -> chip.text }
         val interessesToUpdate = interessesToCheck.joinToString(separator = " ")
 
-        leerling.interesses = interessesToUpdate
+        //leerling.interesses = interessesToUpdate
 
         // TODO("Read leerlingId from sharedPreferences or getExtra from intent")
         val call = LeerlingAPI.repository.update(1, leerling)
