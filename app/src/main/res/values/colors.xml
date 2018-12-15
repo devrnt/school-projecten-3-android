@@ -17,4 +17,12 @@
     <color name="bottomGradient">#ad4f93</color>
     <color name="topGradient">#6e5ba2</color>
 
+    <color name="competentieRed">#800000</color>
+    <color name="competentieOrange">#ce6e00</color>
+    <color name="competentieYellow">#f0c400</color>
+    <color name="competentieGreen">#009e0f</color>
+    <color name="competentieBlue">#005a96</color>
+    <color name="competentiePurple">#674a9c</color>
+    <color name="competentieZwart">#000</color>
+
 </resources>

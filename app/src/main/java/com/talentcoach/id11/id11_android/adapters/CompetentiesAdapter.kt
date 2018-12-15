@@ -3,10 +3,12 @@ package com.talentcoach.id11.id11_android.adapters
 import android.annotation.SuppressLint
 import android.annotation.TargetApi
 import android.app.Dialog
+import android.app.PendingIntent.getActivity
 import android.content.Context
 import android.graphics.Color
 import android.os.Build
 import android.support.annotation.RequiresApi
+import android.support.v4.content.ContextCompat
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.transition.AutoTransition
@@ -45,7 +47,7 @@ class CompetentiesAdapter(
     @RequiresApi(Build.VERSION_CODES.KITKAT)
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
         val hoofdcompetentie: LeerlingHoofdCompetentie = leerlingHoofdcompetenties.get(position)
-
+        holder.view
         holder.view.hoofdcompetentieOmschrijving.text = hoofdcompetentie.hoofdCompetentie.omschrijving
         holder.view.arrowIcon.setImageResource(R.drawable.arrow_right_24dp)
         holder.view.hoopfdcompetentieBehaaldOp.visibility = View.GONE
@@ -82,6 +84,44 @@ class CompetentiesAdapter(
                 opengeklapt = false
             }
         }
+        setCompetentieImageAndColor(context,holder,hoofdcompetentie);
+
+    }
+
+    private fun setCompetentieImageAndColor(context: Context,holder: CustomViewHolder, hoofdCompetentie: LeerlingHoofdCompetentie)
+    {
+        val icon: Int;
+        val kleur: Int;
+        when (hoofdCompetentie.hoofdCompetentie.icon) {
+            "scissors" -> icon = R.drawable.scissors
+            "laptop" -> icon = R.drawable.laptop
+            "computer" -> icon = R.drawable.desktop
+            "sales" -> icon = R.drawable.shopping_cart
+            "wrench" -> icon = R.drawable.wrench
+            "tree" -> icon = R.drawable.tree
+            "weegschaal" -> icon = R.drawable.balancescale
+            "bliksem" -> icon = R.drawable.bolt
+            "cogs" -> icon = R.drawable.cogs
+            "car" -> icon = R.drawable.car
+            "flask" -> icon = R.drawable.flask
+            "medkit" -> icon = R.drawable.medkit
+            "child" -> icon = R.drawable.child
+            "doctor" -> icon = R.drawable.user_md
+            "sport" -> icon = R.drawable.pingpong
+            "plant" -> icon = R.drawable.leaf
+            "food" -> icon = R.drawable.cutlery
+            "building" -> icon = R.drawable.building
+            "paint" -> icon = R.drawable.paintroller
+            "plug" -> icon = R.drawable.plug
+            "retail" -> icon = R.drawable.shopping_bag
+            else -> {
+                icon = 0;
+            }
+        }
+        holder.view.imageView.setImageResource(icon);
+        val colorID= ContextCompat.getColor(context, R.color.competentieRed);
+        holder.view.imageView.setBackgroundColor(colorID);
+
     }
 
     private fun showDialogWindow(view: View, deelcomp: LeerlingDeelCompetentie) {

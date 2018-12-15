@@ -4,4 +4,6 @@ class HoofdCompetentie(
         val id: Long,
         val omschrijving: String,
         val graad: String,
+        val icon: String,
+        val kleur: String,
         val deelCompetenties: MutableList<DeelCompetentie>)
