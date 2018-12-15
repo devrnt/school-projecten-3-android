@@ -25,6 +25,8 @@
 
     <!-- Strings related to Common Use -->
     <string name="close">Sluit</string>
+    <string name="cancel">Cancel</string>
+    <string name="sluiten_van_app">Bent u zeker dat u Talent Coach wil afsluiten?</string>
 
 
     <!-- Strings related to Werkaanbiedingen -->
