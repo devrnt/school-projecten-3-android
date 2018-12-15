@@ -52,7 +52,6 @@ class CompetentiesAdapter(
         holder.view.arrowIcon.setImageResource(R.drawable.arrow_right_24dp)
         holder.view.hoopfdcompetentieBehaaldOp.visibility = View.GONE
         if (hoofdcompetentie.behaald) {
-            holder.view.hoofdcompetentieCard.setCardBackgroundColor(Color.parseColor("#00C853"))
             holder.view.hoopfdcompetentieBehaaldOp.text = "${context.getString(R.string.behaald_op)}: ${dateFormatter.format(hoofdcompetentie.datumBehaald)}"
             holder.view.hoopfdcompetentieBehaaldOp.visibility = View.VISIBLE
         }
