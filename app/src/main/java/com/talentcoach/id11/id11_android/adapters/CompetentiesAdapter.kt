@@ -118,18 +118,23 @@ class CompetentiesAdapter(
                 icon = 0;
             }
         }
-        when(hoofdCompetentie.hoofdCompetentie.kleur){
-            "rood" -> kleur = R.color.competentieRed
-            "oranje" -> kleur = R.color.competentieOrange
-            "geel" -> kleur = R.color.competentieYellow
-            "groen" -> kleur = R.color.colorGreen
-            "blauw" -> kleur = R.color.competentieBlue
-            "paars" -> kleur = R.color.competentiePurple
-            "zwart" -> kleur = R.color.competentieZwart
-            else -> {
-                kleur = 0;
+        if (hoofdCompetentie.behaald) {
+            when(hoofdCompetentie.hoofdCompetentie.kleur){
+                "rood" -> kleur = R.color.competentieRed
+                "oranje" -> kleur = R.color.competentieOrange
+                "geel" -> kleur = R.color.competentieYellow
+                "groen" -> kleur = R.color.colorGreen
+                "blauw" -> kleur = R.color.competentieBlue
+                "paars" -> kleur = R.color.competentiePurple
+                "zwart" -> kleur = R.color.competentieZwart
+                else -> {
+                    kleur = 0;
+                }
             }
+        } else {
+            kleur = R.color.competentieNietBehaald
         }
+
         holder.view.imageView.setImageResource(icon);
         kleur = ContextCompat.getColor(context,kleur)
         holder.view.imageView.setBackgroundColor(kleur);
