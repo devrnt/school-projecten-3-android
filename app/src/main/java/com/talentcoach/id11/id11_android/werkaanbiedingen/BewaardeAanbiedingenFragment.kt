@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.preference.PreferenceManager
 import android.support.constraint.ConstraintLayout
 import android.support.design.card.MaterialCardView
+import android.support.design.chip.Chip
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -134,6 +135,18 @@ class BewaardeAanbiedingenFragment: Fragment() {
             beschrijving.maxLines = if (isExpanded) Integer.MAX_VALUE else 2
             beschrijving.ellipsize = if (isExpanded) null else TextUtils.TruncateAt.END
 
+//            werkaanbieding.tags.forEach {
+//                var c = Chip()
+//                c.text = it
+//                c.isClickable = false
+//                c.setChipBackgroundColorResource(R.color.bg_chip_state_list)
+//                c.setTextAppearance(R.style.whiteTextSelected)
+//                c.isCheckable = true
+//                if (leerling.interesses.contains(it)) {
+//                    c.isChecked = true
+//                }
+//                chipGroupAanbieding.addView(c)
+//            }
 
             holder.itemView.isActivated = isExpanded
             holder.itemView.setOnClickListener {

@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import com.talentcoach.id11.id11_android.werkaanbiedingen.WerkaanbiedingTabNavigatieFragment
 import com.talentcoach.id11.id11_android.competenties.CompetentiesNavigationFragment
+import com.talentcoach.id11.id11_android.job.JobTabNavigatieFragment
 import com.talentcoach.id11.id11_android.joborganisatie.JobNavigationFragment
 import com.talentcoach.id11.id11_android.profiel.ProfielFragment
 import kotlinx.android.synthetic.main.activity_bottom_navigation.*
@@ -20,7 +21,7 @@ class BottomNavigationActivity : AppCompatActivity() {
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_job -> {
-                val fragment = JobNavigationFragment.newInstance()
+                val fragment = JobTabNavigatieFragment.newInstance()
                 openFragment(fragment)
                 return@OnNavigationItemSelectedListener true
             }
