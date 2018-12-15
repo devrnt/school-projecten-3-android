@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
-              xmlns:tools="http://schemas.android.com/tools"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:layout_marginLeft="15dp"
-              android:layout_marginTop="15dp"
-              android:layout_marginRight="15dp"
-              android:orientation="vertical">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="15dp"
+    android:layout_marginTop="15dp"
+    android:layout_marginRight="15dp"
+    android:orientation="vertical">
 
     <android.support.v7.widget.CardView
         android:id="@+id/hoofdcompetentieCard"
@@ -59,20 +59,20 @@
                         android:id="@+id/hoofdcompetentieOmschrijving"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
-                        android:textSize="15sp"/>
+                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Headline"
+                        android:textSize="20sp"/>
 
                     <TextView
                         android:id="@+id/hoopfdcompetentieBehaaldOp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textSize="12sp"/>
+                        android:textSize="15sp"/>
 
                     <TextView
                         android:id="@+id/hoopfdcompetentieGraad"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textSize="12sp"/>
+                        android:textSize="15sp"/>
 
                 </LinearLayout>
 
@@ -96,8 +96,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:paddingLeft="30dp"
-                android:paddingTop="10dp"
+                android:paddingLeft="40dp"
+                android:paddingTop="20dp"
                 android:paddingBottom="20dp"
                 android:visibility="gone">
             </LinearLayout>
