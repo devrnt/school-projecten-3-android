@@ -91,7 +91,7 @@ class CompetentiesAdapter(
     private fun setCompetentieImageAndColor(context: Context,holder: CustomViewHolder, hoofdCompetentie: LeerlingHoofdCompetentie)
     {
         val icon: Int;
-        val kleur: Int;
+        var kleur: Int = 0;
         when (hoofdCompetentie.hoofdCompetentie.icon) {
             "scissors" -> icon = R.drawable.scissors
             "laptop" -> icon = R.drawable.laptop
@@ -118,10 +118,21 @@ class CompetentiesAdapter(
                 icon = 0;
             }
         }
+        when(hoofdCompetentie.hoofdCompetentie.kleur){
+            "rood" -> kleur = R.color.competentieRed
+            "oranje" -> kleur = R.color.competentieOrange
+            "geel" -> kleur = R.color.competentieYellow
+            "groen" -> kleur = R.color.colorGreen
+            "blauw" -> kleur = R.color.competentieBlue
+            "paars" -> kleur = R.color.competentiePurple
+            "zwart" -> kleur = R.color.competentieZwart
+            else -> {
+                kleur = 0;
+            }
+        }
         holder.view.imageView.setImageResource(icon);
-        val colorID= ContextCompat.getColor(context, R.color.competentieRed);
-        holder.view.imageView.setBackgroundColor(colorID);
-
+        kleur = ContextCompat.getColor(context,kleur)
+        holder.view.imageView.setBackgroundColor(kleur);
     }
 
     private fun showDialogWindow(view: View, deelcomp: LeerlingDeelCompetentie) {

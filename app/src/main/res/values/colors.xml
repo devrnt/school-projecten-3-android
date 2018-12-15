@@ -3,10 +3,10 @@
     <color name="colorPrimary">#006fba</color>
     <color name="colorPrimaryDark">#004c7f</color>
     <color name="colorAccent">#FF4081</color>
-    <color name="colorGreen">#00C853</color>
+    <color name="colorGreen">#00c853</color>
     <color name="colorRed">#D50000</color>
     <color name="colorWhite">#fff</color>
-    <color name="colorBlack">#000</color>
+    <color name="colorBlack">#000000</color>
     <color name="colorError">#FBC02D</color>
     <color name="colorGrey">#ececec</color>
     <color name="cardTitle">#de000000</color>
