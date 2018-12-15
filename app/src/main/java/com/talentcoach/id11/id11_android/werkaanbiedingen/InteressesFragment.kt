@@ -101,6 +101,9 @@ class InteressesFragment : Fragment() {
                     if (leerling.interesses.contains(index)) {
                         chip.isChecked = true
                     }
+                    chip.setOnClickListener {
+
+                    }
                     chipGroup.addView(chip)
                 }
             }

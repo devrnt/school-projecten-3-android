@@ -77,7 +77,6 @@ class AanbiedingenFragment : Fragment() {
         doAsync {
             val sharedPreferences: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity)
             leerlingId = sharedPreferences.getString(getString(R.string.sp_key_leerling), "Default").toInt()
-            // HIER NIET VOLLEDIGE LEERLING OPHALEN MAAR ENKEL DE RELEVANTSTE WERKAANBIEDING => API CALL OCEAN
             getLeerling()
         }
 
@@ -120,7 +119,7 @@ class AanbiedingenFragment : Fragment() {
         likeBtn.isEnabled = false
 
         doAsync {
-            var temp = DataManager.getWerkaanbiedingForLeerling(leerling)
+            var temp = DataManager.getInteressantsteWerkaanbieding(leerlingId!!)
             uiThread {
                 if (temp != null) {
                     werkaanbieding = temp
@@ -166,12 +165,20 @@ class AanbiedingenFragment : Fragment() {
     private val onClickListener = View.OnClickListener { v ->
         when (v.id) {
             R.id.dislikeBtn -> {
-                leerling.verwijderdeWerkaanbiedingen.add(werkaanbieding)
-                getWerkaanbieding()
+                doAsync {
+                    DataManager.dislikeWerkaanbieding(leerlingId!!, werkaanbieding.id)
+                    uiThread {
+                        getWerkaanbieding()
+                    }
+                }
             }
             R.id.likeBtn -> {
-                leerling.bewaardeWerkaanbiedingen.add(werkaanbieding)
-                getWerkaanbieding()
+                doAsync {
+                    DataManager.likeWerkaanbieding(leerlingId!!, werkaanbieding.id)
+                    uiThread {
+                        getWerkaanbieding()
+                    }
+                }
             }
         }
     }

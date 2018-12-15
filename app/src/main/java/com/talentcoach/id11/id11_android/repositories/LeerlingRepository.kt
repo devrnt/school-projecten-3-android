@@ -5,6 +5,7 @@ import com.beust.klaxon.Klaxon
 import com.talentcoach.id11.id11_android.models.IRepository
 import com.talentcoach.id11.id11_android.models.Leerling
 import com.talentcoach.id11.id11_android.models.LeerlingHoofdCompetentie
+import com.talentcoach.id11.id11_android.models.Werkaanbieding
 import java.io.Serializable
 import java.net.HttpURLConnection
 import java.net.URL
@@ -84,6 +85,53 @@ class LeerlingRepository: IRepository<Leerling>, Serializable {
 
     override fun getAll(): List<Leerling> {
         TODO("not implemented: functionality is not yet required")
+    }
+
+    override fun getInteressantsteWerkaanbieding(leerlingId: Int): Werkaanbieding? {
+        val interessantsteWerkaanbieding : Werkaanbieding?
+
+        try {
+            val result = URL("$url$leerlingId/werkaanbiedingen/interessant").readText()
+            interessantsteWerkaanbieding = Klaxon().parse<Werkaanbieding>(result)
+        } catch (e: Exception) {
+            throw e
+        }
+
+        return interessantsteWerkaanbieding
+    }
+
+    override fun likeWerkaanbieding(leerlingId: Int, werkaanbiedingId: Long) {
+        try {
+            val url = URL("$url$leerlingId/werkaanbiedingen/$werkaanbiedingId/like")
+            with(url.openConnection() as HttpURLConnection) {
+                connectTimeout = 5000
+                requestMethod = "POST"
+                outputStream.flush()
+
+                // debugging purposes
+                println("$responseCode $responseMessage")
+            }
+
+        } catch (e: Exception) {
+            throw e
+        }
+    }
+
+    override fun dislikeWerkaanbieding(leerlingId: Int, werkaanbiedingId: Long) {
+        try {
+            val url = URL("$url$leerlingId/werkaanbiedingen/$werkaanbiedingId/dislike")
+            with(url.openConnection() as HttpURLConnection) {
+                connectTimeout = 5000
+                requestMethod = "POST"
+                outputStream.flush()
+
+                // debugging purposes
+                println("$responseCode $responseMessage")
+            }
+
+        } catch (e: Exception) {
+            throw e
+        }
     }
 
 }

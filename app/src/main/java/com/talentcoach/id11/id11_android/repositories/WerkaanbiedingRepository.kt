@@ -6,6 +6,18 @@ import java.io.Serializable
 import java.net.URL
 
 class WerkaanbiedingRepository: IRepository<Werkaanbieding>, Serializable {
+    override fun dislikeWerkaanbieding(leerlingId: Int, werkaanbiedingId: Long) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun likeWerkaanbieding(leerlingId: Int, werkaanbiedingId: Long) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun getInteressantsteWerkaanbieding(leerlingId: Int): Werkaanbieding? {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
     override fun getCompetentiesById(id: Int): List<LeerlingHoofdCompetentie> {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }

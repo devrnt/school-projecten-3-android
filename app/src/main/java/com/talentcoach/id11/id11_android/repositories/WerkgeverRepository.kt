@@ -5,6 +5,18 @@ import com.talentcoach.id11.id11_android.models.*
 import java.net.URL
 
 class WerkgeverRepository: IRepository<Werkgever> {
+    override fun dislikeWerkaanbieding(leerlingId: Int, werkaanbiedingId: Long) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun likeWerkaanbieding(leerlingId: Int, werkaanbiedingId: Long) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun getInteressantsteWerkaanbieding(leerlingId: Int): Werkaanbieding? {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
     override fun getAlleTags(): List<String> {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }

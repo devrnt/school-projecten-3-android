@@ -37,6 +37,10 @@ object DataManager : Serializable {
         // minstens 1 tag moet voorkomen in de interesses van de leerling
     }
 
+    fun getInteressantsteWerkaanbieding(leerlingId: Int): Werkaanbieding? {
+        return leerlingRepository.getInteressantsteWerkaanbieding(leerlingId)
+    }
+
     /**
      * Gets all the SpecifiekeInfos for a corresponding Werkgever
      * @param werkgever The Werkgever to whom the SpecifiekeInfo is realted
@@ -53,8 +57,14 @@ object DataManager : Serializable {
     }
 
     fun getAllTags(): List<String> {
-        var i = 1
-        var j = i + 2
         return werkaanbiedingRepository.getAlleTags()
+    }
+
+    fun likeWerkaanbieding(leerlingId: Int, werkaanbiedingId: Long) {
+        leerlingRepository.likeWerkaanbieding(leerlingId, werkaanbiedingId)
+    }
+
+    fun dislikeWerkaanbieding(leerlingId: Int, werkaanbiedingId: Long) {
+        leerlingRepository.dislikeWerkaanbieding(leerlingId, werkaanbiedingId)
     }
 }

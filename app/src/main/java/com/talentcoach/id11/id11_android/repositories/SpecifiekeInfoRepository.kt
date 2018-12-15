@@ -4,9 +4,22 @@ import com.beust.klaxon.Klaxon
 import com.talentcoach.id11.id11_android.models.IRepository
 import com.talentcoach.id11.id11_android.models.LeerlingHoofdCompetentie
 import com.talentcoach.id11.id11_android.models.SpecifiekeInfo
+import com.talentcoach.id11.id11_android.models.Werkaanbieding
 import java.net.URL
 
 class SpecifiekeInfoRepository: IRepository<SpecifiekeInfo> {
+    override fun dislikeWerkaanbieding(leerlingId: Int, werkaanbiedingId: Long) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun likeWerkaanbieding(leerlingId: Int, werkaanbiedingId: Long) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun getInteressantsteWerkaanbieding(leerlingId: Int): Werkaanbieding? {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
     override fun getAlleTags(): List<String> {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }

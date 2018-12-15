@@ -7,4 +7,7 @@ interface IRepository<T> {
     fun getAll(): List<T>
     fun getCompetentiesById(id: Int): List<LeerlingHoofdCompetentie>
     fun getAlleTags(): List<String>
+    fun getInteressantsteWerkaanbieding(leerlingId: Int): Werkaanbieding?
+    fun likeWerkaanbieding(leerlingId: Int, werkaanbiedingId: Long)
+    fun dislikeWerkaanbieding(leerlingId: Int, werkaanbiedingId: Long)
 }
