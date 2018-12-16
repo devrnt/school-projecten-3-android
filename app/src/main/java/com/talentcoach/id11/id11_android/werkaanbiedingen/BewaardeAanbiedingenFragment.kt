@@ -81,6 +81,7 @@ class BewaardeAanbiedingenFragment: Fragment() {
 //                        progressSpinner.visibility = View.GONE
                         progressSpinner.visibility = View.GONE
                         if (werkaanbiedingenList.size > 0) {
+                            geenBewaardeAanbiedingenText.visibility = View.GONE
                             val adapter = BewaardeAanbiedingenFragment.WerkaanbiedingenAdapter(leerlingId!!, werkaanbiedingenList, leerling.interesses)
                             recyclerView?.adapter = adapter
                             recyclerView?.layoutManager = LinearLayoutManager(activity) // items get displayed in a vertical list

@@ -41,6 +41,7 @@ class AlgemeneInfoFragment : Fragment() {
         doAsync {
             val algemeneInfo = DataManager.algemeneInfoRepository.getAll()
             uiThread {
+                progressSpinner.visibility = View.GONE
                 val adapter = AlgemeneInfoFragment.AlgemeneInfoAdapter(algemeneInfo)
                 recyclerView?.adapter = adapter
                 recyclerView?.layoutManager = LinearLayoutManager(activity)
