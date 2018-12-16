@@ -61,7 +61,7 @@
     <string name="behaald_op">Behaald op</string>
     <string name="geen_beoordelingen">heeft geen beoordelingen</string>
     <string name="niets_geselecteerd">Niets geselecteerd</string>
-    <string name="behaald"> competenties behaald</string>
+    <string name="behaald"> hoofdcompetenties behaald</string>
 
 
     <!-- Strings related to Login -->
@@ -114,7 +114,8 @@
     <string name="dummy_opdracht_text">Dit is een hele lange en niet erg representatieve dummy text voor een opdracht van deze Job. Het is extra lang zodat we ervoor kunnen zorgen dat de opmaak mooi blijft bij het hebben van een lange beschrijving.</string>
     <string name="dummy_address_name">Adres</string>
     <string name="dummy_tags_name">Tags</string>
-    <string name="geenAanbiedingen">Het ziet ernaar uit dat je werkaanbiedingen op zijn! Probeer het op een later tijdstip opnieuw of voeg nieuwe interesses toe in het interesses scherm</string>
+    <string name="geenAanbiedingen">Het ziet ernaar uit dat je werkaanbiedingen op zijn! Je hebt 3 opties: wachten op nieuwe aanbiedingen, nieuwe interesses toevoegen in het interesses scherm of je reeds afgekeurde aanbiedingen opnieuw proberen door op de knop onderaan de pagina te klikken. (Geen zorgen, je bewaarde aanbiedingen worden niet gereset)</string>
+    <string name="oeps_title">Oeps…</string>
     <string name="selecteer_jouw_interesses">Jouw interesses</string>
     <string name="geenBewaardeAanbiedingen">Je hebt momenteel nog geen werkaanbiedingen bewaard. Tijd om daar verandering in te brengen!</string>
 
@@ -122,4 +123,8 @@
     <string name="email_header">E-mailadres</string>
     <string name="telefoonnr_header">Telefoonnummer</string>
     <string name="geen_werkgever_text">Je hebt momenteel nog geen werkgever. Ga naar het jobs scherm en zoek een werkaanbieding die bij jou past!</string>
+    <string name="filterheader">Filter</string>
+    <string name="sorteren_op_naam">Sorteren op naam</string>
+    <string name="sorteer_op_behaald">Sorteer op behaald</string>
+    <string name="filteren_op_graad">Filteren op graad</string>
 </resources>

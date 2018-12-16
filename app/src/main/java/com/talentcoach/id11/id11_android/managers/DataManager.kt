@@ -79,4 +79,9 @@ object DataManager : Serializable {
     fun addInteresseLeerling(leerlingId: Int, interesse: String) {
         leerlingRepository.addInteresseLeerling(leerlingId, interesse)
     }
+
+    fun resetWerkaanbiedingen(leerlingId: Int) {
+        leerlingRepository.resetWerkaanbiedingen(leerlingId)
+    }
+
 }

@@ -5,6 +5,29 @@ import com.talentcoach.id11.id11_android.models.*
 import java.net.URL
 
 class WerkgeverRepository: IRepository<Werkgever> {
+
+    val url = "http://projecten3studserver11.westeurope.cloudapp.azure.com/api/werkgevers/"
+
+    override fun getById(id: Int): Werkgever {
+        val werkgever: Werkgever?
+
+        try {
+            val json = URL(url + id).readText()
+
+            werkgever = Klaxon().parse<Werkgever>(json)
+
+        } catch (e: Exception) {
+            throw e
+        }
+
+        return werkgever!!
+    }
+
+    // Not needed
+    override fun resetWerkaanbiedingen(leerlingId: Int) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
     override fun addInteresseLeerling(leerlingId: Int, interesse: String) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
@@ -35,23 +58,6 @@ class WerkgeverRepository: IRepository<Werkgever> {
 
     override fun getCompetentiesById(id: Int): List<LeerlingHoofdCompetentie> {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    val url = "http://projecten3studserver11.westeurope.cloudapp.azure.com/api/werkgevers/"
-
-    override fun getById(id: Int): Werkgever {
-        val werkgever: Werkgever?
-
-        try {
-            val json = URL(url + id).readText()
-
-            werkgever = Klaxon().parse<Werkgever>(json)
-
-        } catch (e: Exception) {
-            throw e
-        }
-
-        return werkgever!!
     }
 
     override fun update(toUpdate: Werkgever) {

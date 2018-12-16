@@ -10,9 +10,6 @@ import java.net.HttpURLConnection
 import java.net.URL
 
 class LeerlingRepository: IRepository<Leerling>, Serializable {
-    override fun getAlleTags(): List<String> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
 
     val url = "http://projecten3studserver11.westeurope.cloudapp.azure.com/api/leerlingen/"
 
@@ -80,10 +77,6 @@ class LeerlingRepository: IRepository<Leerling>, Serializable {
         } catch (e: Exception) {
             throw e
         }
-    }
-
-    override fun getAll(): List<Leerling> {
-        TODO("not implemented: functionality is not yet required")
     }
 
     override fun getInteressantsteWerkaanbieding(leerlingId: Int): Werkaanbieding? {
@@ -200,6 +193,33 @@ class LeerlingRepository: IRepository<Leerling>, Serializable {
         } catch (e: Exception) {
             throw e
         }
+    }
+
+    override fun resetWerkaanbiedingen(leerlingId: Int) {
+        try {
+            val url = URL("$url$leerlingId/werkaanbiedingen/redo")
+            with(url.openConnection() as HttpURLConnection) {
+                connectTimeout = 5000
+                requestMethod = "POST"
+                outputStream.flush()
+
+                // debugging purposes
+                var test = "$responseCode $responseMessage"
+                println(test)
+            }
+
+        } catch (e: Exception) {
+            throw e
+        }
+    }
+
+    // Not needed
+    override fun getAll(): List<Leerling> {
+        TODO("not implemented: functionality is not yet required")
+    }
+
+    override fun getAlleTags(): List<String> {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
 }

@@ -55,7 +55,7 @@
                         app:icon="@drawable/ic_close_24dp"
                         android:drawableTint="#ffffff"
                         app:iconGravity="textStart"
-                        android:gravity="center"/>
+                        android:gravity="center" />
 
                     <android.support.design.button.MaterialButton
                         android:id="@+id/likeBtn"
@@ -69,8 +69,22 @@
                         app:icon="@drawable/ic_heart_outline_24dp"
                         android:drawableTint="#ffffff"
                         app:iconGravity="textStart"
-                        android:gravity="center"
-                        android:onClick="clickLike" />
+                        android:gravity="center" />
+
+                    <android.support.design.button.MaterialButton
+                        android:id="@+id/resetButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:layout_marginEnd="4dp"
+                        android:layout_marginStart="4dp"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"
+                        app:strokeColor="@color/colorAccent"
+                        android:backgroundTint="@color/colorAccent"
+                        app:icon="@drawable/ic_history_24dp"
+                        android:drawableTint="#ffffff"
+                        app:iconGravity="textStart"
+                        android:gravity="center"/>
                 </LinearLayout>
             </LinearLayout>
 
@@ -93,17 +107,46 @@
                         android:max="1"
                         android:layout_gravity="center"/>
 
-                    <TextView
+                    <LinearLayout
                         android:id="@+id/geenAanbiedingenText"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:padding="20dp"
-                        android:text="@string/geenAanbiedingen"
-                        android:fontFamily="@font/roboto_light"
-                        android:textSize="20sp"
-                        android:textAlignment="center"/>
+                        android:orientation="vertical"
+                        android:layout_gravity="center">
 
+                        <TextView
+                            android:id="@+id/oepsText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/oeps_title"
+                            android:paddingLeft="40dp"
+                            android:fontFamily="@font/roboto_regular"
+                            android:textSize="42sp"
+                            android:textColor="@color/colorPrimary"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:padding="20dp"
+                            android:text="@string/geenAanbiedingen"
+                            android:fontFamily="@font/roboto_light"
+                            android:textSize="18sp"
+                            android:textAlignment="center"/>
+
+                        <!--<android.support.design.button.MaterialButton-->
+                            <!--android:id="@+id/resetButton"-->
+                            <!--style="@style/Widget.MaterialComponents.Button.OutlinedButton"-->
+                            <!--android:layout_width="wrap_content"-->
+                            <!--android:layout_height="wrap_content"-->
+                            <!--android:layout_marginStart="40dp"-->
+                            <!--android:layout_marginEnd="40dp"-->
+                            <!--android:text="@string/login_button"-->
+                            <!--android:textColor="@color/colorPrimary"-->
+                            <!--app:strokeColor="@color/colorPrimary"-->
+                            <!--app:strokeWidth="1dp"-->
+                            <!--/>-->
+                    </LinearLayout>
 
                     <LinearLayout
                         android:id="@+id/aanbiedingsInfo"

@@ -17,4 +17,5 @@ interface IRepository<T> {
     fun undoWerkaanbieding(leerlingId: Int, werkaanbiedingId: Long)
     fun removeInteresseLeerling(leerlingId: Int, interesse: String)
     fun addInteresseLeerling(leerlingId: Int, interesse: String)
+    fun resetWerkaanbiedingen(leerlingId: Int)
 }

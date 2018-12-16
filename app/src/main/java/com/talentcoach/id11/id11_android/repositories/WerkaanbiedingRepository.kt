@@ -6,6 +6,40 @@ import java.io.Serializable
 import java.net.URL
 
 class WerkaanbiedingRepository: IRepository<Werkaanbieding>, Serializable {
+
+    private val url = "http://projecten3studserver11.westeurope.cloudapp.azure.com/api/werkaanbiedingen/"
+
+    override fun getAll(): List<Werkaanbieding> {
+        val werkaanbiedingen : List<Werkaanbieding>?
+
+        try {
+            val result = URL(url).readText()
+            werkaanbiedingen = Klaxon().parseArray(result)!!
+        } catch (e: Exception){
+            throw e
+        }
+
+        return werkaanbiedingen
+    }
+
+    override fun getAlleTags(): List<String> {
+        val alleTags : List<String>?
+
+        try {
+            val result = URL(url + "tags").readText()
+            alleTags = Klaxon().parseArray(result)!!
+        } catch (e: Exception) {
+            throw e
+        }
+
+        return alleTags
+    }
+
+    // Not needed
+    override fun resetWerkaanbiedingen(leerlingId: Int) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
     override fun addInteresseLeerling(leerlingId: Int, interesse: String) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
@@ -34,8 +68,6 @@ class WerkaanbiedingRepository: IRepository<Werkaanbieding>, Serializable {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    private val url = "http://projecten3studserver11.westeurope.cloudapp.azure.com/api/werkaanbiedingen/"
-
     override fun getById(id: Int): Werkaanbieding {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
@@ -43,31 +75,4 @@ class WerkaanbiedingRepository: IRepository<Werkaanbieding>, Serializable {
     override fun update(toUpdate: Werkaanbieding) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
-
-    override fun getAll(): List<Werkaanbieding> {
-        val werkaanbiedingen : List<Werkaanbieding>?
-
-        try {
-            val result = URL(url).readText()
-            werkaanbiedingen = Klaxon().parseArray(result)!!
-        } catch (e: Exception){
-            throw e
-        }
-
-        return werkaanbiedingen
-    }
-
-    override fun getAlleTags(): List<String> {
-        val alleTags : List<String>?
-
-        try {
-            val result = URL(url + "tags").readText()
-            alleTags = Klaxon().parseArray(result)!!
-        } catch (e: Exception) {
-            throw e
-        }
-
-        return alleTags
-    }
-
 }

@@ -4,122 +4,115 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/relativeLayout"
     android:layout_width="match_parent"
+    android:minWidth="350dp"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:padding="16dp">
 
-    <RelativeLayout
+    <TextView
+        android:id="@+id/title_Filter_Dialog"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/filterheader"
+        android:textSize="24sp"
+        android:fontFamily="@font/roboto_medium"
+        android:textColor="@color/cardTitle"/>
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="250dp">
-
-        <Spinner
-            android:id="@+id/graadSpinner"
-            android:layout_width="131dp"
-            android:layout_height="36dp"
-            android:layout_alignTop="@+id/tv_sorteer_behaald_toggle"
-            android:layout_alignParentEnd="true"
-            android:layout_marginTop="39dp"
-            android:layout_marginEnd="6dp"
-            tools:textAlignment="textEnd" />
-
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
         <TextView
-            android:id="@+id/title_Filter_Dialog"
+            android:id="@+id/tv_filter_graad"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginStart="7dp"
-            android:layout_marginTop="20dp"
-            android:text="Filter"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+            android:text="@string/filteren_op_graad"
+            android:textAlignment="textStart"
+            android:textSize="16sp" />
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
+        <Spinner
+            android:id="@+id/graadSpinner"
+            android:layout_width="140dp"
+            android:layout_height="wrap_content"
+            tools:textAlignment="textEnd" />
+    </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
         <TextView
             android:id="@+id/tv_sorteer_naam_toggle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="2dp"
-            android:layout_marginBottom="159dp"
-            android:text="Sorteren op naam:"
+            android:text="@string/sorteren_op_naam"
             android:textAlignment="textStart"
             android:textSize="16sp" />
 
         <Switch
             android:id="@+id/naamToggle"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginStart="62dp"
-            android:layout_marginLeft="62dp"
-            android:layout_marginEnd="6dp"
-            android:layout_marginRight="170dp"
-            android:layout_marginBottom="166dp"
-            android:gravity="center_vertical"
             android:textAlignment="center"
-            tools:checked="false" />
+            tools:checked="false"
+            android:layout_weight="1"/>
+    </LinearLayout>
 
-        <Button
-            android:id="@+id/cancelBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignStart="@+id/tv_sorteer_naam_toggle"
-            android:layout_alignParentBottom="true"
-            android:layout_marginStart="63dp"
-            android:layout_marginBottom="6dp"
-            android:text="Terug" />
-
-        <Button
-            android:id="@+id/toepassenBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginEnd="22dp"
-            android:layout_marginBottom="7dp"
-            android:text="Toepassen" />
-
-        <Switch
-            android:id="@+id/behaald_toggle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginStart="0dp"
-            android:layout_marginLeft="62dp"
-            android:layout_marginEnd="6dp"
-            android:layout_marginRight="170dp"
-            android:layout_marginBottom="112dp"
-            android:gravity="center_vertical"
-            android:textAlignment="center"
-            tools:checked="false" />
-
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="8dp">
         <TextView
             android:id="@+id/tv_sorteer_behaald_toggle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignStart="@+id/tv_sorteer_naam_toggle"
-            android:layout_alignParentBottom="true"
-            android:layout_marginStart="0dp"
-            android:layout_marginBottom="112dp"
-            android:text="Sorteer op behaald"
+            android:text="@string/sorteer_op_behaald"
             android:textAlignment="textStart"
             android:textSize="16sp" />
+        <Switch
+            android:id="@+id/behaald_toggle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:textAlignment="center"
+            tools:checked="false"
+            android:layout_weight="1"/>
+    </LinearLayout>
 
-        <TextView
-            android:id="@+id/tv_filter_graad"
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="8dp">
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
+        <android.support.design.button.MaterialButton
+            android:id="@+id/cancelBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginStart="8dp"
-            android:layout_marginBottom="71dp"
-            android:text="Filteren op graad:"
-            android:textAlignment="textStart"
-            android:textSize="16sp" />
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            app:strokeColor="@color/colorPrimary"
+            app:iconGravity="textStart"
+            android:gravity="center"
+            android:text="Terug"
+            android:textColor="@color/colorPrimary"/>
 
-    </RelativeLayout>
-
+        <android.support.design.button.MaterialButton
+            android:id="@+id/toepassenBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            app:strokeColor="@color/colorAccent"
+            app:iconGravity="textStart"
+            android:gravity="center"
+            android:text="Toepassen"
+            android:textColor="@color/colorAccent"
+            android:layout_marginLeft="8dp"/>
+    </LinearLayout>
 </LinearLayout>

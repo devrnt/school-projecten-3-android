@@ -41,9 +41,10 @@ class AanbiedingenFragment : Fragment() {
 
     lateinit var progressSpinner: ProgressBar
     lateinit var aanbiedingsInfo: LinearLayout
-    lateinit var geenAanbiedingenText: TextView
+    lateinit var geenAanbiedingenText: LinearLayout
     lateinit var dislikeBtn: MaterialButton
     lateinit var likeBtn: MaterialButton
+    lateinit var resetBtn: MaterialButton
     lateinit var werkgeverNaam: TextView
     lateinit var opdrachtBeschrijving: TextView
     lateinit var werkgeverAddress: TextView
@@ -62,7 +63,7 @@ class AanbiedingenFragment : Fragment() {
         aanbiedingsInfo.visibility = View.GONE
         progressSpinner = view.findViewById(R.id.progressSpinner) as ProgressBar
         progressSpinner.visibility = View.VISIBLE
-        geenAanbiedingenText = view.findViewById(R.id.geenAanbiedingenText) as TextView
+        geenAanbiedingenText = view.findViewById(R.id.geenAanbiedingenText) as LinearLayout
         geenAanbiedingenText.visibility = View.GONE
 
         werkgeverNaam = view.findViewById(R.id.werkgeverNaam)
@@ -76,6 +77,9 @@ class AanbiedingenFragment : Fragment() {
         likeBtn = view.findViewById(R.id.likeBtn) as MaterialButton
         likeBtn.setOnClickListener(onClickListener)
         likeBtn.isEnabled = false
+        resetBtn = view.findViewById(R.id.resetButton) as MaterialButton
+        resetBtn.setOnClickListener(onClickListener)
+        resetBtn.visibility = View.GONE
 
         started = true
         if (visible && started) {
@@ -147,6 +151,9 @@ class AanbiedingenFragment : Fragment() {
         progressSpinner.visibility = View.GONE
         aanbiedingsInfo.visibility = View.VISIBLE
         geenAanbiedingenText.visibility = View.GONE
+        resetBtn.visibility = View.GONE
+        likeBtn.visibility = View.VISIBLE
+        dislikeBtn.visibility = View.VISIBLE
         dislikeBtn.isEnabled = true
         likeBtn.isEnabled = true
 
@@ -172,6 +179,9 @@ class AanbiedingenFragment : Fragment() {
     private fun showGeenAanbieding() {
         progressSpinner.visibility = View.GONE
         geenAanbiedingenText.visibility = View.VISIBLE
+        likeBtn.visibility = View.GONE
+        dislikeBtn.visibility = View.GONE
+        resetBtn.visibility = View.VISIBLE
     }
 
     private val onClickListener = View.OnClickListener { v ->
@@ -187,6 +197,14 @@ class AanbiedingenFragment : Fragment() {
             R.id.likeBtn -> {
                 doAsync {
                     DataManager.likeWerkaanbieding(leerlingId!!, werkaanbieding.id)
+                    uiThread {
+                        getWerkaanbieding()
+                    }
+                }
+            }
+            R.id.resetButton -> {
+                doAsync {
+                    DataManager.resetWerkaanbiedingen(leerlingId!!)
                     uiThread {
                         getWerkaanbieding()
                     }
@@ -208,6 +226,7 @@ class AanbiedingenFragment : Fragment() {
         aanbiedingsInfo.visibility = View.GONE
         progressSpinner.visibility = View.VISIBLE
         geenAanbiedingenText.visibility = View.GONE
+        resetBtn.visibility = View.GONE
         dislikeBtn.isEnabled = false
         likeBtn.isEnabled = false
 
