@@ -12,5 +12,10 @@ package com.talentcoach.id11.id11_android.models
  *
  */
 enum class BeoordelingScore {
-    RO, O, V, G, ZG, NA
+    RO,
+    O,
+    V,
+    G,
+    ZG,
+    NA
 }

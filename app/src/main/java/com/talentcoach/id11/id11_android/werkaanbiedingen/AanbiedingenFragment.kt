@@ -34,7 +34,6 @@ import android.widget.*
  */
 class AanbiedingenFragment : Fragment() {
 
-
     private var leerlingId: Int? = null
 
     lateinit var leerling: Leerling
@@ -49,6 +48,9 @@ class AanbiedingenFragment : Fragment() {
     lateinit var opdrachtBeschrijving: TextView
     lateinit var werkgeverAddress: TextView
     lateinit var chipGroupAanbieding: ChipGroup
+
+    private var started = false
+    private var visible = false
 
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
@@ -75,11 +77,16 @@ class AanbiedingenFragment : Fragment() {
         likeBtn.setOnClickListener(onClickListener)
         likeBtn.isEnabled = false
 
-        doAsync {
-            val sharedPreferences: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity)
-            leerlingId = sharedPreferences.getString(getString(R.string.sp_key_leerling), "Default").toInt()
-            getLeerling()
+        started = true
+        if (visible && started) {
+            loadView()
         }
+
+//        doAsync {
+//            val sharedPreferences: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity)
+//            leerlingId = sharedPreferences.getString(getString(R.string.sp_key_leerling), "Default").toInt()
+//            getLeerling()
+//        }
 
         return view
     }
@@ -185,6 +192,29 @@ class AanbiedingenFragment : Fragment() {
                     }
                 }
             }
+        }
+    }
+
+    // Is called when user opens this tab again. When that happens we refresh the data so it's always up to date
+    override fun setUserVisibleHint(isVisibleToUser: Boolean) {
+        super.setUserVisibleHint(isVisibleToUser)
+        visible = isVisibleToUser
+        if (started && visible) {
+            loadView()
+        }
+    }
+
+    fun loadView() {
+        aanbiedingsInfo.visibility = View.GONE
+        progressSpinner.visibility = View.VISIBLE
+        geenAanbiedingenText.visibility = View.GONE
+        dislikeBtn.isEnabled = false
+        likeBtn.isEnabled = false
+
+        doAsync {
+            val sharedPreferences: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity)
+            leerlingId = sharedPreferences.getString(getString(R.string.sp_key_leerling), "Default").toInt()
+            getLeerling()
         }
     }
 

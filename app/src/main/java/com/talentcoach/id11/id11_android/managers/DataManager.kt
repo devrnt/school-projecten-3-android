@@ -132,4 +132,12 @@ object DataManager : Serializable {
     fun undoWerkaanbieding(leerlingId: Int, werkaanbiedingId: Long) {
         leerlingRepository.undoWerkaanbieding(leerlingId, werkaanbiedingId)
     }
+
+    fun removeInteresseLeerling(leerlingId: Int, interesse: String) {
+        leerlingRepository.removeInteresseLeerling(leerlingId, interesse)
+    }
+
+    fun addInteresseLeerling(leerlingId: Int, interesse: String) {
+        leerlingRepository.addInteresseLeerling(leerlingId, interesse)
+    }
 }
