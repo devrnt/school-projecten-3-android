@@ -1,5 +1,9 @@
 package com.talentcoach.id11.id11_android.models
-
+/**
+ * Deel van *models*.
+ *
+ * Generic interface voor repository
+ */
 interface IRepository<T> {
 
     fun getById(id: Int): T

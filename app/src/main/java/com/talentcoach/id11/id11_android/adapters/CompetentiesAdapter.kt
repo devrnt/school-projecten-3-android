@@ -19,6 +19,7 @@ import android.view.ViewGroup
 import android.view.Window
 import android.widget.TextView
 import com.talentcoach.id11.id11_android.R
+import com.talentcoach.id11.id11_android.models.AlgemeneInfo
 import com.talentcoach.id11.id11_android.models.LeerlingDeelCompetentie
 import com.talentcoach.id11.id11_android.models.LeerlingHoofdCompetentie
 import kotlinx.android.synthetic.main.hoofdcompetentie_list_item.view.*
