@@ -6,9 +6,9 @@ import kotlin.collections.ArrayList
 /**
  * Deel van *models*.
  *
- * LeerlingHoofdCompetentie het verband tussen een leerling en een hoofdcompentie,
- * gekent door de leerling, bevat de hoofdcompetentie, veld geslaagd, leerlingdeelcompetenties, ...
- * een verwijzing naar de competentie en een veld geslaagd en de datum van geslaag
+ * LeerlingHoofdCompetentie het verband tussen een leerling en een hoofdcompentie;
+ * gekent door de leerling, bevat de hoofdcompetentie, veld geslaagd, leerlingdeelcompetenties, ...;
+ * een verwijzing naar de competentie en een veld geslaagd en de datum van geslaag;
  * @property id het id van de LeerlingHoofdCompetentie
  * @property behaald geeft aan of de Hoofdcompentie al behaald is of niet (behaal als alle deelcompetenties behaald zijn)
  * @property datumGeslaagd indien behaald geeft deze aan wanneer dit gebeurde

@@ -4,9 +4,9 @@ import java.util.*
 /**
  * Deel van *models*.
  *
- * LeerlingDeelCompetentie het verband tussen een leerling en een deelcompentie,
- * gekent door de leerling via LeerlingHoofdCompetentie, bevat de deelcompetentie, de score, beoordelingen,
- * een verwijzing naar de competentie en een veld geslaagd en de datum van geslaag
+ * LeerlingDeelCompetentie het verband tussen een leerling en een deelcompentie;
+ * gekent door de leerling via LeerlingHoofdCompetentie, bevat de deelcompetentie, de score, beoordelingen;
+ * een verwijzing naar de competentie en een veld geslaagd en de datum van geslaag;
  * @property id het id van de leerlingdeelcompetenties
  * @property deelCompetentie de betreffende deelcompentie
  * @property behaald geeft aan of de deelcompentie al behaald is of niet

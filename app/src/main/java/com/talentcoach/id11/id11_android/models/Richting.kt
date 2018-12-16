@@ -4,9 +4,9 @@ import com.google.gson.annotations.SerializedName
 /**
  * Deel van *models*.
  *
- * Richting een bij elkaar horende set van hoofdcompetenties en hun deelcompetenties.
- * Definieert ook het icon en de kleur van de competenties
- * gekent door de leerling, bevat de score, beoordelingen,
+ * Richting een bij elkaar horende set van hoofdcompetenties en hun deelcompetenties;
+ * Definieert ook het icon en de kleur van de competenties;
+ * gekent door de leerling, bevat de score, beoordelingen, ... ;
  * @property id het id van de Richting
  * @property naam de naam van de richting
  * @property competenties de hoofdcompetenties van de richting
