@@ -19,6 +19,7 @@ import android.view.ViewGroup
 import android.view.Window
 import android.widget.TextView
 import com.talentcoach.id11.id11_android.R
+import com.talentcoach.id11.id11_android.models.AlgemeneInfo
 import com.talentcoach.id11.id11_android.models.LeerlingDeelCompetentie
 import com.talentcoach.id11.id11_android.models.LeerlingHoofdCompetentie
 import kotlinx.android.synthetic.main.hoofdcompetentie_list_item.view.*
@@ -60,7 +61,11 @@ class CompetentiesAdapter(
         if(holder.view.childItems.childCount == 0){
             for(deelcompetentie in hoofdcompetentie.deelCompetenties){
                 var text: TextView = TextView(context)
-                text.text = "${'\u25CF'} ${deelcompetentie.deelCompetentie.omschrijving}" // ${'\u25CF'} zorgt voor Bullet icon
+                var icon: Char;
+                // ${'\u25CF'} zorgt voor Bullet icon
+                // ${'\u2713'} zorgt voor Checkmark icon
+                if(deelcompetentie.behaald) icon = '\u2713' else icon ='\u25CF'
+                text.text = "${icon}  ${deelcompetentie.deelCompetentie.omschrijving}"
                 text.setPadding(0,0,0,40)
                 text.setOnClickListener { showDialogWindow(holder.view, deelcompetentie) }
                 holder.view.childItems.addView(text)
