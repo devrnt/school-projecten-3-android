@@ -76,9 +76,7 @@
                         android:layout_height="wrap_content"
                         android:paddingLeft="16dp"
                         android:paddingTop="12dp"
-                        android:paddingRight="16dp"
-                        android:textColor="@color/cardText" />
-
+                        android:paddingRight="16dp" />
                     <TextView
                         style="@style/Base.TextAppearance.AppCompat.Subhead"
                         android:layout_width="wrap_content"
@@ -122,6 +120,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="8dp">
                         <android.support.design.button.MaterialButton
+                            android:id="@+id/deleteBewaardeAanbiedingButton"
                             android:layout_height="wrap_content"
                             android:layout_width="wrap_content"
                             style="@style/Widget.MaterialComponents.Button.TextButton"

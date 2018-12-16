@@ -92,7 +92,12 @@ class LeerlingRepository: IRepository<Leerling>, Serializable {
 
         try {
             val result = URL("$url$leerlingId/werkaanbiedingen/interessant").readText()
-            interessantsteWerkaanbieding = Klaxon().parse<Werkaanbieding>(result)
+            // Fast workaround for testing
+            if (result.contains("Geen matching werkaanbiedingen gevonden")) {
+                interessantsteWerkaanbieding = null
+            } else {
+                interessantsteWerkaanbieding = Klaxon().parse<Werkaanbieding>(result)
+            }
         } catch (e: Exception) {
             throw e
         }
@@ -127,6 +132,24 @@ class LeerlingRepository: IRepository<Leerling>, Serializable {
 
                 // debugging purposes
                 println("$responseCode $responseMessage")
+            }
+
+        } catch (e: Exception) {
+            throw e
+        }
+    }
+
+    override fun undoWerkaanbieding(leerlingId: Int, werkaanbiedingId: Long) {
+        try {
+            val url = URL("$url$leerlingId/werkaanbiedingen/$werkaanbiedingId/undo")
+            with(url.openConnection() as HttpURLConnection) {
+                connectTimeout = 5000
+                requestMethod = "POST"
+                outputStream.flush()
+
+                // debugging purposes
+                var test = "$responseCode $responseMessage"
+                println(test)
             }
 
         } catch (e: Exception) {

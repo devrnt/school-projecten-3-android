@@ -60,7 +60,7 @@ class JobTabNavigatieFragment : Fragment() {
                     JobInfoFragment()
                 }
                 else -> {
-                    return BewaardeAanbiedingenFragment()
+                    return AlgemeneInfoFragment()
                 }
             }
         }

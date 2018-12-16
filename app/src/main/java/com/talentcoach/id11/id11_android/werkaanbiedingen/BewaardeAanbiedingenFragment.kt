@@ -5,15 +5,13 @@ import android.os.Build
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.support.constraint.ConstraintLayout
+import android.support.design.button.MaterialButton
 import android.support.design.card.MaterialCardView
 import android.support.design.chip.Chip
 import android.support.design.chip.ChipGroup
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import com.talentcoach.id11.id11_android.R
 import com.talentcoach.id11.id11_android.models.Leerling
 import com.talentcoach.id11.id11_android.models.Werkaanbieding
@@ -26,11 +24,13 @@ import android.support.v4.view.ViewCompat.setActivated
 import android.support.v7.widget.CardView
 import android.text.TextUtils
 import android.transition.TransitionManager
-import android.view.Gravity
+import android.view.*
 import android.widget.*
 import com.talentcoach.id11.id11_android.R.id.chipGroupBewaardeAanbieding
+import com.talentcoach.id11.id11_android.managers.DataManager
 import com.talentcoach.id11.id11_android.models.Werkgever
 import kotlinx.android.synthetic.main.fragment_aanbiedingen.*
+import org.jetbrains.anko.uiThread
 
 
 class BewaardeAanbiedingenFragment: Fragment() {
@@ -81,7 +81,7 @@ class BewaardeAanbiedingenFragment: Fragment() {
 //                        progressSpinner.visibility = View.GONE
                         progressSpinner.visibility = View.GONE
                         if (werkaanbiedingenList.size > 0) {
-                            val adapter = BewaardeAanbiedingenFragment.WerkaanbiedingenAdapter(werkaanbiedingenList, leerling.interesses)
+                            val adapter = BewaardeAanbiedingenFragment.WerkaanbiedingenAdapter(leerlingId!!, werkaanbiedingenList, leerling.interesses)
                             recyclerView?.adapter = adapter
                             recyclerView?.layoutManager = LinearLayoutManager(activity) // items get displayed in a vertical list
                         } else {
@@ -109,7 +109,21 @@ class BewaardeAanbiedingenFragment: Fragment() {
 
     }
 
+    // Is called when user opens this tab again. When that happens we refresh the data so it's always up to date
+    override fun setUserVisibleHint(isVisibleToUser: Boolean) {
+        super.setUserVisibleHint(isVisibleToUser)
+        if (isVisibleToUser) {
+            doAsync {
+                val sharedPreferences: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity)
+                leerlingId = sharedPreferences.getString(getString(R.string.sp_key_leerling), "Default").toInt()
+                // HIER NIET VOLLEDIGE LEERLING OPHALEN MAAR ENKEL AL ZIJN WERKAANBIEDINGEN
+                getLeerling()
+            }
+        }
+    }
+
     class WerkaanbiedingenAdapter(
+            val leerlingId: Int,
             val werkaanbiedingen: MutableList<Werkaanbieding>,
             val interesses: List<String>
     ) : RecyclerView.Adapter<WerkaanbiedingenAdapter.AanbiedingenViewHolder>() {
@@ -156,6 +170,17 @@ class BewaardeAanbiedingenFragment: Fragment() {
                     c.isChecked = true
                 }
                 chipGroupBewaardeAanbieding.addView(c)
+            }
+
+            val deleteBewaardeAanbiedingButton = holder.constraintLayout.findViewById<MaterialButton>(R.id.deleteBewaardeAanbiedingButton)
+            deleteBewaardeAanbiedingButton.setOnClickListener {
+                doAsync {
+                    DataManager.undoWerkaanbieding(leerlingId, werkaanbieding.id)
+                    uiThread {
+                        werkaanbiedingen.removeAt(pos)
+                        notifyDataSetChanged()
+                    }
+                }
             }
 
             holder.itemView.isActivated = isExpanded

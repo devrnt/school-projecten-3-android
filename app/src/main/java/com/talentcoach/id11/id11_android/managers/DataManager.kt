@@ -67,4 +67,8 @@ object DataManager : Serializable {
     fun dislikeWerkaanbieding(leerlingId: Int, werkaanbiedingId: Long) {
         leerlingRepository.dislikeWerkaanbieding(leerlingId, werkaanbiedingId)
     }
+
+    fun undoWerkaanbieding(leerlingId: Int, werkaanbiedingId: Long) {
+        leerlingRepository.undoWerkaanbieding(leerlingId, werkaanbiedingId)
+    }
 }
