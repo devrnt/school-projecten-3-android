@@ -19,7 +19,13 @@ import com.talentcoach.id11.id11_android.models.Werkaanbieding
 import com.talentcoach.id11.id11_android.werkaanbiedingen.BewaardeAanbiedingenFragment
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
-
+/**
+ * Deel van *job*.
+ *
+ * Fragment dat verantwoordelijk is voor het tonen van bewaarde werkaanbiedingen
+ * @property leerlingId het id van de leerling op basis waarvan de bewaarde jobs worden opgehaald
+ * @property werkgever het id van de werkgever waarvan de informatie weergegeven wordt
+ */
 class AlgemeneInfoFragment : Fragment() {
 
     lateinit var headerList: List<String>

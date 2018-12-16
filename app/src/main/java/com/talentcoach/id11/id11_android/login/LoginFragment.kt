@@ -31,13 +31,16 @@ import android.widget.TextView
 
 
 /**
- * Fragment that shows an input for username and password and a login button
- * @property gebruikersnaamInput The text input that is used to type the username
- * @property wachtwoordInput The text input that is used to type the password
- * @property gebruikersnaamInputLayout The input layout that is used to display username error messages
- * @property wachtwoordInputLayout The input layout that is used to display password error message
+ * Deel van *login*.
+ *
+ * Fragment dat inputs voor username en passwoord ondersteund, met een login knop;
+ * @property gebruikersnaamInput De textinput die gebruikt wordt voor de username
+ * @property wachtwoordInput De textinput die gebruik wordt voor het wachtwoord
+ * @property gebruikersnaamInputLayout De input layout voor username error messages
+ * @property wachtwoordInputLayout De input layout voor password error message
  */
 class LoginFragment : Fragment() {
+
     private lateinit var sharedPreferences: SharedPreferences
     private lateinit var spEditor: SharedPreferences.Editor
 
@@ -92,14 +95,28 @@ class LoginFragment : Fragment() {
         return view
     }
 
+    /**
+     * Hulpmethode die controlleert of er een geldige username-combinatie werd ingevuld
+     * @return Boolean
+     */
     private fun validGebruikersnaam(): Boolean {
         return gebruikersnaamInput.text != null && gebruikersnaamInput.text.isNotBlank()
     }
 
+    /**
+     * Hulpmethode die controlleert of er een geldige wachtwoord-combinatie werd ingevuld
+     * @return Boolean
+     */
     private fun validWachtwoord(): Boolean {
         return wachtwoordInput.text != null && wachtwoordInput.text.trim().length >= 8
     }
 
+
+    /**
+     * Hulpmethode die uit de local storage via de sharedPreferences key values pairs kan ophalen;
+     * voor username en paswoord van een eerder ingelogde user
+     *
+     */
     private fun readSharedPreferences() {
         val gebruikersnaam = sharedPreferences.getString(getString(R.string.login_username), "")
         val wachtwoord = sharedPreferences.getString(getString(R.string.login_password), "")
@@ -109,6 +126,12 @@ class LoginFragment : Fragment() {
         wachtwoordInput.setText(wachtwoord)
     }
 
+
+    /**
+     * Methode die op basis van de text- en wachtwoordinput de gebruiker inlogd;
+     * Op basis van de loginresponse wordt vervolgens het correcte Leerling object opgehaald
+     *
+     */
     private fun attemptLogin() {
         // reset error messages
         gebruikersnaamInputLayout.error = null

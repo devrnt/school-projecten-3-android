@@ -22,7 +22,13 @@ import org.w3c.dom.Text
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-
+/**
+ * Deel van *job*.
+ *
+ * Fragment dat verantwoordelijk is voor het tonen van bewaarde werkaanbiedingen
+ * @property leerlingId het id van de leerling op basis waarvan de bewaarde jobs worden opgehaald
+ * @property werkgever het id van de werkgever waarvan de informatie weergegeven wordt
+ */
 class JobInfoFragment : Fragment() {
     private var leerlingId: Int? = null
     lateinit var leerling: Leerling
@@ -61,6 +67,10 @@ class JobInfoFragment : Fragment() {
         return view
     }
 
+    /*
+     * Hulp Methode om op basis van het leerlingId, de leerling en de bijhorende werkgever op te halen;
+     * Afhandeling in de callback
+     */
     private fun getLeerling() {
 
         val call = LeerlingAPI.repository.getById(leerlingId!!)
@@ -100,6 +110,9 @@ class JobInfoFragment : Fragment() {
         })
     }
 
+    /*
+     * Hulp Methode voor het weergeven van de werknemer
+     */
     private fun showWerkgever() {
         werkgeverInfoLayout.visibility = View.VISIBLE
         werkgeverNaam.text = werkgever!!.naam
@@ -108,6 +121,10 @@ class JobInfoFragment : Fragment() {
         werkgeverTelefoonnr.text = werkgever!!.telefoonNummer.toString()
     }
 
+
+    /*
+     * Hulp Methode voor het weergeven van tekst als er geen werkgever is
+     */
     private fun showGeenWerkgever() {
         geenWerkgeverText.visibility = View.VISIBLE
     }

@@ -18,6 +18,8 @@ import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 
 /**
+ * Deel van *joborganisatie*.
+ *
  * Shows two fragments which can be toggled with tabs (Button views)
  * @property algemeneInfoFragment InfoFragment with AlgemeneInfo in its ExpandableListView
  * @property algemeneInfoFragment InfoFragment with SpecifiekeInfo in its ExpandableListView
@@ -92,10 +94,10 @@ class JobNavigationFragment : Fragment() {
 
     companion object {
         /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
+         * Factoy Method die gebruikt wordt om een nieuwe instantie van deze fragment te verkrijgen;
+         *  gebruikmakende van de parameters;
          *
-         * @return A new instance of fragment Tab1Fragment.
+         * @return een nieuwe instantie van fragment JobNavigationFragment.
          */
         @JvmStatic
         fun newInstance() = JobNavigationFragment()

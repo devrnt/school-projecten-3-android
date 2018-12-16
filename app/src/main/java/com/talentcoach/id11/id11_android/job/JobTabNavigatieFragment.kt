@@ -13,7 +13,12 @@ import com.talentcoach.id11.id11_android.R
 import com.talentcoach.id11.id11_android.werkaanbiedingen.BewaardeAanbiedingenFragment
 import com.talentcoach.id11.id11_android.werkaanbiedingen.InteressesFragment
 import com.talentcoach.id11.id11_android.werkaanbiedingen.WerkaanbiedingTabNavigatieFragment
-
+/**
+ * Deel van *job*.
+ *
+ * Fragment dat verantwoordelijk is voor de navigatie binnen het app-onderdeel job
+ *
+ */
 class JobTabNavigatieFragment : Fragment() {
 
     private lateinit var viewPager: ViewPager
