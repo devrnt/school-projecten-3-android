@@ -60,7 +60,11 @@ class CompetentiesAdapter(
         if(holder.view.childItems.childCount == 0){
             for(deelcompetentie in hoofdcompetentie.deelCompetenties){
                 var text: TextView = TextView(context)
-                text.text = "${'\u25CF'} ${deelcompetentie.deelCompetentie.omschrijving}" // ${'\u25CF'} zorgt voor Bullet icon
+                var icon: Char;
+                // ${'\u25CF'} zorgt voor Bullet icon
+                // ${'\u2713'} zorgt voor Checkmark icon
+                if(deelcompetentie.behaald) icon = '\u2713' else icon ='\u25CF'
+                text.text = "${icon}  ${deelcompetentie.deelCompetentie.omschrijving}"
                 text.setPadding(0,0,0,40)
                 text.setOnClickListener { showDialogWindow(holder.view, deelcompetentie) }
                 holder.view.childItems.addView(text)
