@@ -6,6 +6,14 @@ import java.io.Serializable
 import java.net.URL
 
 class WerkaanbiedingRepository: IRepository<Werkaanbieding>, Serializable {
+    override fun addInteresseLeerling(leerlingId: Int, interesse: String) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun removeInteresseLeerling(leerlingId: Int, interesse: String) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
     override fun undoWerkaanbieding(leerlingId: Int, werkaanbiedingId: Long) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }

@@ -107,11 +107,27 @@ class InteressesFragment : Fragment() {
                         chip.isChecked = true
                     }
                     chip.setOnClickListener {
-
+                        if ((it as Chip).isChecked) {
+                            addInteresseLeerling(index)
+                        } else {
+                            removeInteresseLeerling(index)
+                        }
                     }
                     chipGroup.addView(chip)
                 }
             }
+        }
+    }
+
+    private fun addInteresseLeerling(interesse: String) {
+        doAsync {
+            DataManager.addInteresseLeerling(leerlingId!!, interesse)
+        }
+    }
+
+    private fun removeInteresseLeerling(interesse: String) {
+        doAsync {
+            DataManager.removeInteresseLeerling(leerlingId!!, interesse)
         }
     }
 

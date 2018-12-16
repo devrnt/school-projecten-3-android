@@ -8,6 +8,14 @@ import com.talentcoach.id11.id11_android.models.Werkaanbieding
 import java.net.URL
 
 class AlgemeneInfoRepository : IRepository<AlgemeneInfo> {
+    override fun addInteresseLeerling(leerlingId: Int, interesse: String) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun removeInteresseLeerling(leerlingId: Int, interesse: String) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
     override fun undoWerkaanbieding(leerlingId: Int, werkaanbiedingId: Long) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }

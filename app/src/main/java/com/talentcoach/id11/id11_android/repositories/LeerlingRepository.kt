@@ -2,10 +2,9 @@ package com.talentcoach.id11.id11_android.repositories
 
 import android.util.Log
 import com.beust.klaxon.Klaxon
-import com.talentcoach.id11.id11_android.models.IRepository
-import com.talentcoach.id11.id11_android.models.Leerling
-import com.talentcoach.id11.id11_android.models.LeerlingHoofdCompetentie
-import com.talentcoach.id11.id11_android.models.Werkaanbieding
+import com.talentcoach.id11.id11_android.models.*
+import org.json.JSONObject
+import org.json.JSONStringer
 import java.io.Serializable
 import java.net.HttpURLConnection
 import java.net.URL
@@ -88,18 +87,22 @@ class LeerlingRepository: IRepository<Leerling>, Serializable {
     }
 
     override fun getInteressantsteWerkaanbieding(leerlingId: Int): Werkaanbieding? {
-        val interessantsteWerkaanbieding : Werkaanbieding?
+        var interessantsteWerkaanbieding : Werkaanbieding?
 
         try {
             val result = URL("$url$leerlingId/werkaanbiedingen/interessant").readText()
-            // Fast workaround for testing
-            if (result.contains("Geen matching werkaanbiedingen gevonden")) {
-                interessantsteWerkaanbieding = null
-            } else {
-                interessantsteWerkaanbieding = Klaxon().parse<Werkaanbieding>(result)
-            }
+
+            interessantsteWerkaanbieding = Klaxon().parse<Werkaanbieding>(result)
+
+
+//            // Fast workaround for testing
+//            if (result.contains("Geen matching werkaanbiedingen gevonden")) {
+//                interessantsteWerkaanbieding = null
+//            } else {
+//                interessantsteWerkaanbieding = Klaxon().parse<Werkaanbieding>(result)
+//            }
         } catch (e: Exception) {
-            throw e
+            interessantsteWerkaanbieding = null
         }
 
         return interessantsteWerkaanbieding
@@ -150,6 +153,48 @@ class LeerlingRepository: IRepository<Leerling>, Serializable {
                 // debugging purposes
                 var test = "$responseCode $responseMessage"
                 println(test)
+            }
+
+        } catch (e: Exception) {
+            throw e
+        }
+    }
+
+    override fun removeInteresseLeerling(leerlingId: Int, interesse: String) {
+        try {
+            val i = Interesse(interesse)
+            val json = Klaxon().toJsonString(i)
+            val url = URL("$url$leerlingId/interesses/delete")
+            with(url.openConnection() as HttpURLConnection) {
+                connectTimeout = 5000
+                requestMethod = "POST"
+                addRequestProperty("Content-Type", "application/json")
+                outputStream.write(json.toByteArray())
+                outputStream.flush()
+
+                // debugging purposes
+                println("$responseCode $responseMessage")
+            }
+
+        } catch (e: Exception) {
+            throw e
+        }
+    }
+
+    override fun addInteresseLeerling(leerlingId: Int, interesse: String) {
+        try {
+            val i = Interesse(interesse)
+            val json = Klaxon().toJsonString(i)
+            val url = URL("$url$leerlingId/interesses/add")
+            with(url.openConnection() as HttpURLConnection) {
+                connectTimeout = 5000
+                requestMethod = "POST"
+                addRequestProperty("Content-Type", "application/json")
+                outputStream.write(json.toByteArray())
+                outputStream.flush()
+
+                // debugging purposes
+                println("$responseCode $responseMessage")
             }
 
         } catch (e: Exception) {
