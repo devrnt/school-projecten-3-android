@@ -72,7 +72,7 @@ class CompetentiesNavigationFragment : Fragment() {
         var cancelBtn: Button
         var graadSpinner:Spinner
 
-        myDialog = Dialog(activity)
+        myDialog = Dialog(this.context!!)
         myDialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         myDialog.setContentView(R.layout.dialog_filter)
         sorteerOpNaamToggle = myDialog.findViewById(R.id.naamToggle) as Switch
@@ -122,7 +122,7 @@ class CompetentiesNavigationFragment : Fragment() {
         graadSpinner = myDialog.findViewById<Spinner>(R.id.graadSpinner)
         val graadOptions: MutableList<String> = hoofdcompetentieLijst.map { hc -> hc.hoofdCompetentie.graad }.distinct().sorted().toMutableList()
         graadOptions.add(0, "Alle")
-        graadSpinner.adapter = ArrayAdapter<String>(activity,android.R.layout.simple_dropdown_item_1line,graadOptions)
+        graadSpinner.adapter = ArrayAdapter<String>(this.context!!,android.R.layout.simple_dropdown_item_1line,graadOptions)
         graadSpinner.setSelection(graadSelected)
 
         graadSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
