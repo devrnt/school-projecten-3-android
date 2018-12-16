@@ -2,9 +2,11 @@ package com.talentcoach.id11.id11_android.profiel
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.view.Gravity
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.ArrayAdapter
+import android.widget.TextView
 import android.widget.Toast
 import com.google.gson.Gson
 import com.hootsuite.nachos.terminator.ChipTerminatorHandler
@@ -103,7 +105,11 @@ class ProfielEditActivity : AppCompatActivity() {
 
             // Backend can't be reached
             override fun onFailure(call: Call<Leerling>, t: Throwable) {
-                Toast.makeText(applicationContext, getString(R.string.something_went_wrong_login), Toast.LENGTH_LONG).show()
+//                Toast.makeText(applicationContext, getString(R.string.something_went_wrong_login), Toast.LENGTH_LONG).show()
+                val toast = Toast.makeText(applicationContext, getString(R.string.something_went_wrong_login), Toast.LENGTH_LONG)
+                val v = toast.getView().findViewById(android.R.id.message) as TextView
+                if (v != null) v.gravity = Gravity.CENTER
+                toast.show()
             }
         })
     }

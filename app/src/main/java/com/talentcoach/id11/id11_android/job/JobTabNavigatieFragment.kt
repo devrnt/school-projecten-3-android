@@ -57,7 +57,7 @@ class JobTabNavigatieFragment : Fragment() {
         override fun  getItem(position: Int): Fragment {
             return when (position) {
                 0  -> {
-                    InteressesFragment()
+                    JobInfoFragment()
                 }
                 else -> {
                     return BewaardeAanbiedingenFragment()

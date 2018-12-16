@@ -4,17 +4,17 @@
     <item
         android:id="@+id/navigation_competenties"
         android:icon="@drawable/school"
-        android:title="@string/title_competenties" />
+        android:title="@string/title_talent" />
 
     <item
         android:id="@+id/navigation_job"
         android:icon="@drawable/ic_briefcase_black_24dp"
-        android:title="@string/title_job" />
+        android:title="@string/title_jobinfo" />
 
     <item
         android:id="@+id/navigation_aanbiedingen"
         android:icon="@drawable/ic_library_books_black_24dp"
-        android:title="@string/title_aanbiedingen" />
+        android:title="@string/title_jobs" />
 
     <item
         android:id="@+id/navigation_coach"

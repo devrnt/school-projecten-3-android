@@ -7,9 +7,11 @@ import android.preference.PreferenceManager
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import android.widget.Toast
 import com.talentcoach.id11.id11_android.R
 import com.talentcoach.id11.id11_android.adapters.CompetentiesAdapter
@@ -140,7 +142,11 @@ class CompetentieListFragment : Fragment() {
         val sharedPreferences: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity)
         LeerlingAPI.repository.getById(sharedPreferences.getString(getString(R.string.sp_key_leerling), "Default").toInt()).enqueue(object : Callback<Leerling> {
             override fun onFailure(call: Call<Leerling>, t: Throwable) {
-                Toast.makeText(context, activity!!.getString(R.string.something_went_wrong_login), Toast.LENGTH_LONG).show()
+//                Toast.makeText(context, activity!!.getString(R.string.something_went_wrong_login), Toast.LENGTH_LONG).show()
+                val toast = Toast.makeText(context, getString(R.string.something_went_wrong_login), Toast.LENGTH_LONG)
+                val v = toast.getView().findViewById(android.R.id.message) as TextView
+                if (v != null) v.gravity = Gravity.CENTER
+                toast.show()
             }
 
             override fun onResponse(call: Call<Leerling>, response: Response<Leerling>) {
@@ -157,7 +163,11 @@ class CompetentieListFragment : Fragment() {
                     competentiesAdapter = CompetentiesAdapter(hoofdcompetentieLijst, activity!!.applicationContext)
                     recycle.adapter = competentiesAdapter
                 } else {
-                    Toast.makeText(context, activity!!.getString(R.string.something_went_wrong_login), Toast.LENGTH_LONG).show()
+//                    Toast.makeText(context, activity!!.getString(R.string.something_went_wrong_login), Toast.LENGTH_LONG).show()
+                    val toast = Toast.makeText(context, getString(R.string.something_went_wrong_login), Toast.LENGTH_LONG)
+                    val v = toast.getView().findViewById(android.R.id.message) as TextView
+                    if (v != null) v.gravity = Gravity.CENTER
+                    toast.show()
                 }
 
             }

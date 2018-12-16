@@ -1,56 +1,60 @@
-package com.talentcoach.id11.id11_android.werkaanbiedingen
-
+package com.talentcoach.id11.id11_android.job
 
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.preference.PreferenceManager
-import android.support.design.chip.Chip
-import android.support.design.chip.ChipGroup
 import android.support.v4.app.Fragment
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
-
 import com.talentcoach.id11.id11_android.R
-import com.talentcoach.id11.id11_android.managers.DataManager
 import com.talentcoach.id11.id11_android.models.Leerling
+import com.talentcoach.id11.id11_android.models.Werkgever
 import com.talentcoach.id11.id11_android.repositories.LeerlingAPI
+import kotlinx.android.synthetic.main.fragment_werkaanbieding.*
 import org.jetbrains.anko.doAsync
-import org.jetbrains.anko.uiThread
+import org.w3c.dom.Text
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-/**
- * A simple [Fragment] subclass.
- *
- */
-class InteressesFragment : Fragment() {
-
+class JobInfoFragment : Fragment() {
     private var leerlingId: Int? = null
     lateinit var leerling: Leerling
-    lateinit var interesses: List<String>
-    lateinit var chipGroup: ChipGroup
+    var werkgever: Werkgever? = null
+
+    lateinit var werkgeverInfoLayout: LinearLayout
     lateinit var progressSpinner: ProgressBar
+    lateinit var geenWerkgeverText: TextView
+    lateinit var werkgeverNaam: TextView
+    lateinit var werkgeverAddress: TextView
+    lateinit var werkgeverEmail: TextView
+    lateinit var werkgeverTelefoonnr: TextView
 
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        val view: View = inflater.inflate(R.layout.fragment_interesses, container, false)
-        chipGroup = view.findViewById(R.id.chipGroup) as ChipGroup
-        progressSpinner = view.findViewById(R.id.progressSpinnerInteresses) as ProgressBar
-        progressSpinner.visibility = View.VISIBLE
+        val view: View =  inflater.inflate(R.layout.fragment_job_info, container, false)
+
+        werkgeverInfoLayout = view.findViewById(R.id.werkgeverInfoLayout) as LinearLayout
+        werkgeverInfoLayout.visibility = View.GONE
+        geenWerkgeverText = view.findViewById(R.id.geenWerkgeverText) as TextView
+        geenWerkgeverText.visibility = View.GONE
+        progressSpinner = view.findViewById(R.id.progressSpinner) as ProgressBar
+        werkgeverNaam = view.findViewById(R.id.werkgeverNaam)
+        werkgeverAddress = view.findViewById(R.id.adrestv)
+        werkgeverEmail = view.findViewById(R.id.emailtv)
+        werkgeverTelefoonnr = view.findViewById(R.id.telefoonnrtv)
 
         doAsync {
             val sharedPreferences: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity)
             leerlingId = sharedPreferences.getString(getString(R.string.sp_key_leerling), "Default").toInt()
-            // TODO("HIER NIET VOLLEDIGE LEERLING OPHALEN MAAR ENKEL ZIJN INTERESSES")
             getLeerling()
         }
 
@@ -68,7 +72,13 @@ class InteressesFragment : Fragment() {
                 when {
                     response.isSuccessful -> {
                         leerling = response.body()!!
-                        getAndShowInteresses()
+                        werkgever = leerling.werkgever
+                        progressSpinner.visibility = View.GONE
+                        if (werkgever != null){
+                            showWerkgever()
+                        } else {
+                            showGeenWerkgever()
+                        }
                     }
                     else ->
                         // TODO("These cases will only be needed in development, not in production")
@@ -90,40 +100,18 @@ class InteressesFragment : Fragment() {
         })
     }
 
-    private fun getAndShowInteresses() {
-        doAsync {
-            interesses = DataManager.getAllTags()
-            uiThread {
-                progressSpinner.visibility = View.GONE
-                chipGroup.removeAllViews()
-                for (index in interesses) {
-                    val chip = Chip(chipGroup.context)
-                    chip.text = index
-                    chip.setChipBackgroundColorResource(R.color.bg_chip_state_list)
-                    chip.setTextAppearance(R.style.whiteTextSelected)
-                    chip.isClickable = true
-                    chip.isCheckable = true
-                    if (leerling.interesses.contains(index)) {
-                        chip.isChecked = true
-                    }
-                    chip.setOnClickListener {
-
-                    }
-                    chipGroup.addView(chip)
-                }
-            }
-        }
+    private fun showWerkgever() {
+        werkgeverInfoLayout.visibility = View.VISIBLE
+        werkgeverNaam.text = werkgever!!.naam
+        werkgeverAddress.text = werkgever!!.werkplaats
+        werkgeverEmail.text = werkgever!!.email
+        werkgeverTelefoonnr.text = werkgever!!.telefoonNummer.toString()
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @return A new instance of fragment Tab1Fragment.
-         */
-        @JvmStatic
-        fun newInstance() = InteressesFragment()
+    private fun showGeenWerkgever() {
+        geenWerkgeverText.visibility = View.VISIBLE
     }
+
+
 
 }

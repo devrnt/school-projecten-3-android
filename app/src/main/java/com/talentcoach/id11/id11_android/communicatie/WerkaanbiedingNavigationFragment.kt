@@ -24,7 +24,7 @@ import org.jetbrains.anko.uiThread
  */
 class WerkaanbiedingNavigationFragment : Fragment(), IClickListener {
     var leerling = Leerling(1, Richting(1, "", mutableListOf()), 0, "1993-07-05T00:00:00", "leerling@school.be", mutableListOf(),
-            mutableListOf(), mutableListOf(), "Stroobants", "Bruno", mutableListOf())
+            mutableListOf(), mutableListOf(), "Stroobants", "Bruno", mutableListOf(), null)
         private set
     // shown when user toggles to Bewaarde Werkaanbiedingen
     val werkaanbiedingenListFragment = WerkaanbiedingenListFragment() // shows Leerling.bewaardeWerkaanbiedingen
@@ -168,7 +168,7 @@ class WerkaanbiedingNavigationFragment : Fragment(), IClickListener {
         }
         // resets leerling property so Leerling gets retrieved from the database when activity resumes
         leerling = Leerling(1, Richting(1, "", mutableListOf()), 0, "1993-07-05T00:00:00", "leerling@school.be", mutableListOf(),
-                mutableListOf(), mutableListOf(), "Stroobants", "Bruno", mutableListOf())
+                mutableListOf(), mutableListOf(), "Stroobants", "Bruno", mutableListOf(), null)
     }
 
     companion object {

@@ -25,6 +25,10 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import kotlin.math.absoluteValue
+import android.view.Gravity
+import android.widget.TextView
+
+
 
 /**
  * Fragment that shows an input for username and password and a login button
@@ -157,7 +161,12 @@ class LoginFragment : Fragment() {
                         override fun onFailure(call: Call<Leerling>, t: Throwable) {
                             println(call)
                             println(t.message)
-                            Toast.makeText(context, getString(R.string.something_went_wrong_login), Toast.LENGTH_LONG).show()
+//                            Toast.makeText(context, getString(R.string.something_went_wrong_login), Toast.LENGTH_LONG).show()
+                            val toast = Toast.makeText(context, getString(R.string.something_went_wrong_login), Toast.LENGTH_LONG)
+                            val v = toast.getView().findViewById(android.R.id.message) as TextView
+                            if (v != null) v.gravity = Gravity.CENTER
+                            toast.show()
+
                         }
                     })
 
@@ -176,7 +185,11 @@ class LoginFragment : Fragment() {
             override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
                 println(call)
                 println(t.message)
-                Toast.makeText(context, getString(R.string.something_went_wrong_login), Toast.LENGTH_LONG).show()
+//                Toast.makeText(context, getString(R.string.something_went_wrong_login), Toast.LENGTH_LONG).show()
+                val toast = Toast.makeText(context, getString(R.string.something_went_wrong_login), Toast.LENGTH_LONG)
+                val v = toast.getView().findViewById(android.R.id.message) as TextView
+                if (v != null) v.gravity = Gravity.CENTER
+                toast.show()
             }
         })
     }

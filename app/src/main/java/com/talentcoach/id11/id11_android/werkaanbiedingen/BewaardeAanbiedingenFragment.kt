@@ -25,6 +25,7 @@ import android.support.v4.view.ViewCompat.setActivated
 import android.support.v7.widget.CardView
 import android.text.TextUtils
 import android.transition.TransitionManager
+import android.view.Gravity
 import android.widget.*
 import com.talentcoach.id11.id11_android.models.Werkgever
 import kotlinx.android.synthetic.main.fragment_aanbiedingen.*
@@ -96,7 +97,11 @@ class BewaardeAanbiedingenFragment: Fragment() {
 
             // backend can't be reached
             override fun onFailure(call: Call<Leerling>, t: Throwable) {
-                Toast.makeText(activity, getString(R.string.something_went_wrong_login), Toast.LENGTH_LONG).show()
+//                Toast.makeText(activity, getString(R.string.something_went_wrong_login), Toast.LENGTH_LONG).show()
+                val toast = Toast.makeText(activity, getString(R.string.something_went_wrong_login), Toast.LENGTH_LONG)
+                val v = toast.getView().findViewById(android.R.id.message) as TextView
+                if (v != null) v.gravity = Gravity.CENTER
+                toast.show()
             }
         })
 

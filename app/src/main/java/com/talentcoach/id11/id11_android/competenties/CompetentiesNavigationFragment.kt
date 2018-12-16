@@ -165,7 +165,11 @@ class CompetentiesNavigationFragment : Fragment() {
         LeerlingAPI.repository.getById(sharedPreferences.getString(getString(R.string.sp_key_leerling), "Default").toInt()).enqueue(object : Callback<Leerling> {
         //LeerlingAPI.repository.getById(2).enqueue(object : Callback<Leerling> {
             override fun onFailure(call: Call<Leerling>, t: Throwable) {
-            Toast.makeText(context, activity!!.getString(R.string.something_went_wrong_login), Toast.LENGTH_LONG).show()
+//            Toast.makeText(context, activity!!.getString(R.string.something_went_wrong_login), Toast.LENGTH_LONG).show()
+            val toast = Toast.makeText(context, getString(R.string.something_went_wrong_login), Toast.LENGTH_LONG)
+            val v = toast.getView().findViewById(android.R.id.message) as TextView
+            if (v != null) v.gravity = Gravity.CENTER
+            toast.show()
             }
 
             override fun onResponse(call: Call<Leerling>, response: Response<Leerling>) {
@@ -181,7 +185,11 @@ class CompetentiesNavigationFragment : Fragment() {
 
                     view!!.findViewById<TextView>(R.id.aantalBehaaldeHoofdcompetenties).text = "${behaaldeHoofdCompetentieLijst.size}/${hoofdcompetentieLijst.size} ${activity!!.getString(R.string.behaald)}"
                 } else {
-                    Toast.makeText(context, activity!!.getString(R.string.something_went_wrong_login), Toast.LENGTH_LONG).show()
+//                    Toast.makeText(context, activity!!.getString(R.string.something_went_wrong_login), Toast.LENGTH_LONG).show()
+                    val toast = Toast.makeText(context, getString(R.string.something_went_wrong_login), Toast.LENGTH_LONG)
+                    val v = toast.getView().findViewById(android.R.id.message) as TextView
+                    if (v != null) v.gravity = Gravity.CENTER
+                    toast.show()
                 }
             }
 

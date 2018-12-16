@@ -7,6 +7,7 @@ import android.preference.PreferenceManager
 import android.support.v4.app.Fragment
 import android.view.*
 import android.widget.Button
+import android.widget.TextView
 import android.widget.Toast
 import com.google.gson.Gson
 import com.talentcoach.id11.id11_android.R
@@ -103,7 +104,11 @@ class ProfielFragment : Fragment() {
 
             // backend can't be reached
             override fun onFailure(call: Call<Leerling>, t: Throwable) {
-                Toast.makeText(activity, getString(R.string.something_went_wrong_login), Toast.LENGTH_LONG).show()
+//                Toast.makeText(activity, getString(R.string.something_went_wrong_login), Toast.LENGTH_LONG).show()
+                val toast = Toast.makeText(activity, getString(R.string.something_went_wrong_login), Toast.LENGTH_LONG)
+                val v = toast.getView().findViewById(android.R.id.message) as TextView
+                if (v != null) v.gravity = Gravity.CENTER
+                toast.show()
             }
         })
 
