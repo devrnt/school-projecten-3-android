@@ -13,7 +13,18 @@ import com.talentcoach.id11.id11_android.models.BeoordelingScore
 import kotlinx.android.synthetic.main.beoordeling_deelcompetentie_card.view.*
 import java.text.SimpleDateFormat
 
-
+/**
+ * Deel van *adapters*.
+ *
+ * DeelcompetentiesAdapter is verantwoordelijk voor het omzetten van deelcompetenties objecten in view elementen (dialogs);
+ *
+ * Op basis van de [LeerlingDeelCompetentie] wordt de bijhorende view [beoordeling_deelcompetentie_card.xml] opgebouwd
+ *
+ * @property beoordelingen lijst die alle [BeoordelingDeelCompetentie] objecten bevat van een [LeerlingDeelCompetentie]
+ * @property context de viewcontext
+ * @property dateFormatter formateerd en houdt een datum bij in dd/MM/yyyy formaat
+ * @constructor maakt een nieuwe instantie van [DeelcompetentieAdapter]
+ */
 class DeelcompetentieAdapter(
         var beoordelingen: MutableList<BeoordelingDeelCompetentie>,
         var context: Context):RecyclerView.Adapter<BeoordelingViewHolder>(){

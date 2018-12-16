@@ -8,8 +8,16 @@ import android.widget.BaseExpandableListAdapter
 import android.widget.TextView
 import com.talentcoach.id11.id11_android.R
 import kotlinx.android.synthetic.main.list_child.view.*
-
-
+/**
+ * Deel van *adapters*.
+ *
+ * ExpandableListAdapter is verantwoordelijk voor het omzetten van string objecten in view elementen (chipss);
+ *
+ * @property leerlingHoofdcompetenties de lijst van hoofdcompetenties van de ingelogde leerling
+ * @property context de viewcontext
+ * @property header lijst va
+ * @property body formateerd en houdt een datum bij in dd/MM/yyyy formaat
+ */
 class ExpandableListAdapter(
         var context: Context,
         var header: List<String>,

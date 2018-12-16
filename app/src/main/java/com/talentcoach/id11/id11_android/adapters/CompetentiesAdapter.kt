@@ -24,7 +24,18 @@ import com.talentcoach.id11.id11_android.models.LeerlingDeelCompetentie
 import com.talentcoach.id11.id11_android.models.LeerlingHoofdCompetentie
 import kotlinx.android.synthetic.main.hoofdcompetentie_list_item.view.*
 import java.text.SimpleDateFormat
-
+/**
+ * Deel van *adapters*.
+ *
+ * CompetentiesAdapter is verantwoordelijk voor het omzetten van hoofdcompetentie objecten in view elementen;
+ * Op basis van de [leerlingHoofdcompetenties] wordt de bijhorende view [hoofdcompetentie_list_item.xml] opgebouwd
+ *
+ * @property leerlingHoofdcompetenties de lijst van hoofdcompetenties van de ingelogde leerling
+ * @property context de viewcontext
+ * @property opengeklapt houdt de staat bij van iedere hoofdcompetentie
+ * @property dateFormatter formateerd en houdt een datum bij in dd/MM/yyyy formaat
+ * @constructor maakt een nieuwe instantie van CompetentieAdapter
+ */
 class CompetentiesAdapter(
     var leerlingHoofdcompetenties: MutableList<LeerlingHoofdCompetentie>,
     var context: Context):RecyclerView.Adapter<CustomViewHolder>(){
@@ -40,6 +51,11 @@ class CompetentiesAdapter(
         return CustomViewHolder(cellForRow)
     }
 
+
+    /**
+     * Geeft het aanntal [leerlingHoofdcompetenties]
+     * @return het aantal [leerlingHoofdcompetenties]
+     */
     override fun getItemCount(): Int {
         return leerlingHoofdcompetenties.size
     }
@@ -92,6 +108,15 @@ class CompetentiesAdapter(
 
     }
 
+
+    /**
+     * Hulpmethode voegt het passende icon en kleur toe aan de view van een [LeerlingHoofdCompetentie] op basis van de attributen icon en kleur;
+     * @param context de context, wordt gebruikt om de kleur op te halen uit de app res
+     * @param holder wordt gebruitk om de kleur en het icon op in te stellen
+     * @param hoofdCompetentie wordt gebruikt om de kleur en icon velden uit te lezen
+     *
+     * @return het aantal [leerlingHoofdcompetenties]
+     */
     private fun setCompetentieImageAndColor(context: Context,holder: CustomViewHolder, hoofdCompetentie: LeerlingHoofdCompetentie)
     {
         val icon: Int;
@@ -144,6 +169,13 @@ class CompetentiesAdapter(
         holder.view.imageView.setBackgroundColor(kleur);
     }
 
+    /**
+     * Hulpmethode opent een [Dialog] voor een gekozen [LeerlingDeelCompetentie];
+     * De [LeerlingDeelCompetentie.beoordelingen] worden weergegeven;
+     * @param view de context waar de teksten op ingesteld worden
+     * @param deelcomp de [LeerlingHoofdCompetentie] waaruit de data wordt gelezen
+     *
+     */
     private fun showDialogWindow(view: View, deelcomp: LeerlingDeelCompetentie) {
 
         beoordelingsDialog = Dialog(view.context)
