@@ -18,7 +18,11 @@ import org.jetbrains.anko.uiThread
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-
+/**
+ * Deel van *competenties*.
+ *
+ * Fragment  verantwoordelijk voor het tonen van bewaarde werkaanbiedingen cards
+ */
 class CompetentiesNavigationFragment : Fragment() {
 
     /**

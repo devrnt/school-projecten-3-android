@@ -10,6 +10,8 @@ import com.talentcoach.id11.id11_android.R
 import kotlinx.android.synthetic.main.fragment_werkaanbieding_buttons.*
 
 /**
+ * Deel van *commmunicatie*.
+ *
  * Fragment that shows a like and noLike button or a remove button
  * @property iClickListener The activity that listens to this fragment
  * @property onlyRemove if true, then there will only be a remove button shown

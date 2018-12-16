@@ -15,6 +15,7 @@ import com.talentcoach.id11.id11_android.models.Werkaanbieding
 
 
 /**
+ * Deel van *communicatie*.
  * Fragment that contains a RecyclerView to display Bewaarde Werkaanbiedingen
  * @property werkaanbiedingenList The list of Bewaarde Werkaanbiedingen to be shown
  * @property iClickListener The activity listening to this fragment

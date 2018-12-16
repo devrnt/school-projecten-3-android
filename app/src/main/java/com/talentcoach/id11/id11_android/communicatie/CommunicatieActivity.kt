@@ -11,7 +11,12 @@ import kotlinx.android.synthetic.main.activity_communicatie.*
 import org.jetbrains.anko.toast
 
 /**
+ * Deel van *communicatie*.
+ *
  * Lets a user launch the activities concering "Communicatie"
+ * @property timesRequested records the amount of requests
+ * @property werkspreukRepo houdt de repository die de werkspreuken fetched
+ * @property werkspreuk de huidge werkspreuk
  */
 class CommunicatieActivity : AppCompatActivity() {
     private var timesRequested: Int = 0

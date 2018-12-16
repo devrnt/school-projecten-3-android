@@ -26,6 +26,7 @@ import retrofit2.Response
 import java.util.*
 
 /**
+ * Deel van *competenties*.
  * This class gets the list of [LeerlingHoofdCompetentie] from the [Leerling] and shows them via RecyclerView.
  *
  * @property competentiesAdapter gets the details from each [LeerlingHoofdCompetentie] and shows them in the CardView

@@ -15,6 +15,7 @@ import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 
 /**
+ * Deel van *competenties*.
  * Enables the user to view and react to a Werkaanbieding and to manage his/her Bewaarde Werkaanbiedingen
  * Implements IClickListener to listen to button clicks in its fragments
  * @property leerling The current logged in Leerling
