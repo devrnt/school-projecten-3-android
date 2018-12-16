@@ -73,7 +73,7 @@ class CompetentiesAdapter(
 
             if(!opengeklapt){
                 holder.view.arrowIcon.setImageResource(R.drawable.arrow_down_24dp)
-                TransitionManager.beginDelayedTransition(holder.view.hoofdcompetentieCard,transDelay)
+                TransitionManager.beginDelayedTransition(holder.view.hoofdcompetentieCard as ViewGroup?,transDelay)
                 holder.view.childItems.visibility = View.VISIBLE
                 opengeklapt = true
             }
