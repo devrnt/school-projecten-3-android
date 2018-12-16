@@ -7,6 +7,7 @@ import android.preference.PreferenceManager
 import android.support.constraint.ConstraintLayout
 import android.support.design.card.MaterialCardView
 import android.support.design.chip.Chip
+import android.support.design.chip.ChipGroup
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -27,6 +28,7 @@ import android.text.TextUtils
 import android.transition.TransitionManager
 import android.view.Gravity
 import android.widget.*
+import com.talentcoach.id11.id11_android.R.id.chipGroupBewaardeAanbieding
 import com.talentcoach.id11.id11_android.models.Werkgever
 import kotlinx.android.synthetic.main.fragment_aanbiedingen.*
 
@@ -79,7 +81,7 @@ class BewaardeAanbiedingenFragment: Fragment() {
 //                        progressSpinner.visibility = View.GONE
                         progressSpinner.visibility = View.GONE
                         if (werkaanbiedingenList.size > 0) {
-                            val adapter = BewaardeAanbiedingenFragment.WerkaanbiedingenAdapter(werkaanbiedingenList)
+                            val adapter = BewaardeAanbiedingenFragment.WerkaanbiedingenAdapter(werkaanbiedingenList, leerling.interesses)
                             recyclerView?.adapter = adapter
                             recyclerView?.layoutManager = LinearLayoutManager(activity) // items get displayed in a vertical list
                         } else {
@@ -108,7 +110,8 @@ class BewaardeAanbiedingenFragment: Fragment() {
     }
 
     class WerkaanbiedingenAdapter(
-            val werkaanbiedingen: MutableList<Werkaanbieding>
+            val werkaanbiedingen: MutableList<Werkaanbieding>,
+            val interesses: List<String>
     ) : RecyclerView.Adapter<WerkaanbiedingenAdapter.AanbiedingenViewHolder>() {
 
         private var mExpandedPosition = -1
@@ -140,18 +143,20 @@ class BewaardeAanbiedingenFragment: Fragment() {
             beschrijving.maxLines = if (isExpanded) Integer.MAX_VALUE else 2
             beschrijving.ellipsize = if (isExpanded) null else TextUtils.TruncateAt.END
 
-//            werkaanbieding.tags.forEach {
-//                var c = Chip()
-//                c.text = it
-//                c.isClickable = false
-//                c.setChipBackgroundColorResource(R.color.bg_chip_state_list)
-//                c.setTextAppearance(R.style.whiteTextSelected)
-//                c.isCheckable = true
-//                if (leerling.interesses.contains(it)) {
-//                    c.isChecked = true
-//                }
-//                chipGroupAanbieding.addView(c)
-//            }
+            val chipGroupBewaardeAanbieding = holder.constraintLayout.findViewById<ChipGroup>(R.id.chipGroupBewaardeAanbieding)
+            chipGroupBewaardeAanbieding.removeAllViews()
+            werkaanbieding.tags.forEach {
+                var c = Chip(holder.constraintLayout.context)
+                c.text = it
+                c.isClickable = false
+                c.setChipBackgroundColorResource(R.color.bg_chip_state_list)
+                c.setTextAppearance(R.style.whiteTextSelected)
+                c.isCheckable = true
+                if (interesses.contains(it)) {
+                    c.isChecked = true
+                }
+                chipGroupBewaardeAanbieding.addView(c)
+            }
 
             holder.itemView.isActivated = isExpanded
             holder.itemView.setOnClickListener {

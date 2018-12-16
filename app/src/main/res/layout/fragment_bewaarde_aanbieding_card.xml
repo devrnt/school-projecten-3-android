@@ -96,19 +96,19 @@
                         android:layout_marginTop="14dp"
                         android:layout_marginRight="16dp">
 
-                        <android.support.design.chip.Chip
-                            android:id="@+id/chip_example"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:clickable="false"
-                            android:text="Teamwork" />
+                        <!--<android.support.design.chip.Chip-->
+                            <!--android:id="@+id/chip_example"-->
+                            <!--android:layout_width="wrap_content"-->
+                            <!--android:layout_height="wrap_content"-->
+                            <!--android:clickable="false"-->
+                            <!--android:text="Teamwork" />-->
 
-                        <android.support.design.chip.Chip
-                            android:id="@+id/chip_example2"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:clickable="false"
-                            android:text="Leergierigheid" />
+                        <!--<android.support.design.chip.Chip-->
+                            <!--android:id="@+id/chip_example2"-->
+                            <!--android:layout_width="wrap_content"-->
+                            <!--android:layout_height="wrap_content"-->
+                            <!--android:clickable="false"-->
+                            <!--android:text="Leergierigheid" />-->
                     </android.support.design.chip.ChipGroup>
 
                     <View
