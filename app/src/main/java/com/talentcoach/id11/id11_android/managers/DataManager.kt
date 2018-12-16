@@ -76,31 +76,59 @@ object DataManager : Serializable {
      * @param werkgever de werkgever van de specifieke info
      * @returns Een lijst met SpecifiekeInfo objecten
      */
-
-
-
     fun getSpecifiekeInfoForWerkgever(werkgever: Werkgever): List<SpecifiekeInfo> {
         return specifiekeInfoRepository.getAll().filter {
             specifiekeInfo -> specifiekeInfo.werkgever.naam == werkgever.naam
         }
     }
 
+    /**
+     *Geeft alle specifieke info voor een Werkgever;
+     * depricated, wordt niet gebruikt in de app
+     * @param werkgever de werkgever van de specifieke info
+     * @returns Een lijst met SpecifiekeInfo objecten
+     */
     fun update(leerling: Leerling) {
         leerlingRepository.update(leerling)
     }
 
+
+    /**
+     *Geeft alle Tags die aanwezig zijn in de beschikbare werkaanbiedingen;
+     *
+     * @returns Een lijst met tags
+     */
     fun getAllTags(): List<String> {
         return werkaanbiedingRepository.getAlleTags()
     }
 
+    /**
+     * Voegt een werkaanbieding toe aan de geliked lijst van werkaanbiedingen van een leerling
+     * @param leerlingId het id van de betreffende leerling
+     * @param werkaanbiedingId het id van de betreffende werkaanbieding
+     * @returns De bewaarde werkaanbieding
+     */
     fun likeWerkaanbieding(leerlingId: Int, werkaanbiedingId: Long) {
         leerlingRepository.likeWerkaanbieding(leerlingId, werkaanbiedingId)
     }
 
+    /**
+     * Voegt een werkaanbieding toe aan de verwijderde lijst van werkaanbiedingen van een leerling
+     * @param leerlingId het id van de betreffende leerling
+     * @param werkaanbiedingId het id van de betreffende werkaanbieding
+     * @returns De verwijderde werkaanbieding
+     */
     fun dislikeWerkaanbieding(leerlingId: Int, werkaanbiedingId: Long) {
         leerlingRepository.dislikeWerkaanbieding(leerlingId, werkaanbiedingId)
     }
 
+
+    /**
+     * Verandert een werkaanbieding van lijst van een leerling
+     * @param leerlingId het id van de betreffende leerling
+     * @param werkaanbiedingId het id van de betreffende werkaanbieding
+     * @returns De veranderde werkaanbieding
+     */
     fun undoWerkaanbieding(leerlingId: Int, werkaanbiedingId: Long) {
         leerlingRepository.undoWerkaanbieding(leerlingId, werkaanbiedingId)
     }

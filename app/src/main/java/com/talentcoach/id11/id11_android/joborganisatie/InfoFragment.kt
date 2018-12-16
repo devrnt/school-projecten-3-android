@@ -16,9 +16,11 @@ private const val HEADER_LIST = "INFO_LIST"
 private const val BODY_LIST = "BODY_LIST"
 
 /**
- * Fragment which can display a ExpandableListView
- * @property headerList ArrayList of Strings containing the headers for the list
- * @property bodyList ArrayList of Strings containing the body texts for the list
+ * Deel van *joborganisatie*.
+ *
+ * Fragment dat een ExpandableListView kan tonen
+ * @property headerList ArrayList van Strings die de headers voor de lijst bevat
+ * @property bodyList ArrayList van Strings die de body texten voor de lijst bevat
  */
 class InfoFragment : Fragment() {
     var headerList: List<String>? = null
@@ -45,12 +47,12 @@ class InfoFragment : Fragment() {
 
     companion object {
         /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
+         *  Factoy Method die gebruikt wordt om een nieuwe instantie van deze fragment te verkrijgen;
+         *  gebruikmakende van de parameters;
          *
-         * @param headerList ArrayList of Strings containing the headers for the list
-         * @param bodyList ArrayList of Strings containing the body texts for the list
-         * @return A new instance of fragment InfoFragment.
+         * @param headerList ArrayList van Strings die de headers voor de lijst bevat
+         * @param bodyList ArrayList van Strings die de body texten voor de lijst bevat
+         * @return een nieuwe instantie van fragment InfoFragment.
          */
         @JvmStatic
         fun newInstance(headerList: Array<String>, bodyList: Array<String>) =
