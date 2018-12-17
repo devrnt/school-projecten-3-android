@@ -36,7 +36,7 @@ class CompetentiesNavigationFragment : Fragment() {
     lateinit var myDialog:Dialog
     var namesSortedState:Boolean = false
     var behaaldSortedState: Boolean = false
-    var graadSelected:Int = 0
+    var graadSelectedState:Int = 0
     var hoofdcompetentieLijst: MutableList<LeerlingHoofdCompetentie> = mutableListOf()
     var behaaldeHoofdCompetentieLijst: MutableList<LeerlingHoofdCompetentie> = mutableListOf()
     var teBehalenHoofdcompetentieLijst: MutableList<LeerlingHoofdCompetentie> = mutableListOf()
@@ -49,7 +49,7 @@ class CompetentiesNavigationFragment : Fragment() {
 
         view.findViewById<ImageButton>(R.id.filterbutton).setOnClickListener {
             // when clicked remove the corresponding item and notify adapter of change
-            ShowDialogWindow(graadSelected)
+            ShowDialogWindow()
         }
 
         doAsync {
@@ -69,8 +69,7 @@ class CompetentiesNavigationFragment : Fragment() {
     }
 
     //Toont Dialog venster waar gebruiker competenties kan sorteren/filteren
-    private fun ShowDialogWindow(graadSelected:Int) {
-
+    private fun ShowDialogWindow() {
         var sorteerOpNaamToggle:Switch
         var sorteerOpBehaaldToggle: Switch
         var cancelBtn: Button
@@ -79,35 +78,23 @@ class CompetentiesNavigationFragment : Fragment() {
         myDialog = Dialog(this.context!!)
         myDialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         myDialog.setContentView(R.layout.dialog_filter)
-        sorteerOpNaamToggle = myDialog.findViewById(R.id.naamToggle) as Switch
-        if(namesSortedState){
-            sorteerOpNaamToggle.isChecked = true
-        }
-        else if (!namesSortedState){
-            sorteerOpNaamToggle.isChecked = false
-        }
+
 
         //Switch button om te sorteren op naam van competentie
+        sorteerOpNaamToggle = myDialog.findViewById(R.id.naamToggle) as Switch
+        sorteerOpNaamToggle.isChecked = namesSortedState
         sorteerOpNaamToggle.setOnCheckedChangeListener{sorteerOpNaamToggle,isChecked ->
-
             if(isChecked){
-                competentieListFragment.showSortedListView()
                 namesSortedState = true
             }
             else{
-                competentieListFragment.showUnsortedListView()
                 namesSortedState = false
             }
         }
 
-        sorteerOpBehaaldToggle = myDialog.findViewById(R.id.behaald_toggle) as Switch
-        if (behaaldSortedState) {
-            sorteerOpBehaaldToggle.isChecked = true
-        }
-        else if (!behaaldSortedState) {
-            sorteerOpBehaaldToggle.isChecked = false
-        }
 
+        sorteerOpBehaaldToggle = myDialog.findViewById(R.id.behaald_toggle) as Switch
+        sorteerOpBehaaldToggle.isChecked = behaaldSortedState
         sorteerOpBehaaldToggle.setOnCheckedChangeListener { sorteerOpBehaaldToggle, isChecked ->
             if (isChecked) {
                 behaaldSortedState = true
@@ -116,36 +103,33 @@ class CompetentiesNavigationFragment : Fragment() {
             }
         }
 
-        //Cancel Button om dialog venster te sluiten
-        cancelBtn = myDialog.findViewById(R.id.cancelBtn)
-        cancelBtn.setOnClickListener(){
-         myDialog.cancel()
-        }
-
         //Spinner = dropdown list om te filteren op graad
         graadSpinner = myDialog.findViewById<Spinner>(R.id.graadSpinner)
         val graadOptions: MutableList<String> = hoofdcompetentieLijst.map { hc -> hc.hoofdCompetentie.graad }.distinct().sorted().toMutableList()
         graadOptions.add(0, "Alle")
         graadSpinner.adapter = ArrayAdapter<String>(this.context!!,android.R.layout.simple_dropdown_item_1line,graadOptions)
-        graadSpinner.setSelection(graadSelected)
-
+        graadSpinner.setSelection(graadSelectedState)
         graadSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-
             override fun onNothingSelected(parent: AdapterView<*>?) {
                 println(activity!!.getString(R.string.niets_geselecteerd))
             }
-
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                this@CompetentiesNavigationFragment.graadSelected = position
+                graadSelectedState = position
             }
+        }
 
+
+
+        //Cancel Button om dialog venster te sluiten
+        cancelBtn = myDialog.findViewById(R.id.cancelBtn)
+        cancelBtn.setOnClickListener(){
+            myDialog.cancel()
         }
 
         //bevestig Button om filter in te stellen
         var toepassenBtn = myDialog.findViewById<Button>(R.id.toepassenBtn)
         toepassenBtn.setOnClickListener(){
-            competentieListFragment.applyFilter(behaaldSortedState, graadSpinner.selectedItem.toString())
-
+            competentieListFragment.applyFilter(namesSortedState, behaaldSortedState, graadSpinner.selectedItem.toString())
             myDialog.cancel()
         }
 

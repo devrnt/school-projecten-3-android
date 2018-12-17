@@ -107,37 +107,46 @@ class CompetentieListFragment : Fragment() {
      * @param Boolean to see if the user wants to see the behaalde competenties or not
      * @param String to know which graad of hoofdcompetenties the user wants to see
      */
-    fun applyFilter(behaald:Boolean, graad:String){
-
+    fun applyFilter(sorteerOpNaam: Boolean, behaald:Boolean, graad:String){
         var sortedList: List<LeerlingHoofdCompetentie> = listOf()
 
-        if (copyList.isNotEmpty()) {
-            competentiesAdapter.leerlingHoofdcompetenties.clear()
-            for (item in copyList) {
-                competentiesAdapter.leerlingHoofdcompetenties.add(competentiesAdapter.leerlingHoofdcompetenties.size , item)
-            }
-            copyList = mutableListOf()
-        }
+        if (sorteerOpNaam == true && !graad.contains("Alle", true) && behaald == true) {
+            sortedList = hoofdcompetentieLijst.filter { hc -> hc.behaald == behaald && hc.hoofdCompetentie.graad.equals(graad,true) }.sortedBy { hc -> hc.hoofdCompetentie.omschrijving }
+        } else {
+            if (sorteerOpNaam == false && !graad.contains("Alle", true) && behaald == true){
+                sortedList = hoofdcompetentieLijst.filter { c -> c.behaald == behaald && c.hoofdCompetentie.graad.equals(graad,true) }
+            } else {
+                if (sorteerOpNaam == true && graad.contains("Alle", true) && behaald == true) {
+                    sortedList = hoofdcompetentieLijst.filter { hc -> hc.behaald == behaald }.sortedBy { hc -> hc.hoofdCompetentie.omschrijving }
+                } else {
+                    if (sorteerOpNaam == false && graad.contains("Alle", true) && behaald == true) {
+                        sortedList = hoofdcompetentieLijst.filter { hc -> hc.behaald == behaald }
+                    }
+                }
 
-        sortedList = hoofdcompetentieLijst.filter { c -> c.behaald == behaald && c.hoofdCompetentie.graad.equals(graad,true) }
-
-        if (graad.contains("Alle", true)) {
-            sortedList = hoofdcompetentieLijst.filter { hc -> hc.behaald == behaald }
-        }
-
-        if(sortedList.isNotEmpty()){
-            copyList = hoofdcompetentieLijst.toMutableList()
-            competentiesAdapter.leerlingHoofdcompetenties = mutableListOf()
-            for(item in sortedList){
-                competentiesAdapter.leerlingHoofdcompetenties.add(competentiesAdapter.leerlingHoofdcompetenties.size, item)
             }
         }
-        else
-            competentiesAdapter.leerlingHoofdcompetenties = mutableListOf()
+
+        if (sorteerOpNaam == true && !graad.contains("Alle", true) && behaald == false) {
+            sortedList = hoofdcompetentieLijst.filter { hc -> hc.hoofdCompetentie.graad.equals(graad,true) }.sortedBy { hc -> hc.hoofdCompetentie.omschrijving }
+        } else {
+            if (sorteerOpNaam == false && !graad.contains("Alle", true) && behaald == false){
+                sortedList = hoofdcompetentieLijst.filter { c -> c.hoofdCompetentie.graad.equals(graad,true) }
+            } else {
+                if (sorteerOpNaam == true && graad.contains("Alle", true) && behaald == false) {
+                    sortedList = hoofdcompetentieLijst.sortedBy { hc -> hc.hoofdCompetentie.omschrijving }
+                } else {
+                    if (sorteerOpNaam == false && graad.contains("Alle", true) && behaald == false) {
+                        sortedList = hoofdcompetentieLijst
+                    }
+                }
+
+            }
+        }
 
 
-        competentiesAdapter.notifyDataSetChanged()
-
+        competentiesAdapter = CompetentiesAdapter(sortedList.toMutableList(), activity!!.applicationContext)
+        recycle.adapter = competentiesAdapter
     }
 
     /**
