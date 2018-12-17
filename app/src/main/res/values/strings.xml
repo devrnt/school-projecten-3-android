@@ -59,7 +59,7 @@
     <string name="werkaanbieding_title">Werkaanbieding</string>
     <string name="title_dialog_deelcompetentie_beoordelingen">Beoordelingen</string>
     <string name="behaald_op">Behaald op</string>
-    <string name="geen_beoordelingen">heeft geen beoordelingen</string>
+    <string name="geen_beoordelingen">Deze deelcompetentie heeft nog geen beoordelingen</string>
     <string name="niets_geselecteerd">Niets geselecteerd</string>
     <string name="behaald"> hoofdcompetenties behaald</string>
 
@@ -127,4 +127,6 @@
     <string name="sorteren_op_naam">Sorteren op naam</string>
     <string name="sorteer_op_behaald">Sorteer op behaald</string>
     <string name="filteren_op_graad">Filteren op graad</string>
+    <string name="under_construction">Coach under construction</string>
+    <string name="app_logo">app logo</string>
 </resources>

@@ -1,25 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_margin="16dp"
     android:paddingBottom="16dp"
     android:clipToPadding="false"
     android:background="@color/colorGrey">
-    <ProgressBar
-        android:id="@+id/progressSpinnerAI"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        android:indeterminate="true"
-        android:max="1"
-        android:layout_gravity="center"/>
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/algemeneInfoRecView"
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="103.5dp"
+        android:layout_height="219dp"
+        android:contentDescription="@string/logo_description"
+        app:srcCompat="@drawable/logo_gradient_transparent_rechts"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_marginBottom="52dp"/>
+
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scrollbars="vertical" />
-</FrameLayout>
+        android:layout_alignParentTop="true">
+        <ProgressBar
+            android:id="@+id/progressSpinnerAI"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:indeterminate="true"
+            android:max="1"
+            android:layout_gravity="center"/>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/algemeneInfoRecView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="vertical" />
+    </FrameLayout>
+
+</RelativeLayout>

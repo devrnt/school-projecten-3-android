@@ -187,7 +187,9 @@ class CompetentiesNavigationFragment : Fragment() {
                     hoofdcompetentieLijst.addAll(0, teBehalenHoofdcompetentieLijst)
                     hoofdcompetentieLijst.addAll(hoofdcompetentieLijst.size, behaaldeHoofdCompetentieLijst)
 
-                    view!!.findViewById<TextView>(R.id.aantalBehaaldeHoofdcompetenties).text = "${behaaldeHoofdCompetentieLijst.size}/${hoofdcompetentieLijst.size}  ${activity!!.getString(R.string.behaald)}"
+                    val countString = "${behaaldeHoofdCompetentieLijst.size}/${hoofdcompetentieLijst.size}  ${activity!!.getString(R.string.behaald)}"
+//                    view!!.findViewById<TextView>(R.id.aantalBehaaldeHoofdcompetenties).text = countString
+                    competentieListFragment.showCount(countString)
                 } else {
 //                    Toast.makeText(context, activity!!.getString(R.string.something_went_wrong_login), Toast.LENGTH_LONG).show()
                     val toast = Toast.makeText(context, getString(R.string.something_went_wrong_login), Toast.LENGTH_LONG)

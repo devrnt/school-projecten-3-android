@@ -9,6 +9,7 @@ import android.graphics.Color
 import android.os.Build
 import android.support.annotation.RequiresApi
 import android.support.v4.content.ContextCompat
+import android.support.v7.widget.CardView
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.transition.AutoTransition
@@ -185,8 +186,10 @@ class CompetentiesAdapter(
         beoordelingsDialog.findViewById<TextView>(R.id.tv_deelcompetentie_omschrijving).text= deelcomp.deelCompetentie.omschrijving
 
         if (deelcomp.beoordelingen.isEmpty()) {
+            beoordelingsDialog.findViewById<CardView>(R.id.geenBeoordelingenCard).visibility = View.VISIBLE
             beoordelingsDialog.findViewById<TextView>(R.id.tv_boolean_beoordelingen).text = context.getString(R.string.geen_beoordelingen)
         } else {
+            beoordelingsDialog.findViewById<CardView>(R.id.geenBeoordelingenCard).visibility = View.GONE
             var recycle = beoordelingsDialog.findViewById(R.id.recyclerBeoordelingenDeelcompetentie) as RecyclerView
             recycle.layoutManager = LinearLayoutManager(view.context)
             recycle.adapter = DeelcompetentieAdapter(deelcomp.beoordelingen, view.context)

@@ -13,7 +13,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <RelativeLayout
+        <LinearLayout
             xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/toolbarVervanger"
             android:layout_width="match_parent"
@@ -22,12 +22,20 @@
             android:orientation="horizontal"
             android:paddingTop="5dp"
             android:paddingBottom="5dp"
-            android:paddingStart="20dp"
+            android:paddingStart="16dp"
             android:paddingEnd="16dp"
-            android:visibility="visible">
-
+            android:visibility="visible"
+            >
+            
+            <ImageView
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_marginRight="8dp"
+                android:layout_gravity="center"
+                android:contentDescription="@string/app_logo"
+                app:srcCompat="@drawable/logo_white_transparent"/>
+            
             <TextView
-                android:id="@+id/aantalBehaaldeHoofdcompetenties"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
@@ -38,19 +46,26 @@
                 android:textSize="16sp"
                 android:fontFamily="@font/roboto_medium"
                 android:textAllCaps="true"
-                android:visibility="visible" />
+                android:visibility="visible"
+                android:text="@string/app_name"/>
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"/>
 
             <ImageButton
                 android:id="@+id/filterbutton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
                 android:layout_gravity="center"
                 android:layout_margin="5dp"
                 android:background="@android:color/transparent"
                 android:visibility="visible"
                 app:srcCompat="@drawable/filter_icon" />
-        </RelativeLayout>
+        </LinearLayout>
 
         <FrameLayout
             android:id="@+id/fragmentFrameCompetenties"

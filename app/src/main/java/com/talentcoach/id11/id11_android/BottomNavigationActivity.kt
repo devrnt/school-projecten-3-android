@@ -38,6 +38,8 @@ class BottomNavigationActivity : AppCompatActivity() {
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_coach -> {
+                val fragment = CoachFragment.newInstance()
+                openFragment(fragment)
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_profiel -> {

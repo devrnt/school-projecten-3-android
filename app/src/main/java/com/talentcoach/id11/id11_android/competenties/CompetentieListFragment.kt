@@ -11,6 +11,7 @@ import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import com.talentcoach.id11.id11_android.R
@@ -40,20 +41,26 @@ class CompetentieListFragment : Fragment() {
 
     lateinit var competentiesAdapter: CompetentiesAdapter
     lateinit var recycle: RecyclerView
+    lateinit var aantalCompsHeader: LinearLayout
 
     var hoofdcompetentieLijst: MutableList<LeerlingHoofdCompetentie> = mutableListOf()
     var copyList = mutableListOf<LeerlingHoofdCompetentie>()
     var copyListSwitch = mutableListOf<LeerlingHoofdCompetentie>()
 
+    lateinit var aantalBehaaldeCompetentiesText: TextView
     /**
      * The layout gets inflated and the recycle is made
      */
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         var view = inflater.inflate(R.layout.fragment_competentie_list, container, false)
 
+        aantalCompsHeader = view.findViewById(R.id.aantalCompsHeader) as LinearLayout
+        aantalCompsHeader.visibility = View.GONE
+
         getAndShowCompetentiesLeerling()
         recycle = view.findViewById(R.id.recyclerHoofdcompetentie) as RecyclerView
         recycle.layoutManager = LinearLayoutManager(container?.context)
+        aantalBehaaldeCompetentiesText = view.findViewById(R.id.aantalBehaaldeCompetentiesText) as TextView
 
         return view
     }
@@ -159,6 +166,7 @@ class CompetentieListFragment : Fragment() {
 
                     //Progressbar doen verdwijnen en lijst weergeven
                     recycle.visibility = View.VISIBLE
+                    aantalCompsHeader.visibility = View.VISIBLE
                     behaaldProgress.visibility = View.GONE
 
                     competentiesAdapter = CompetentiesAdapter(hoofdcompetentieLijst, activity!!.applicationContext)
@@ -176,5 +184,8 @@ class CompetentieListFragment : Fragment() {
         })
     }
 
+    fun showCount(countString: String) {
+        aantalBehaaldeCompetentiesText.text = countString
+    }
 
 }
